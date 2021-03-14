@@ -27,7 +27,6 @@ public class Generation {
         this.start = start;
         this.end = end;
         this.imageSrc = imageSrc;
-        this.model = model;
     }
 
     public int getId() {
@@ -68,10 +67,6 @@ public class Generation {
 
     public Model getModel() {
         return model;
-    }
-
-    public void setModel(Model model) {
-        this.model = model;
     }
 
     @Override
