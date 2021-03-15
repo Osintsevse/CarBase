@@ -18,4 +18,7 @@ public class Vendor {
 
     @OneToMany(mappedBy="vendor", fetch=FetchType.EAGER)
     private List<Model> models;
+
+    @OneToMany(mappedBy="vendor", fetch=FetchType.EAGER)
+    private List<Engine> engines;
 }
