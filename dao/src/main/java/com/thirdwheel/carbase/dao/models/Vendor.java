@@ -12,9 +12,9 @@ public class Vendor {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "vendor_id")
-    private int id;
+    private int vendorId;
     @Column(name = "vendor_name")
-    private String name;
+    private String vendorName;
 
     @OneToMany(mappedBy="vendor", fetch=FetchType.EAGER)
     private List<Model> models;
