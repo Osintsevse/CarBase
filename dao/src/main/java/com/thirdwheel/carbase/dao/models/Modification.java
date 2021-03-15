@@ -1,6 +1,7 @@
 package com.thirdwheel.carbase.dao.models;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigInteger;
@@ -26,6 +27,7 @@ enum ChargerTypes{
 }
 
 @Data
+@NoArgsConstructor
 @Entity
 @Table(name = "modifications")
 public class Modification {
