@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Data
 @Entity
@@ -12,9 +13,9 @@ public class Generation {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "generation_id")
-    private int id;
+    private int generationId;
     @Column(name = "generation_name")
-    private String name;
+    private String generationName;
     @Column(name = "start")
     private Timestamp start;
     @Column(name = "end")
@@ -25,4 +26,7 @@ public class Generation {
     @ManyToOne(optional=false, fetch = FetchType.EAGER)
     @JoinColumn(name = "model_id")
     private Model model;
+
+    @OneToMany(mappedBy="generation", fetch=FetchType.EAGER)
+    private List<Chassis> chassises;
 }

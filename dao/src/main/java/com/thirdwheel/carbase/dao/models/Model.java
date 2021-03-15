@@ -12,9 +12,9 @@ public class Model {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "model_id")
-    private int id;
+    private int modelId;
     @Column(name = "model_name")
-    private String name;
+    private String modelName;
 
     @ManyToOne(optional=false, fetch = FetchType.EAGER)
     @JoinColumn(name = "vendor_id")
