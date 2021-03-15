@@ -11,12 +11,7 @@ enum FuelTypes{
     Electric,
     Unknown
 }
-enum ChargerTypes{
-    Turbocharger,
-    Compressor,
-    TwinTurbo,
-    None
-}
+
 enum EngineTypes{
     R,
     V,
@@ -40,16 +35,6 @@ public class Engine {
     private FuelTypes fuelType;
     @Column(name = "volume")
     private int volume;
-    @Column(name = "max_power")
-    private int maxPower;
-    @Column(name = "max_torque")
-    private int maxTorque;
-    @Column(name = "max_power_engine_speed")
-    private int maxPowerEngineSpeed;
-    @Column(name = "max_torque_engine_speed")
-    private int maxTorqueEngineSpeed;
-    @Column(name = "charger_type")
-    private ChargerTypes chargerType;
     @Column(name = "cylinder_count")
     private int cylinderCount;
     @Column(name = "valve_count")
@@ -58,8 +43,6 @@ public class Engine {
     private int valvePerCylinder;
     @Column(name = "engine_type")
     private EngineTypes engineType;
-    @Column(name = "compression_ratio")
-    private int compressionRatio;
     @Column(name = "bore")
     private int bore;
     @Column(name = "stroke")

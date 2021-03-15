@@ -18,6 +18,12 @@ enum WDTypes{
     All,
     unknown
 }
+enum ChargerTypes{
+    Turbocharger,
+    Compressor,
+    TwinTurbo,
+    None
+}
 
 @Data
 @Entity
@@ -63,6 +69,19 @@ public class Modification {
     private int doorCount;
     @Column(name = "weight")
     private int weight;
+    @Column(name = "max_power")
+    private int maxPower;
+    @Column(name = "max_torque")
+    private int maxTorque;
+    @Column(name = "max_power_engine_speed")
+    private int maxPowerEngineSpeed;
+    @Column(name = "max_torque_engine_speed")
+    private int maxTorqueEngineSpeed;
+    @Column(name = "charger_type")
+    private ChargerTypes chargerType;
+    @Column(name = "compression_ratio")
+    private int compressionRatio;
+
 
     @ManyToOne(optional=false, fetch = FetchType.EAGER)
     @JoinColumn(name = "chassis_id")
