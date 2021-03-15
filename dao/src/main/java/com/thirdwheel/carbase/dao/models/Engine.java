@@ -3,6 +3,8 @@ package com.thirdwheel.carbase.dao.models;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
+
 enum FuelTypes{
     Gasoline,
     Diesel,
@@ -66,4 +68,7 @@ public class Engine {
     @ManyToOne(optional=false, fetch = FetchType.EAGER)
     @JoinColumn(name = "vendor_id")
     private Vendor vendor;
+
+    @OneToMany(mappedBy="engine", fetch=FetchType.EAGER)
+    private List<Modification> modifications;
 }

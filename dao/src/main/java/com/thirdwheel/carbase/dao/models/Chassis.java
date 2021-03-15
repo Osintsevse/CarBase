@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.math.BigInteger;
+import java.util.List;
 
 @Data
 @Entity
@@ -41,4 +42,7 @@ public class Chassis {
     @ManyToOne(optional=false, fetch = FetchType.EAGER)
     @JoinColumn(name = "rear_suspension_id")
     private Suspension rearSuspension;
+
+    @OneToMany(mappedBy="chassis", fetch=FetchType.EAGER)
+    private List<Modification> modifications;
 }
