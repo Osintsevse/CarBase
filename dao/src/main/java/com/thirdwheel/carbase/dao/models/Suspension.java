@@ -12,9 +12,10 @@ import javax.persistence.*;
 public class Suspension {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "suspension_id")
+    @Column(name = "suspension_id", nullable = false)
     private int suspensionId;
-    @Column(name = "suspension_name")
+
+    @Column(name = "suspension_name", nullable = false)
     private String suspensionName;
 
 }

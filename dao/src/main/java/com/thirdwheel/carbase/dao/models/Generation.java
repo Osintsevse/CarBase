@@ -14,14 +14,18 @@ import java.util.List;
 public class Generation {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "generation_id")
+    @Column(name = "generation_id", nullable = false)
     private int generationId;
-    @Column(name = "generation_name")
+
+    @Column(name = "generation_name", nullable = false)
     private String generationName;
+
     @Column(name = "start")
     private Timestamp start;
+
     @Column(name = "end")
     private Timestamp end;
+
     @Column(name = "image_src")
     private String imageSrc;
 

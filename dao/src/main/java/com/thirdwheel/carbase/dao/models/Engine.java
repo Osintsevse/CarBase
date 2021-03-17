@@ -29,24 +29,33 @@ enum EngineTypes{
 public class Engine {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "engine_id")
+    @Column(name = "engine_id", nullable = false)
     private int engineId;
-    @Column(name = "engine_name")
+
+    @Column(name = "engine_name", nullable = false)
     private String engineName;
+
     @Column(name = "fuel_type")
     private FuelTypes fuelType;
+
     @Column(name = "volume")
     private int volume;
+
     @Column(name = "cylinder_count")
     private int cylinderCount;
+
     @Column(name = "valve_count")
     private int valveCount;
+
     @Column(name = "valve_per_cylinder")
     private int valvePerCylinder;
-    @Column(name = "engine_type")
+
+    @Column(name = "engine_type", nullable = false)
     private EngineTypes engineType;
+
     @Column(name = "bore")
     private int bore;
+
     @Column(name = "stroke")
     private int stroke;
 

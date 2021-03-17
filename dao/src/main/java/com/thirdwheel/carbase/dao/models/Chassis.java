@@ -14,26 +14,36 @@ import java.util.List;
 public class Chassis {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "chassis_id")
+    @Column(name = "chassis_id", nullable = false)
     private int chassisId;
-    @Column(name = "chassis_name")
+
+    @Column(name = "chassis_name", nullable = false)
     private String chassisName;
-    @Column(name = "is_name_generated")
+
+    @Column(name = "is_name_generated", nullable = false)
     private boolean isNameGenerated;
+
     @Column(name = "length")
     private BigInteger length;
+
     @Column(name = "width")
     private BigInteger width;
+
     @Column(name = "wheel_base")
     private BigInteger wheelBase;
+
     @Column(name = "front_overhang")
     private BigInteger frontOverhang;
+
     @Column(name = "rear_overhang")
     private BigInteger rearOverhang;
+
     @Column(name = "front_track")
     private BigInteger frontTrack;
+
     @Column(name = "rear_track")
     private BigInteger rearTrack;
+
     @Column(name = "height")
     private BigInteger height;
 
