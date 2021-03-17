@@ -12,6 +12,7 @@
         <module>dao</module>
         <module>service</module>
         <module>view</module>
+        <module>dbmigration</module>
     </modules>
 
     <properties>
