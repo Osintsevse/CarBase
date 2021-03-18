@@ -12,7 +12,8 @@ import java.util.List;
 @Table(name = "vendors")
 public class Vendor {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "vendor_seq")
+    @SequenceGenerator(name = "vendor_seq", sequenceName = "vendor_seq", allocationSize = 1)
     @Column(name = "vendor_id", nullable = false)
     private int vendorId;
 
