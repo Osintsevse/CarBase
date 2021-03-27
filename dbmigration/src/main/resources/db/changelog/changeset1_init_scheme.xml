@@ -7,7 +7,7 @@
 
     <changeSet  id="1" author="Stas">
         <createTable tableName="vendors">
-            <column name="vendor_id" type="serial">
+            <column name="vendor_id" type="SERIAL" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true" unique="true"/>
             </column>
             <column name="vendor_name" type="TEXT">
@@ -18,7 +18,7 @@
 
     <changeSet id="2" author="Stas">
         <createTable tableName="models">
-            <column name="model_id" type="serial">
+            <column name="model_id" type="SERIAL" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="model_name" type="TEXT">
@@ -34,7 +34,7 @@
 
     <changeSet id="3" author="Stas">
         <createTable tableName="generations">
-            <column name="generation_id" type="serial">
+            <column name="generation_id" type="SERIAL" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="generation_name" type="TEXT">

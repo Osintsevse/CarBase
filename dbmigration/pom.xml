@@ -101,14 +101,6 @@
                         <version>4.3.1</version>
                     </dependency>
                 </dependencies>
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <goals>-->
-<!--                            <goal>diff</goal>-->
-<!--                        </goals>-->
-<!--                        <phase>process-classes</phase>-->
-<!--                    </execution>-->
-<!--                </executions>-->
             </plugin>
         </plugins>
     </build>
