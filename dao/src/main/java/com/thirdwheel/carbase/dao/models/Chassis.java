@@ -47,10 +47,14 @@ public class Chassis {
     private long height;
 
     @ManyToOne(optional=false, fetch = FetchType.EAGER)
+    @JoinColumn(name = "generation_id")
+    private Generation generation;
+
+    @ManyToOne(optional=true, fetch = FetchType.EAGER)
     @JoinColumn(name = "front_suspension_id")
     private Suspension frontSuspension;
 
-    @ManyToOne(optional=false, fetch = FetchType.EAGER)
+    @ManyToOne(optional=true, fetch = FetchType.EAGER)
     @JoinColumn(name = "rear_suspension_id")
     private Suspension rearSuspension;
 
