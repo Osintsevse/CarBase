@@ -1,31 +1,15 @@
 package com.thirdwheel.carbase.dao.models;
 
 
+import com.thirdwheel.carbase.dao.models.enums.TransmissionTypes;
+import com.thirdwheel.carbase.dao.models.enums.WDTypes;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.math.BigInteger;
 import java.sql.Timestamp;
 
-enum TransmissionTypes{
-    Auto,
-    Manual,
-    Robot,
-    unknown
-}
-enum WDTypes{
-    Front,
-    Rear,
-    All,
-    unknown
-}
-enum ChargerTypes{
-    Turbocharger,
-    Compressor,
-    TwinTurbo,
-    None
-}
+
 
 @Data
 @NoArgsConstructor
@@ -77,7 +61,7 @@ public class Modification {
     private WDTypes wdType;
 
     @Column(name = "clearance")
-    private BigInteger clearance;
+    private long clearance;
 
     @Column(name = "country_build")
     private String countryBuild;
@@ -91,30 +75,11 @@ public class Modification {
     @Column(name = "weight")
     private int weight;
 
-    @Column(name = "max_power")
-    private int maxPower;
-
-    @Column(name = "max_torque")
-    private int maxTorque;
-
-    @Column(name = "max_power_engine_speed")
-    private int maxPowerEngineSpeed;
-
-    @Column(name = "max_torque_engine_speed")
-    private int maxTorqueEngineSpeed;
-
-    @Column(name = "charger_type")
-    private ChargerTypes chargerType;
-
-    @Column(name = "compression_ratio")
-    private int compressionRatio;
-
-
     @ManyToOne(optional=false, fetch = FetchType.EAGER)
     @JoinColumn(name = "chassis_id")
     private Chassis chassis;
 
     @ManyToOne(optional=false, fetch = FetchType.EAGER)
-    @JoinColumn(name = "engine_id")
-    private Engine engine;
+    @JoinColumn(name = "engine_modification_id")
+    private EngineModification engineModification;
 }

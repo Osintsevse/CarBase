@@ -4,7 +4,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.math.BigInteger;
 import java.util.List;
 
 @Data
@@ -24,28 +23,28 @@ public class Chassis {
     private boolean isNameGenerated;
 
     @Column(name = "length")
-    private BigInteger length;
+    private long length;
 
     @Column(name = "width")
-    private BigInteger width;
+    private long width;
 
     @Column(name = "wheel_base")
-    private BigInteger wheelBase;
+    private long wheelBase;
 
     @Column(name = "front_overhang")
-    private BigInteger frontOverhang;
+    private long frontOverhang;
 
     @Column(name = "rear_overhang")
-    private BigInteger rearOverhang;
+    private long rearOverhang;
 
     @Column(name = "front_track")
-    private BigInteger frontTrack;
+    private long frontTrack;
 
     @Column(name = "rear_track")
-    private BigInteger rearTrack;
+    private long rearTrack;
 
     @Column(name = "height")
-    private BigInteger height;
+    private long height;
 
     @ManyToOne(optional=false, fetch = FetchType.EAGER)
     @JoinColumn(name = "front_suspension_id")
