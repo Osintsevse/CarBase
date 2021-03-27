@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="7" author="Stas">
+        <createTable tableName="engine_modifications">
+            <column name="engine_modification_id" type="SERIAL" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="engine_modification_name" type="TEXT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="max_power" type="integer">
+                <constraints nullable="true"/>
+            </column>
+            <column name="max_power_engine_speed" type="integer">
+                <constraints nullable="true"/>
+            </column>
+            <column name="max_torque" type="integer">
+                <constraints nullable="true"/>
+            </column>
+            <column name="max_torque_engine_speed" type="integer">
+                <constraints nullable="true"/>
+            </column>
+            <column name="charger_type" type="TEXT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="compression_ratio" type="integer">
+                <constraints nullable="true"/>
+            </column>
+            <column name="engine_id" type="SERIAL">
+                <constraints nullable="false"
+                             references="engines(engine_id)"
+                             foreignKeyName="FK_engine_modifications_engines"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

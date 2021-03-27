@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="5" author="Stas">
+        <createTable tableName="chassises">
+            <column name="chassis_id" type="SERIAL" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="chassis_name" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_name_generated" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="length" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="width" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="wheel_base" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="front_overhang" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="rear_overhang" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="front_track" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="rear_track" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="height" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="generation_id" type="SERIAL">
+                <constraints nullable="false"
+                             references="generations(generation_id)"
+                             foreignKeyName="FK_chassises_generations"/>
+            </column>
+            <column name="front_suspension_id" type="SERIAL">
+                <constraints nullable="true"
+                             references="suspensions(suspension_id)"
+                             foreignKeyName="FK_chassises_suspensions_front"/>
+            </column>
+            <column name="rear_suspension_id" type="SERIAL">
+                <constraints nullable="true"
+                             references="suspensions(suspension_id)"
+                             foreignKeyName="FK_chassises_suspensions_rear"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
