@@ -12,8 +12,8 @@ public class VendorRepository {
         this.entityManager = entityManager;
     }
 
-    public void saveVendor(Vendor huy) {
-        entityManager.persist(huy);
+    public void saveVendor(Vendor vendor) {
+        entityManager.persist(vendor);
         entityManager.flush();
     }
 

@@ -27,7 +27,7 @@ public class JpaConfig {
         LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
         emf.setPersistenceUnitName("cbdb-persistence-unit");
         emf.setPersistenceProviderClass(HibernatePersistenceProvider.class);
-        emf.setPackagesToScan("com.stas.learn.dao");
+        emf.setPackagesToScan("com.thirdwheel.carbase.dao.models");
         emf.setJpaProperties(getProperties());
 
         return emf;
