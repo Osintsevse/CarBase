@@ -49,6 +49,6 @@ public class Engine {
     @JoinColumn(name = "vendor_id")
     private Vendor vendor;
 
-    @OneToMany(mappedBy="engineModification", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy="engine", fetch=FetchType.EAGER)
     private List<EngineModification> engineModifications;
 }
