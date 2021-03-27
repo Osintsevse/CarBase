@@ -1,6 +1,7 @@
 package com.thirdwheel.carbase.dao.models;
 
 import com.thirdwheel.carbase.dao.models.enums.EngineTypes;
+import com.thirdwheel.carbase.dao.models.enums.FuelTypes;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -48,6 +49,6 @@ public class Engine {
     @JoinColumn(name = "vendor_id")
     private Vendor vendor;
 
-    @OneToMany(mappedBy="engine", fetch=FetchType.EAGER)
-    private List<Modification> modifications;
+    @OneToMany(mappedBy="engineModification", fetch=FetchType.EAGER)
+    private List<EngineModification> engineModifications;
 }
