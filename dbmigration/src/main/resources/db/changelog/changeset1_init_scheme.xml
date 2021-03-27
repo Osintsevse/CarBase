@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet  id="1" author="Stas">
+        <createTable tableName="vendors">
+            <column name="vendor_id" type="serial">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="vendor_name" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2" author="Stas">
+        <createTable tableName="models">
+            <column name="model_id" type="serial">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="model_name" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="vendor_id" type="serial">
+                <constraints nullable="false"
+                             references="vendors(vendor_id)"
+                             foreignKeyName="FK_models_vendors"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="3" author="Stas">
+        <createTable tableName="generations">
+            <column name="generation_id" type="serial">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="generation_name" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="start" type="timestamp">
+                <constraints nullable="true"/>
+            </column>
+            <column name="end" type="timestamp">
+                <constraints nullable="true"/>
+            </column>
+            <column name="image_src" type="TEXT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="model_id" type="serial">
+                <constraints nullable="false"
+                             references="models(model_id)"
+                             foreignKeyName="FK_generations_models"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
