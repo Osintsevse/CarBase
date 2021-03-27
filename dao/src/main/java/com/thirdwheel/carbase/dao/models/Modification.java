@@ -5,27 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.math.BigInteger;
 import java.sql.Timestamp;
 
-enum TransmissionTypes{
-    Auto,
-    Manual,
-    Robot,
-    unknown
-}
-enum WDTypes{
-    Front,
-    Rear,
-    All,
-    unknown
-}
-enum ChargerTypes{
-    Turbocharger,
-    Compressor,
-    TwinTurbo,
-    None
-}
+
 
 @Data
 @NoArgsConstructor
@@ -77,7 +59,7 @@ public class Modification {
     private WDTypes wdType;
 
     @Column(name = "clearance")
-    private BigInteger clearance;
+    private long clearance;
 
     @Column(name = "country_build")
     private String countryBuild;

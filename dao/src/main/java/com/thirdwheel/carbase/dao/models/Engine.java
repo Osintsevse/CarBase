@@ -1,26 +1,11 @@
 package com.thirdwheel.carbase.dao.models;
 
+import com.thirdwheel.carbase.dao.models.enums.EngineTypes;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
-
-enum FuelTypes{
-    Gasoline,
-    Diesel,
-    Electric,
-    Unknown
-}
-
-enum EngineTypes{
-    R,
-    V,
-    W,
-    Opposite,
-    Rotor,
-    unknown
-}
 
 @Data
 @NoArgsConstructor
