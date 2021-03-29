@@ -1,6 +1,6 @@
 package com.thirdwheel.carbase.dao.models.enums;
 
-public enum FuelTypes{
+public enum FuelType {
     Gasoline,
     Diesel,
     Electric,

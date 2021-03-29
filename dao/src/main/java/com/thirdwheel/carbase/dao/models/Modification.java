@@ -1,8 +1,8 @@
 package com.thirdwheel.carbase.dao.models;
 
 
-import com.thirdwheel.carbase.dao.models.enums.TransmissionTypes;
-import com.thirdwheel.carbase.dao.models.enums.WDTypes;
+import com.thirdwheel.carbase.dao.models.enums.TransmissionType;
+import com.thirdwheel.carbase.dao.models.enums.WDType;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,7 +17,7 @@ import java.sql.Timestamp;
 @Table(name = "modifications")
 public class Modification {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private int id;
 
@@ -28,7 +28,7 @@ public class Modification {
     private String steeringWheelPosition;
 
     @Column(name = "transmission_type", nullable = false)
-    private TransmissionTypes transmissionType;
+    private TransmissionType transmissionType;
 
     @Column(name = "start")
     private Timestamp start;
@@ -37,7 +37,7 @@ public class Modification {
     private Timestamp end;
 
     @Column(name = "acceleration0100")
-    private double acceleration0100;
+    private Double acceleration0100;
 
     @Column(name = "front_wheels")
     private String frontWheels;
@@ -46,22 +46,22 @@ public class Modification {
     private String rearWheels;
 
     @Column(name = "gear_count")
-    private int gearCount;
+    private Integer gearCount;
 
     @Column(name = "mtr")
-    private double mtr;
+    private Double mtr;
 
     @Column(name = "seat_count")
-    private int seatCount;
+    private Integer seatCount;
 
     @Column(name = "seat_row_count")
-    private int seatRowCount;
+    private Integer seatRowCount;
 
     @Column(name = "wd_type", nullable = false)
-    private WDTypes wdType;
+    private WDType wdType;
 
     @Column(name = "clearance")
-    private long clearance;
+    private Long clearance;
 
     @Column(name = "country_build")
     private String countryBuild;
@@ -70,10 +70,10 @@ public class Modification {
     private String countryStore;
 
     @Column(name = "door_count")
-    private int doorCount;
+    private Integer doorCount;
 
     @Column(name = "weight")
-    private int weight;
+    private Integer weight;
 
     @ManyToOne(optional=false, fetch = FetchType.EAGER)
     @JoinColumn(name = "chassis_id")

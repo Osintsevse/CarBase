@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Table(name = "suspensions")
 public class Suspension {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private int id;
 

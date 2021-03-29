@@ -12,7 +12,7 @@ import java.util.List;
 @Table(name = "chassises")
 public class Chassis {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private int id;
 
@@ -23,28 +23,28 @@ public class Chassis {
     private boolean isNameGenerated;
 
     @Column(name = "length")
-    private long length;
+    private Long length;
 
     @Column(name = "width")
-    private long width;
+    private Long width;
 
     @Column(name = "wheel_base")
-    private long wheelBase;
+    private Long wheelBase;
 
     @Column(name = "front_overhang")
-    private long frontOverhang;
+    private Long frontOverhang;
 
     @Column(name = "rear_overhang")
-    private long rearOverhang;
+    private Long rearOverhang;
 
     @Column(name = "front_track")
-    private long frontTrack;
+    private Long frontTrack;
 
     @Column(name = "rear_track")
-    private long rearTrack;
+    private Long rearTrack;
 
     @Column(name = "height")
-    private long height;
+    private Long height;
 
     @ManyToOne(optional=false, fetch = FetchType.EAGER)
     @JoinColumn(name = "generation_id")

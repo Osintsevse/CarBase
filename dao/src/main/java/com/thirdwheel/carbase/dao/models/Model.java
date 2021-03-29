@@ -12,7 +12,7 @@ import java.util.List;
 @Table(name = "models")
 public class Model {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private int id;
 

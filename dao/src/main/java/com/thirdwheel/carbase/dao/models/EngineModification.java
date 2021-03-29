@@ -1,11 +1,10 @@
 package com.thirdwheel.carbase.dao.models;
 
-import com.thirdwheel.carbase.dao.models.enums.ChargerTypes;
+import com.thirdwheel.carbase.dao.models.enums.ChargerType;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -13,7 +12,7 @@ import java.util.List;
 @Table(name = "engine_modifications")
 public class EngineModification {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private int id;
 
@@ -21,27 +20,24 @@ public class EngineModification {
     private String name;
 
     @Column(name = "max_power")
-    private int maxPower;
+    private Integer maxPower;
 
     @Column(name = "max_torque")
-    private int maxTorque;
+    private Integer maxTorque;
 
-    @Column(name = "max_power_engine_speed")
-    private int maxPowerEngineSpeed;
+    @Column(name = "max_power_rpm")
+    private Integer maxPowerRPM;
 
-    @Column(name = "max_torque_engine_speed")
-    private int maxTorqueEngineSpeed;
+    @Column(name = "max_torque_rpm")
+    private Integer maxTorqueRPM;
 
     @Column(name = "charger_type")
-    private ChargerTypes chargerType;
+    private ChargerType chargerType;
 
     @Column(name = "compression_ratio")
-    private int compressionRatio;
+    private Integer compressionRatio;
 
     @ManyToOne(optional=false, fetch = FetchType.EAGER)
     @JoinColumn(name = "engine_id")
     private Engine engine;
-
-    @OneToMany(mappedBy="engineModification", fetch=FetchType.EAGER)
-    private List<Modification> modifications;
 }
