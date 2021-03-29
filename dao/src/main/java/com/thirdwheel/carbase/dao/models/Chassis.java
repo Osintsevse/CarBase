@@ -13,11 +13,11 @@ import java.util.List;
 public class Chassis {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "chassis_id", nullable = false)
-    private int chassisId;
+    @Column(name = "id", nullable = false)
+    private int id;
 
-    @Column(name = "chassis_name", nullable = false)
-    private String chassisName;
+    @Column(name = "name", nullable = false)
+    private String name;
 
     @Column(name = "is_name_generated", nullable = false)
     private boolean isNameGenerated;

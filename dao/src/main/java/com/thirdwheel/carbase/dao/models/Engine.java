@@ -15,11 +15,11 @@ import java.util.List;
 public class Engine {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "engine_id", nullable = false)
-    private int engineId;
+    @Column(name = "id", nullable = false)
+    private int id;
 
-    @Column(name = "engine_name", nullable = false)
-    private String engineName;
+    @Column(name = "name", nullable = false)
+    private String name;
 
     @Column(name = "fuel_type")
     private FuelTypes fuelType;

@@ -14,11 +14,11 @@ import java.util.List;
 public class Generation {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "generation_id", nullable = false)
-    private int generationId;
+    @Column(name = "id", nullable = false)
+    private int id;
 
-    @Column(name = "generation_name", nullable = false)
-    private String generationName;
+    @Column(name = "name", nullable = false)
+    private String name;
 
     @Column(name = "start")
     private Timestamp start;

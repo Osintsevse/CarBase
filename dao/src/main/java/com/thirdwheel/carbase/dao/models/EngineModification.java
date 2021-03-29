@@ -14,11 +14,11 @@ import java.util.List;
 public class EngineModification {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "engine_modification_id", nullable = false)
-    private int engineModificationId;
+    @Column(name = "id", nullable = false)
+    private int id;
 
-    @Column(name = "engine_modification_name", nullable = false)
-    private String engineModificationName;
+    @Column(name = "name", nullable = false)
+    private String name;
 
     @Column(name = "max_power")
     private int maxPower;

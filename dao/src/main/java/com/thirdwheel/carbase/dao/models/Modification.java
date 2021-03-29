@@ -18,11 +18,11 @@ import java.sql.Timestamp;
 public class Modification {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "modification_id", nullable = false)
-    private int modificationId;
+    @Column(name = "id", nullable = false)
+    private int id;
 
-    @Column(name = "modification_name", nullable = false)
-    private String modificationName;
+    @Column(name = "name", nullable = false)
+    private String name;
 
     @Column(name = "steering_wheel_position", nullable = false)
     private String steeringWheelPosition;

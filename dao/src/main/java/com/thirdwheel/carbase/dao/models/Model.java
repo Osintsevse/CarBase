@@ -13,11 +13,11 @@ import java.util.List;
 public class Model {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "model_id", nullable = false)
-    private int modelId;
+    @Column(name = "id", nullable = false)
+    private int id;
 
-    @Column(name = "model_name", nullable = false)
-    private String modelName;
+    @Column(name = "name", nullable = false)
+    private String name;
 
     @ManyToOne(optional=false, fetch = FetchType.EAGER)
     @JoinColumn(name = "vendor_id")

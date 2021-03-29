@@ -13,10 +13,11 @@ import java.util.List;
 public class Vendor {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private int vendorId;
+    @Column(name = "id", nullable = false)
+    private int id;
 
-    @Column(name = "vendor_name", nullable = false)
-    private String vendorName;
+    @Column(name = "name", nullable = false)
+    private String name;
 
     @OneToMany(mappedBy="vendor", fetch=FetchType.EAGER)
     private List<Model> models;
