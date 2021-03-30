@@ -1,12 +1,10 @@
 package com.thirdwheel.carbase.dao.models;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
-@NoArgsConstructor
 @Entity
 @Table(name = "suspensions")
 public class Suspension {

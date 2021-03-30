@@ -3,12 +3,10 @@ package com.thirdwheel.carbase.dao.models;
 import com.thirdwheel.carbase.dao.models.enums.EngineType;
 import com.thirdwheel.carbase.dao.models.enums.FuelType;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
-@NoArgsConstructor
 @Entity
 @Table(name = "engines")
 public class Engine {

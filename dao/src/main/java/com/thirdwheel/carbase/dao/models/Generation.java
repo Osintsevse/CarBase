@@ -1,14 +1,12 @@
 package com.thirdwheel.carbase.dao.models;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
-@NoArgsConstructor
 @Entity
 @Table(name = "generations")
 public class Generation {
@@ -21,10 +19,10 @@ public class Generation {
     private String name;
 
     @Column(name = "start")
-    private Timestamp start;
+    private LocalDate start;
 
     @Column(name = "end")
-    private Timestamp end;
+    private LocalDate end;
 
     @Column(name = "image_src")
     private String imageSrc;

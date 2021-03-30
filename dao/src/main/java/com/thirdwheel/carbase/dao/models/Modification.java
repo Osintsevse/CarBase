@@ -4,15 +4,12 @@ package com.thirdwheel.carbase.dao.models;
 import com.thirdwheel.carbase.dao.models.enums.TransmissionType;
 import com.thirdwheel.carbase.dao.models.enums.WDType;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
-
+import java.time.LocalDate;
 
 
 @Data
-@NoArgsConstructor
 @Entity
 @Table(name = "modifications")
 public class Modification {
@@ -31,10 +28,10 @@ public class Modification {
     private TransmissionType transmissionType;
 
     @Column(name = "start")
-    private Timestamp start;
+    private LocalDate start;
 
     @Column(name = "end")
-    private Timestamp end;
+    private LocalDate end;
 
     @Column(name = "acceleration0100")
     private Double acceleration0100;

@@ -2,12 +2,10 @@ package com.thirdwheel.carbase.dao.models;
 
 import com.thirdwheel.carbase.dao.models.enums.ChargerType;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
-@NoArgsConstructor
 @Entity
 @Table(name = "engine_modifications")
 public class EngineModification {
