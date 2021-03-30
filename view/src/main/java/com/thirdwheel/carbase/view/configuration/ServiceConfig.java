@@ -7,8 +7,4 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class ServiceConfig {
-    @Bean
-    public VendorService getVendorService(VendorRepository repository){
-        return new VendorService(repository);
-    }
 }
