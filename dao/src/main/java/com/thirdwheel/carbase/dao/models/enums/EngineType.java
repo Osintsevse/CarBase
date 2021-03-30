@@ -1,10 +1,10 @@
 package com.thirdwheel.carbase.dao.models.enums;
 
-public enum EngineTypes{
-    R,
-    V,
-    W,
+public enum EngineType {
+    Straight,
+    VType,
+    WType,
     Opposite,
     Rotor,
-    unknown
+    Unknown
 }
