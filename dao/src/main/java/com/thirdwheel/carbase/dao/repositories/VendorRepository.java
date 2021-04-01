@@ -15,7 +15,6 @@ public class VendorRepository {
 
     public void saveVendor(Vendor vendor) {
         entityManager.persist(vendor);
-        entityManager.flush();
     }
 
     public Vendor getById(int id) {

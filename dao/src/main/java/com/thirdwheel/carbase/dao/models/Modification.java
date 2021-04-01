@@ -24,6 +24,7 @@ public class Modification {
     @Column(name = "steering_wheel_position", nullable = false)
     private String steeringWheelPosition;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "transmission_type", nullable = false)
     private TransmissionType transmissionType;
 
@@ -54,6 +55,7 @@ public class Modification {
     @Column(name = "seat_row_count")
     private Integer seatRowCount;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "wd_type", nullable = false)
     private WDType wdType;
 

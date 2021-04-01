@@ -12,7 +12,6 @@
     <artifactId>view</artifactId>
 
     <properties>
-        <hibernate.version>5.4.29.Final</hibernate.version>
         <spring-boot-starter-web.version>2.4.3</spring-boot-starter-web.version>
     </properties>
 

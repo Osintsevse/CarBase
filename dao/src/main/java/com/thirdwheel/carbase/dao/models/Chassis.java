@@ -48,11 +48,11 @@ public class Chassis {
     @JoinColumn(name = "generation_id")
     private Generation generation;
 
-    @ManyToOne(optional=true, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "front_suspension_id")
     private Suspension frontSuspension;
 
-    @ManyToOne(optional=true, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "rear_suspension_id")
     private Suspension rearSuspension;
 

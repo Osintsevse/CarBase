@@ -18,6 +18,7 @@ public class Engine {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "fuel_type")
     private FuelType fuelType;
 
@@ -33,6 +34,7 @@ public class Engine {
     @Column(name = "valve_per_cylinder")
     private Integer valvePerCylinder;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "engine_type", nullable = false)
     private EngineType engineType;
 

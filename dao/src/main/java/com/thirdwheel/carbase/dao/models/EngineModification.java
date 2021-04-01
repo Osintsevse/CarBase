@@ -29,6 +29,7 @@ public class EngineModification {
     @Column(name = "max_torque_rpm")
     private Integer maxTorqueRPM;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "charger_type")
     private ChargerType chargerType;
 
