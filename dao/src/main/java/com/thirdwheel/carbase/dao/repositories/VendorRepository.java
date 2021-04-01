@@ -1,11 +1,11 @@
 package com.thirdwheel.carbase.dao.repositories;
 
 import com.thirdwheel.carbase.dao.models.Vendor;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-@Service
+@Repository
 public class VendorRepository {
     private EntityManager entityManager;
     @PersistenceContext
