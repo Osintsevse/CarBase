@@ -15,7 +15,7 @@ public class VendorController {
 
     @RequestMapping(method = RequestMethod.POST, path = "/createvendor")
     public ResponseEntity<Boolean> saveVendor(@RequestBody String name) {
-        vendorService.saveVendor(name);
+        vendorService.save(name);
         return ResponseEntity.ok(true);
     }
 }

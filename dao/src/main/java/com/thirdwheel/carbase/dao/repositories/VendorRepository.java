@@ -13,7 +13,7 @@ public class VendorRepository {
         this.entityManager = entityManager;
     }
 
-    public void saveVendor(Vendor vendor) {
+    public void save(Vendor vendor) {
         entityManager.persist(vendor);
     }
 
