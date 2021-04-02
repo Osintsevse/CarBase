@@ -1,23 +1,21 @@
 package com.thirdwheel.carbase.dao.models;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Data
-@NoArgsConstructor
 @Entity
 @Table(name = "models")
 public class Model {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "model_id", nullable = false)
-    private int modelId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private int id;
 
-    @Column(name = "model_name", nullable = false)
-    private String modelName;
+    @Column(name = "name", nullable = false)
+    private String name;
 
     @ManyToOne(optional=false, fetch = FetchType.EAGER)
     @JoinColumn(name = "vendor_id")

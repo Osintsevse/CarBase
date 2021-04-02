@@ -25,9 +25,9 @@ public class JpaConfig {
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean() {
         LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
-        emf.setPersistenceUnitName("cb-persistence-unit");
+        emf.setPersistenceUnitName("cbdb-persistence-unit");
         emf.setPersistenceProviderClass(HibernatePersistenceProvider.class);
-        emf.setPackagesToScan("com.thirdwheel.carbase.dao");
+        emf.setPackagesToScan("com.thirdwheel.carbase.dao.models");
         emf.setJpaProperties(getProperties());
 
         return emf;
@@ -37,4 +37,5 @@ public class JpaConfig {
     public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
         return new JpaTransactionManager(emf);
     }
+
 }

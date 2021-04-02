@@ -1,30 +1,28 @@
 package com.thirdwheel.carbase.dao.models;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
-@NoArgsConstructor
 @Entity
 @Table(name = "generations")
 public class Generation {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "generation_id", nullable = false)
-    private int generationId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private int id;
 
-    @Column(name = "generation_name", nullable = false)
-    private String generationName;
+    @Column(name = "name", nullable = false)
+    private String name;
 
     @Column(name = "start")
-    private Timestamp start;
+    private LocalDate start;
 
     @Column(name = "end")
-    private Timestamp end;
+    private LocalDate end;
 
     @Column(name = "image_src")
     private String imageSrc;

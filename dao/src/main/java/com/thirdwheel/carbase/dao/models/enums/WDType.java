@@ -1,8 +1,8 @@
 package com.thirdwheel.carbase.dao.models.enums;
 
-public enum WDTypes {
+public enum WDType {
     Front,
     Rear,
     All,
-    unknown
+    Unknown
 }
