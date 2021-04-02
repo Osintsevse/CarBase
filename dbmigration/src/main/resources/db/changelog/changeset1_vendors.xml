@@ -7,10 +7,10 @@
 
     <changeSet  id="1" author="Stas">
         <createTable tableName="vendors">
-            <column name="vendor_id" type="SERIAL" autoIncrement="true">
+            <column name="id" type="SERIAL" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true" unique="true"/>
             </column>
-            <column name="vendor_name" type="TEXT">
+            <column name="name" type="TEXT">
                 <constraints nullable="false"/>
             </column>
         </createTable>

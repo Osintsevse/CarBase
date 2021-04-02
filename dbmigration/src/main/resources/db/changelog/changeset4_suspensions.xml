@@ -8,10 +8,10 @@
 
     <changeSet id="4" author="Stas">
         <createTable tableName="suspensions">
-            <column name="suspension_id" type="SERIAL" autoIncrement="true">
+            <column name="id" type="SERIAL" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="suspension_name" type="TEXT">
+            <column name="name" type="TEXT">
                 <constraints nullable="false"/>
             </column>
         </createTable>

@@ -7,10 +7,10 @@
 
     <changeSet id="3" author="Stas">
         <createTable tableName="generations">
-            <column name="generation_id" type="SERIAL" autoIncrement="true">
+            <column name="id" type="SERIAL" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="generation_name" type="TEXT">
+            <column name="name" type="TEXT">
                 <constraints nullable="false"/>
             </column>
             <column name="start" type="timestamp">

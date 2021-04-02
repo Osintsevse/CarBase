@@ -7,10 +7,10 @@
 
     <changeSet id="8" author="Stas">
         <createTable tableName="modifications">
-            <column name="modification_id" type="SERIAL" autoIncrement="true">
+            <column name="id" type="SERIAL" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="modification_name" type="TEXT">
+            <column name="name" type="TEXT">
                 <constraints nullable="false"/>
             </column>
             <column name="steering_wheel_position" type="TEXT">

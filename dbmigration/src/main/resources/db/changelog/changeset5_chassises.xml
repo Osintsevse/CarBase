@@ -7,10 +7,10 @@
 
     <changeSet id="5" author="Stas">
         <createTable tableName="chassises">
-            <column name="chassis_id" type="SERIAL" autoIncrement="true">
+            <column name="id" type="SERIAL" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="chassis_name" type="TEXT">
+            <column name="name" type="TEXT">
                 <constraints nullable="false"/>
             </column>
             <column name="is_name_generated" type="BOOLEAN">

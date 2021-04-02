@@ -7,10 +7,10 @@
 
     <changeSet id="7" author="Stas">
         <createTable tableName="engine_modifications">
-            <column name="engine_modification_id" type="SERIAL" autoIncrement="true">
+            <column name="id" type="SERIAL" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="engine_modification_name" type="TEXT">
+            <column name="name" type="TEXT">
                 <constraints nullable="true"/>
             </column>
             <column name="max_power" type="integer">
