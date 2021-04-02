@@ -67,12 +67,12 @@
 
             <column name="chassis_id" type="SERIAL">
                 <constraints nullable="false"
-                             references="chassises(chassis_id)"
+                             references="chassises(id)"
                              foreignKeyName="FK_modifications_chassises"/>
             </column>
             <column name="engine_modification_id" type="SERIAL">
                 <constraints nullable="false"
-                             references="engine_modifications(engine_modification_id)"
+                             references="engine_modifications(id)"
                              foreignKeyName="FK_modifications_engine_modifications"/>
             </column>
         </createTable>

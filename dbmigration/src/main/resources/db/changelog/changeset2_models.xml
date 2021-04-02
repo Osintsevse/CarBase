@@ -14,7 +14,7 @@
             </column>
             <column name="vendor_id" type="SERIAL">
                 <constraints nullable="false"
-                             references="vendors(vendor_id)"
+                             references="vendors(id)"
                              foreignKeyName="FK_models_vendors"/>
             </column>
         </createTable>

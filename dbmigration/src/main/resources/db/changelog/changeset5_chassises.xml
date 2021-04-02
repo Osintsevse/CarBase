@@ -42,17 +42,17 @@
             </column>
             <column name="generation_id" type="SERIAL">
                 <constraints nullable="false"
-                             references="generations(generation_id)"
+                             references="generations(id)"
                              foreignKeyName="FK_chassises_generations"/>
             </column>
             <column name="front_suspension_id" type="SERIAL">
                 <constraints nullable="true"
-                             references="suspensions(suspension_id)"
+                             references="suspensions(id)"
                              foreignKeyName="FK_chassises_suspensions_front"/>
             </column>
             <column name="rear_suspension_id" type="SERIAL">
                 <constraints nullable="true"
-                             references="suspensions(suspension_id)"
+                             references="suspensions(id)"
                              foreignKeyName="FK_chassises_suspensions_rear"/>
             </column>
         </createTable>

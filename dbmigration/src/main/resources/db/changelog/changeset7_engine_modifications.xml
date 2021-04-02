@@ -33,7 +33,7 @@
             </column>
             <column name="engine_id" type="SERIAL">
                 <constraints nullable="false"
-                             references="engines(engine_id)"
+                             references="engines(id)"
                              foreignKeyName="FK_engine_modifications_engines"/>
             </column>
         </createTable>

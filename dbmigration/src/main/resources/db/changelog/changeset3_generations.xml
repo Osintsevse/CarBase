@@ -24,7 +24,7 @@
             </column>
             <column name="model_id" type="SERIAL">
                 <constraints nullable="false"
-                             references="models(model_id)"
+                             references="models(id)"
                              foreignKeyName="FK_generations_models"/>
             </column>
         </createTable>
