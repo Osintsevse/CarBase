@@ -2,10 +2,7 @@ package com.thirdwheel.carbase.service;
 
 import com.thirdwheel.carbase.dao.models.Vendor;
 import com.thirdwheel.carbase.dao.repositories.GeneralRepository;
-import com.thirdwheel.carbase.dao.repositories.VendorRepository;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;

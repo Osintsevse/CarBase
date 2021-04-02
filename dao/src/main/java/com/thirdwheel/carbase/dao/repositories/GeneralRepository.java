@@ -7,9 +7,9 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-@Repository
+@RequiredArgsConstructor
 public class GeneralRepository<T> {
-    private Class<T> tClass;
+    final private Class<T> tClass;
     private EntityManager entityManager;
     @PersistenceContext
     public void setEntityManager(EntityManager entityManager) {
