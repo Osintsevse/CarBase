@@ -178,13 +178,13 @@
             <column name="max_power" type="integer">
                 <constraints nullable="true"/>
             </column>
-            <column name="max_power_engine_speed" type="integer">
+            <column name="max_power_rpm" type="integer">
                 <constraints nullable="true"/>
             </column>
             <column name="max_torque" type="integer">
                 <constraints nullable="true"/>
             </column>
-            <column name="max_torque_engine_speed" type="integer">
+            <column name="max_torque_rpm" type="integer">
                 <constraints nullable="true"/>
             </column>
             <column name="charger_type" type="TEXT">
