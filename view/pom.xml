@@ -13,6 +13,7 @@
 
     <properties>
         <spring-boot-starter-web.version>2.4.3</spring-boot-starter-web.version>
+        <spring-orm.version>5.3.5</spring-orm.version>
     </properties>
 
     <dependencies>
@@ -29,7 +30,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
-            <version>5.3.5</version>
+            <version>${spring-orm.version}</version>
         </dependency>
 
     </dependencies>
