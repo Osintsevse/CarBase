@@ -12,6 +12,7 @@
         <module>dao</module>
         <module>service</module>
         <module>view</module>
+        <module>dbmigration</module>
     </modules>
 
     <properties>
@@ -21,7 +22,17 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <start-class>com.thirdwheel.carbase.view.Launcher</start-class>
+        <postgresql.version>42.2.19</postgresql.version>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.18</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>
@@ -56,13 +67,5 @@
         </plugins>
     </build>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.18</version>
-            <scope>provided</scope>
-        </dependency>
-    </dependencies>
 
 </project>
