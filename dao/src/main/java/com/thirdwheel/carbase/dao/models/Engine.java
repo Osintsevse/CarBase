@@ -39,10 +39,10 @@ public class Engine {
     private EngineType engineType;
 
     @Column(name = "bore")
-    private Integer bore;
+    private Double bore;
 
     @Column(name = "stroke")
-    private Integer stroke;
+    private Double stroke;
 
     @ManyToOne(optional=false, fetch = FetchType.EAGER)
     @JoinColumn(name = "vendor_id")

@@ -34,7 +34,7 @@ public class EngineModification {
     private ChargerType chargerType;
 
     @Column(name = "compression_ratio")
-    private Integer compressionRatio;
+    private Double compressionRatio;
 
     @ManyToOne(optional=false, fetch = FetchType.EAGER)
     @JoinColumn(name = "engine_id")
