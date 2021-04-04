@@ -109,6 +109,9 @@
             <column name="height" type="bigint">
                 <constraints nullable="true"/>
             </column>
+            <column name="body_type" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
             <column name="generation_id" type="SERIAL">
                 <constraints nullable="false"
                              references="generations(id)"
@@ -153,10 +156,10 @@
             <column name="engine_type" type="TEXT">
                 <constraints nullable="true"/>
             </column>
-            <column name="bore" type="integer">
+            <column name="bore" type="double precision">
                 <constraints nullable="true"/>
             </column>
-            <column name="stroke" type="integer">
+            <column name="stroke" type="double precision">
                 <constraints nullable="true"/>
             </column>
             <column name="vendor_id" type="SERIAL">
@@ -190,7 +193,7 @@
             <column name="charger_type" type="TEXT">
                 <constraints nullable="true"/>
             </column>
-            <column name="compression_ratio" type="integer">
+            <column name="compression_ratio" type="double precision">
                 <constraints nullable="true"/>
             </column>
             <column name="engine_id" type="SERIAL">

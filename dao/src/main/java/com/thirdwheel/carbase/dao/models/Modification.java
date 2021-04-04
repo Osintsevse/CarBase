@@ -1,6 +1,7 @@
 package com.thirdwheel.carbase.dao.models;
 
 
+import com.thirdwheel.carbase.dao.models.enums.SteeringWheelPosition;
 import com.thirdwheel.carbase.dao.models.enums.TransmissionType;
 import com.thirdwheel.carbase.dao.models.enums.WDType;
 import lombok.Data;
@@ -21,8 +22,9 @@ public class Modification {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "steering_wheel_position", nullable = false)
-    private String steeringWheelPosition;
+    private SteeringWheelPosition steeringWheelPosition;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "transmission_type", nullable = false)
