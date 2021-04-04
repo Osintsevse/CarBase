@@ -38,4 +38,5 @@ public class JpaConfig {
         return new JpaTransactionManager(emf);
     }
 
+
 }
