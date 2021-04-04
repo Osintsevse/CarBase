@@ -109,6 +109,9 @@
             <column name="height" type="bigint">
                 <constraints nullable="true"/>
             </column>
+            <column name="body_type" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
             <column name="generation_id" type="SERIAL">
                 <constraints nullable="false"
                              references="generations(id)"

@@ -43,6 +43,10 @@ public class Chassis {
     @Column(name = "height")
     private Long height;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "body_type")
+    private String bodyType;
+
     @ManyToOne(optional=false, fetch = FetchType.EAGER)
     @JoinColumn(name = "generation_id")
     private Generation generation;
