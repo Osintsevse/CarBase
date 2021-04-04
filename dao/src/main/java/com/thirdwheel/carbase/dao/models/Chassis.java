@@ -1,5 +1,6 @@
 package com.thirdwheel.carbase.dao.models;
 
+import com.thirdwheel.carbase.dao.models.enums.BodyStyle;
 import lombok.Data;
 import javax.persistence.*;
 import java.util.List;
@@ -44,8 +45,8 @@ public class Chassis {
     private Long height;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "body_type")
-    private String bodyType;
+    @Column(name = "body_style")
+    private BodyStyle bodyStyle;
 
     @ManyToOne(optional=false, fetch = FetchType.EAGER)
     @JoinColumn(name = "generation_id")
