@@ -13,6 +13,8 @@
 
     <properties>
         <spring-boot-starter-web.version>2.4.3</spring-boot-starter-web.version>
+        <spring-orm.version>5.3.5</spring-orm.version>
+        <start-class>com.thirdwheel.carbase.view.Launcher</start-class>
     </properties>
 
     <dependencies>
@@ -29,9 +31,32 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
-            <version>5.3.5</version>
+            <version>${spring-orm.version}</version>
         </dependency>
-
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot-maven-plugin.version}</version>
+                <configuration>
+                    <fork>true</fork>
+                    <mainClass>${start-class}</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>exec</classifier>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

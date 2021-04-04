@@ -1,23 +1,26 @@
 package com.thirdwheel.carbase.dao.repositories;
 
-import com.thirdwheel.carbase.dao.models.Vendor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-@Repository
-public class VendorRepository {
+@RequiredArgsConstructor
+public class GeneralRepository<T> {
+    final private Class<T> tClass;
     private EntityManager entityManager;
     @PersistenceContext
     public void setEntityManager(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
-    public void save(Vendor vendor) {
-        entityManager.persist(vendor);
+    public void save(T entity) {
+        entityManager.persist(entity);
     }
 
-    public Vendor getById(int id) {
-        return entityManager.find(Vendor.class, id);
+    public T getById(int id) {
+        return entityManager.find(tClass, id);
     }
 }
