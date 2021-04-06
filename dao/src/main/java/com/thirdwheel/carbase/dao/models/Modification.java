@@ -35,7 +35,7 @@ public class Modification {
     @Column(name = "start")
     private LocalDate start;
 
-    @Column(name = "end")
+    @Column(name = "\"end\"")
     private LocalDate end;
 
     @Column(name = "acceleration0100")

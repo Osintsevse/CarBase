@@ -23,7 +23,7 @@ public class Generation {
     @Column(name = "start")
     private LocalDate start;
 
-    @Column(name = "end")
+    @Column(name = "\"end\"")
     private LocalDate end;
 
     @Column(name = "image_src")
