@@ -3,12 +3,14 @@ package com.thirdwheel.carbase.dao.models;
 import com.thirdwheel.carbase.dao.models.enums.EngineType;
 import com.thirdwheel.carbase.dao.models.enums.FuelType;
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @Data
 @Entity
 @Table(name = "engines")
+@ToString
 public class Engine {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

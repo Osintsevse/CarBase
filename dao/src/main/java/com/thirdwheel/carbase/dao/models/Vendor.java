@@ -1,6 +1,7 @@
 package com.thirdwheel.carbase.dao.models;
 
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "vendors")
+@ToString(exclude = "models")
 public class Vendor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

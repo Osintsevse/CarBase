@@ -2,12 +2,15 @@ package com.thirdwheel.carbase.dao.models;
 
 import com.thirdwheel.carbase.dao.models.enums.BodyStyle;
 import lombok.Data;
+import lombok.ToString;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Data
 @Entity
 @Table(name = "chassises")
+@ToString(exclude = "modifications")
 public class Chassis {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -63,3 +66,4 @@ public class Chassis {
     @OneToMany(mappedBy="chassis", fetch=FetchType.EAGER)
     private List<Modification> modifications;
 }
+
