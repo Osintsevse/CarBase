@@ -17,5 +17,13 @@
                 oldColumnName="body_type"
                 newColumnName="body_style"/>
     </changeSet>
+    <changeSet  id="10" author="Stas">
+        <modifyDataType tableName="generations" columnName="start" newDataType="DATE"/>
+        <modifyDataType tableName="generations" columnName="end" newDataType="DATE"/>
+    </changeSet>
+    <changeSet  id="11" author="Stas">
+        <modifyDataType tableName="modifications" columnName="start" newDataType="DATE"/>
+        <modifyDataType tableName="modifications" columnName="end" newDataType="DATE"/>
+    </changeSet>
 
 </databaseChangeLog>
