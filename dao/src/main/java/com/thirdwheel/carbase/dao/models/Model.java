@@ -23,6 +23,6 @@ public class Model {
     @JoinColumn(name = "vendor_id")
     private Vendor vendor;
 
-    @OneToMany(mappedBy="model", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy="model", fetch=FetchType.LAZY)
     private List<Generation> generations;
 }

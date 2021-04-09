@@ -19,6 +19,6 @@ public class Vendor {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @OneToMany(mappedBy="vendor", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy="vendor", fetch=FetchType.LAZY)
     private List<Model> models;
 }

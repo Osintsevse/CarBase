@@ -63,7 +63,7 @@ public class Chassis {
     @JoinColumn(name = "rear_suspension_id")
     private Suspension rearSuspension;
 
-    @OneToMany(mappedBy="chassis", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy="chassis", fetch=FetchType.LAZY)
     private List<Modification> modifications;
 }
 

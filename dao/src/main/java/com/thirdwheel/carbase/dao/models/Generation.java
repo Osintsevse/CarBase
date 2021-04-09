@@ -33,6 +33,6 @@ public class Generation {
     @JoinColumn(name = "model_id")
     private Model model;
 
-    @OneToMany(mappedBy="generation", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy="generation", fetch=FetchType.LAZY)
     private List<Chassis> chassises;
 }
