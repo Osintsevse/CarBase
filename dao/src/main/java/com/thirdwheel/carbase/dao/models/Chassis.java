@@ -1,12 +1,16 @@
 package com.thirdwheel.carbase.dao.models;
 
+import com.thirdwheel.carbase.dao.models.enums.BodyStyle;
 import lombok.Data;
+import lombok.ToString;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Data
 @Entity
 @Table(name = "chassises")
+@ToString(exclude = "modifications")
 public class Chassis {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,8 +48,8 @@ public class Chassis {
     private Long height;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "body_type")
-    private String bodyType;
+    @Column(name = "body_style")
+    private BodyStyle bodyStyle;
 
     @ManyToOne(optional=false, fetch = FetchType.EAGER)
     @JoinColumn(name = "generation_id")
@@ -59,6 +63,7 @@ public class Chassis {
     @JoinColumn(name = "rear_suspension_id")
     private Suspension rearSuspension;
 
-    @OneToMany(mappedBy="chassis", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy="chassis", fetch=FetchType.LAZY)
     private List<Modification> modifications;
 }
+

@@ -1,6 +1,7 @@
 package com.thirdwheel.carbase.dao.models;
 
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "models")
+@ToString(exclude = "generations")
 public class Model {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +23,6 @@ public class Model {
     @JoinColumn(name = "vendor_id")
     private Vendor vendor;
 
-    @OneToMany(mappedBy="model", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy="model", fetch=FetchType.LAZY)
     private List<Generation> generations;
 }

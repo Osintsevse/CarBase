@@ -5,6 +5,7 @@ import com.thirdwheel.carbase.dao.models.enums.SteeringWheelPosition;
 import com.thirdwheel.carbase.dao.models.enums.TransmissionType;
 import com.thirdwheel.carbase.dao.models.enums.WDType;
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 @Data
 @Entity
 @Table(name = "modifications")
+@ToString
 public class Modification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +35,7 @@ public class Modification {
     @Column(name = "start")
     private LocalDate start;
 
-    @Column(name = "end")
+    @Column(name = "\"end\"")
     private LocalDate end;
 
     @Column(name = "acceleration0100")
