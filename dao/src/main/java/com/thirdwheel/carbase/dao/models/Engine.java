@@ -51,18 +51,21 @@ public class Engine {
     @JoinColumn(name = "vendor_id")
     private Vendor vendor;
 
-    public boolean equals(Engine engine) {
-        if (
-                (this.getName().equals(engine.getName())) &&
-                        (this.getFuelType() == engine.getFuelType()) &&
-                        (this.getEngineType() == engine.getEngineType()) &&
-                        (NullOrEquals.compare(this.getVolume(), engine.getVolume())) &&
-                        (NullOrEquals.compare(this.getCylinderCount(), engine.getCylinderCount())) &&
-                        (NullOrEquals.compare(this.getValveCount(), engine.getValveCount())) &&
-                        (NullOrEquals.compare(this.getValvePerCylinder(), engine.getValvePerCylinder())) &&
-                        (NullOrEquals.compare(this.getBore(), engine.getBore())) &&
-                        (NullOrEquals.compare(this.getStroke(), engine.getStroke()))
-        ) return true;
-        else return false;
+    @Override
+    public boolean equals(Object obj) {
+        if (obj.getClass() != this.getClass()){
+            return false;
+        } else {
+            Engine engine = (Engine) obj;
+            return (this.getName().equals(engine.getName())) &&
+                    (this.getFuelType() == engine.getFuelType()) &&
+                    (this.getEngineType() == engine.getEngineType()) &&
+                    (NullOrEquals.compare(this.getVolume(), engine.getVolume())) &&
+                    (NullOrEquals.compare(this.getCylinderCount(), engine.getCylinderCount())) &&
+                    (NullOrEquals.compare(this.getValveCount(), engine.getValveCount())) &&
+                    (NullOrEquals.compare(this.getValvePerCylinder(), engine.getValvePerCylinder())) &&
+                    (NullOrEquals.compare(this.getBore(), engine.getBore())) &&
+                    (NullOrEquals.compare(this.getStroke(), engine.getStroke()));
+        }
     }
 }

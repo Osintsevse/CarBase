@@ -9,8 +9,9 @@ import javax.persistence.PersistenceContext;
 
 @RequiredArgsConstructor
 public class GeneralRepository<T> {
-    final private Class<T> tClass;
-    private EntityManager entityManager;
+    final protected Class<T> tClass;
+    protected EntityManager entityManager;
+
     @PersistenceContext
     public void setEntityManager(EntityManager entityManager) {
         this.entityManager = entityManager;

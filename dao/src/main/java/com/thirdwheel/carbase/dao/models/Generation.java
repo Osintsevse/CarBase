@@ -37,12 +37,15 @@ public class Generation {
     @OneToMany(mappedBy = "generation", fetch = FetchType.LAZY)
     private List<Chassis> chassises;
 
-    public boolean equals(Generation generation) {
-        if (
-                (this.getName().equals(generation.getName())) &&
-                        (NullOrEquals.compare(this.getStart(), generation.getStart())) &&
-                        (NullOrEquals.compare(this.getEnd(), generation.getEnd()))
-        ) return true;
-        else return false;
+    @Override
+    public boolean equals(Object obj) {
+        if (obj.getClass() != this.getClass()){
+            return false;
+        } else {
+            Generation generation = (Generation) obj;
+            return (this.getName().equals(generation.getName())) &&
+                    (NullOrEquals.compare(this.getStart(), generation.getStart())) &&
+                    (NullOrEquals.compare(this.getEnd(), generation.getEnd()));
+        }
     }
 }

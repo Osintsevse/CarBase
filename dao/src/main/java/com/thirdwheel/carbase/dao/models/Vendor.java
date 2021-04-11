@@ -22,10 +22,13 @@ public class Vendor {
     @OneToMany(mappedBy = "vendor", fetch = FetchType.LAZY)
     private List<Model> models;
 
-    public boolean equals(Vendor vendor) {
-        if (
-                (this.getName().equals(vendor.getName()))
-        ) return true;
-        else return false;
+    @Override
+    public boolean equals(Object obj) {
+        if (obj.getClass() != this.getClass()){
+            return false;
+        } else {
+            Vendor vendor = (Vendor) obj;
+            return this.getName().equals(vendor.getName());
+        }
     }
 }

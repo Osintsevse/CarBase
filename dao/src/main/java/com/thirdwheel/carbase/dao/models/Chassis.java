@@ -67,23 +67,26 @@ public class Chassis {
     @OneToMany(mappedBy = "chassis", fetch = FetchType.LAZY)
     private List<Modification> modifications;
 
-    public boolean equals(Chassis chassis) {
-        if (
-                (this.getName().equals(chassis.getName())) &&
-                        (this.isNameGenerated == chassis.isNameGenerated) &&
-                        (NullOrEquals.compare(this.getLength(), chassis.getLength())) &&
-                        (NullOrEquals.compare(this.getWidth(), chassis.getWidth())) &&
-                        (NullOrEquals.compare(this.getWheelBase(), chassis.getWheelBase())) &&
-                        (NullOrEquals.compare(this.getFrontOverhang(), chassis.getFrontOverhang())) &&
-                        (NullOrEquals.compare(this.getRearOverhang(), chassis.getRearOverhang())) &&
-                        (NullOrEquals.compare(this.getFrontTrack(), chassis.getFrontTrack())) &&
-                        (NullOrEquals.compare(this.getRearTrack(), chassis.getRearTrack())) &&
-                        (NullOrEquals.compare(this.getHeight(), chassis.getHeight())) &&
-                        (this.getBodyStyle() == chassis.getBodyStyle()) &&
-                        (this.getFrontSuspension() == chassis.getFrontSuspension()) &&
-                        (this.getRearSuspension() == chassis.getRearSuspension())
-        ) return true;
-        else return false;
+    @Override
+    public boolean equals(Object obj) {
+        if (obj.getClass() != this.getClass()){
+            return false;
+        } else {
+            Chassis chassis = (Chassis) obj;
+            return (this.getName().equals(chassis.getName())) &&
+                    (this.isNameGenerated == chassis.isNameGenerated) &&
+                    (NullOrEquals.compare(this.getLength(), chassis.getLength())) &&
+                    (NullOrEquals.compare(this.getWidth(), chassis.getWidth())) &&
+                    (NullOrEquals.compare(this.getWheelBase(), chassis.getWheelBase())) &&
+                    (NullOrEquals.compare(this.getFrontOverhang(), chassis.getFrontOverhang())) &&
+                    (NullOrEquals.compare(this.getRearOverhang(), chassis.getRearOverhang())) &&
+                    (NullOrEquals.compare(this.getFrontTrack(), chassis.getFrontTrack())) &&
+                    (NullOrEquals.compare(this.getRearTrack(), chassis.getRearTrack())) &&
+                    (NullOrEquals.compare(this.getHeight(), chassis.getHeight())) &&
+                    (this.getBodyStyle() == chassis.getBodyStyle()) &&
+                    (this.getFrontSuspension() == chassis.getFrontSuspension()) &&
+                    (this.getRearSuspension() == chassis.getRearSuspension());
+        }
     }
 }
 

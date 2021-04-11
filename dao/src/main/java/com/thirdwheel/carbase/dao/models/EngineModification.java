@@ -43,16 +43,19 @@ public class EngineModification {
     @JoinColumn(name = "engine_id")
     private Engine engine;
 
-    public boolean equals(EngineModification engineModification) {
-        if (
-                (this.getName().equals(engineModification.getName())) &&
-                        (this.getChargerType() == engineModification.getChargerType()) &&
-                        (NullOrEquals.compare(this.getMaxPower(), engineModification.getMaxPower())) &&
-                        (NullOrEquals.compare(this.getMaxPowerRPM(), engineModification.getMaxPowerRPM())) &&
-                        (NullOrEquals.compare(this.getMaxTorque(), engineModification.getMaxTorque())) &&
-                        (NullOrEquals.compare(this.getMaxTorqueRPM(), engineModification.getMaxTorqueRPM())) &&
-                        (NullOrEquals.compare(this.getCompressionRatio(), engineModification.getCompressionRatio()))
-        ) return true;
-        else return false;
+    @Override
+    public boolean equals(Object obj) {
+        if (obj.getClass() != this.getClass()){
+            return false;
+        } else {
+            EngineModification engineModification = (EngineModification) obj;
+            return (this.getName().equals(engineModification.getName())) &&
+                    (this.getChargerType() == engineModification.getChargerType()) &&
+                    (NullOrEquals.compare(this.getMaxPower(), engineModification.getMaxPower())) &&
+                    (NullOrEquals.compare(this.getMaxPowerRPM(), engineModification.getMaxPowerRPM())) &&
+                    (NullOrEquals.compare(this.getMaxTorque(), engineModification.getMaxTorque())) &&
+                    (NullOrEquals.compare(this.getMaxTorqueRPM(), engineModification.getMaxTorqueRPM())) &&
+                    (NullOrEquals.compare(this.getCompressionRatio(), engineModification.getCompressionRatio()));
+        }
     }
 }

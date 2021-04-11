@@ -26,11 +26,14 @@ public class Model {
     @OneToMany(mappedBy = "model", fetch = FetchType.LAZY)
     private List<Generation> generations;
 
-    public boolean equals(Model model) {
-        if (
-                (this.getName().equals(model.getName())) &&
-                        (this.getVendor() == model.getVendor())
-        ) return true;
-        else return false;
+    @Override
+    public boolean equals(Object obj) {
+        if (obj.getClass() != this.getClass()){
+            return false;
+        } else {
+            Model model = (Model) obj;
+            return (this.getName().equals(model.getName())) &&
+                    (this.getVendor() == model.getVendor());
+        }
     }
 }
