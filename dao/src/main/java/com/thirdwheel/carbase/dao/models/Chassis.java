@@ -84,8 +84,9 @@ public class Chassis {
                     (NullOrEquals.compare(this.getRearTrack(), chassis.getRearTrack())) &&
                     (NullOrEquals.compare(this.getHeight(), chassis.getHeight())) &&
                     (this.getBodyStyle() == chassis.getBodyStyle()) &&
-                    (this.getFrontSuspension() == chassis.getFrontSuspension()) &&
-                    (this.getRearSuspension() == chassis.getRearSuspension());
+                    (this.getGeneration().equals(chassis.getGeneration())) &&
+                    (NullOrEquals.compare(this.getFrontSuspension(),chassis.getFrontSuspension()) &&
+                    (NullOrEquals.compare(this.getRearSuspension(),chassis.getRearSuspension())));
         }
     }
 }

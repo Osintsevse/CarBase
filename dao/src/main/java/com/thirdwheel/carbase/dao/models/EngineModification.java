@@ -54,6 +54,7 @@ public class EngineModification {
                     (NullOrEquals.compare(this.getMaxPower(), engineModification.getMaxPower())) &&
                     (NullOrEquals.compare(this.getMaxPowerRPM(), engineModification.getMaxPowerRPM())) &&
                     (NullOrEquals.compare(this.getMaxTorque(), engineModification.getMaxTorque())) &&
+                    (this.getEngine().equals(engineModification.getEngine())) &&
                     (NullOrEquals.compare(this.getMaxTorqueRPM(), engineModification.getMaxTorqueRPM())) &&
                     (NullOrEquals.compare(this.getCompressionRatio(), engineModification.getCompressionRatio()));
         }

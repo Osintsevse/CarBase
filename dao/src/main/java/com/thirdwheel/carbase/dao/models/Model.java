@@ -33,7 +33,7 @@ public class Model {
         } else {
             Model model = (Model) obj;
             return (this.getName().equals(model.getName())) &&
-                    (this.getVendor() == model.getVendor());
+                    (this.getVendor().equals(model.getVendor()));
         }
     }
 }

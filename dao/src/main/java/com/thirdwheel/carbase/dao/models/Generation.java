@@ -45,6 +45,7 @@ public class Generation {
             Generation generation = (Generation) obj;
             return (this.getName().equals(generation.getName())) &&
                     (NullOrEquals.compare(this.getStart(), generation.getStart())) &&
+                    (this.getModel().equals(generation.getModel())) &&
                     (NullOrEquals.compare(this.getEnd(), generation.getEnd()));
         }
     }

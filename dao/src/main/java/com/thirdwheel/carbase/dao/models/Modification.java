@@ -94,11 +94,11 @@ public class Modification {
         } else {
             Modification modification = (Modification) obj;
             return (this.getName().equals(modification.getName())) &&
-                    (this.getEngineModification() == modification.getEngineModification()) &&
+                    (this.getEngineModification().equals(modification.getEngineModification())) &&
                     (this.getSteeringWheelPosition() == modification.getSteeringWheelPosition()) &&
                     (this.getTransmissionType() == modification.getTransmissionType()) &&
                     (this.getWdType() == modification.getWdType()) &&
-                    (this.getChassis() == modification.getChassis()) &&
+                    (this.getChassis().equals(modification.getChassis())) &&
                     (NullOrEquals.compare(this.getStart(), modification.getStart())) &&
                     (NullOrEquals.compare(this.getEnd(), modification.getEnd())) &&
                     (NullOrEquals.compare(this.getAcceleration0100(), modification.getAcceleration0100())) &&
