@@ -1,5 +1,6 @@
 package com.thirdwheel.carbase.dao.models;
 
+import com.thirdwheel.carbase.dao.models.common.NullOrEquals;
 import com.thirdwheel.carbase.dao.models.enums.BodyStyle;
 import lombok.Data;
 import lombok.ToString;
@@ -51,7 +52,7 @@ public class Chassis {
     @Column(name = "body_style")
     private BodyStyle bodyStyle;
 
-    @ManyToOne(optional=false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "generation_id")
     private Generation generation;
 
@@ -63,7 +64,26 @@ public class Chassis {
     @JoinColumn(name = "rear_suspension_id")
     private Suspension rearSuspension;
 
-    @OneToMany(mappedBy="chassis", fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "chassis", fetch = FetchType.LAZY)
     private List<Modification> modifications;
+
+    public boolean equals(Chassis chassis) {
+        if (
+                (this.getName().equals(chassis.getName())) &&
+                        (this.isNameGenerated == chassis.isNameGenerated) &&
+                        (NullOrEquals.compare(this.getLength(), chassis.getLength())) &&
+                        (NullOrEquals.compare(this.getWidth(), chassis.getWidth())) &&
+                        (NullOrEquals.compare(this.getWheelBase(), chassis.getWheelBase())) &&
+                        (NullOrEquals.compare(this.getFrontOverhang(), chassis.getFrontOverhang())) &&
+                        (NullOrEquals.compare(this.getRearOverhang(), chassis.getRearOverhang())) &&
+                        (NullOrEquals.compare(this.getFrontTrack(), chassis.getFrontTrack())) &&
+                        (NullOrEquals.compare(this.getRearTrack(), chassis.getRearTrack())) &&
+                        (NullOrEquals.compare(this.getHeight(), chassis.getHeight())) &&
+                        (this.getBodyStyle() == chassis.getBodyStyle()) &&
+                        (this.getFrontSuspension() == chassis.getFrontSuspension()) &&
+                        (this.getRearSuspension() == chassis.getRearSuspension())
+        ) return true;
+        else return false;
+    }
 }
 

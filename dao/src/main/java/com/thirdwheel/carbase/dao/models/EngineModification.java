@@ -1,5 +1,6 @@
 package com.thirdwheel.carbase.dao.models;
 
+import com.thirdwheel.carbase.dao.models.common.NullOrEquals;
 import com.thirdwheel.carbase.dao.models.enums.ChargerType;
 import lombok.Data;
 import lombok.ToString;
@@ -38,7 +39,20 @@ public class EngineModification {
     @Column(name = "compression_ratio")
     private Double compressionRatio;
 
-    @ManyToOne(optional=false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "engine_id")
     private Engine engine;
+
+    public boolean equals(EngineModification engineModification) {
+        if (
+                (this.getName().equals(engineModification.getName())) &&
+                        (this.getChargerType() == engineModification.getChargerType()) &&
+                        (NullOrEquals.compare(this.getMaxPower(), engineModification.getMaxPower())) &&
+                        (NullOrEquals.compare(this.getMaxPowerRPM(), engineModification.getMaxPowerRPM())) &&
+                        (NullOrEquals.compare(this.getMaxTorque(), engineModification.getMaxTorque())) &&
+                        (NullOrEquals.compare(this.getMaxTorqueRPM(), engineModification.getMaxTorqueRPM())) &&
+                        (NullOrEquals.compare(this.getCompressionRatio(), engineModification.getCompressionRatio()))
+        ) return true;
+        else return false;
+    }
 }

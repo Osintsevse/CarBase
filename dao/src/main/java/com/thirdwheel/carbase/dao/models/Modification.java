@@ -1,6 +1,7 @@
 package com.thirdwheel.carbase.dao.models;
 
 
+import com.thirdwheel.carbase.dao.models.common.NullOrEquals;
 import com.thirdwheel.carbase.dao.models.enums.SteeringWheelPosition;
 import com.thirdwheel.carbase.dao.models.enums.TransmissionType;
 import com.thirdwheel.carbase.dao.models.enums.WDType;
@@ -78,11 +79,37 @@ public class Modification {
     @Column(name = "weight")
     private Integer weight;
 
-    @ManyToOne(optional=false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "chassis_id")
     private Chassis chassis;
 
-    @ManyToOne(optional=false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "engine_modification_id")
     private EngineModification engineModification;
+
+    public boolean equals(Modification modification) {
+        if (
+                (this.getName().equals(modification.getName())) &&
+                        (this.getEngineModification() == modification.getEngineModification()) &&
+                        (this.getSteeringWheelPosition() == modification.getSteeringWheelPosition()) &&
+                        (this.getTransmissionType() == modification.getTransmissionType()) &&
+                        (this.getWdType() == modification.getWdType()) &&
+                        (this.getChassis() == modification.getChassis()) &&
+                        (NullOrEquals.compare(this.getStart(), modification.getStart())) &&
+                        (NullOrEquals.compare(this.getEnd(), modification.getEnd())) &&
+                        (NullOrEquals.compare(this.getAcceleration0100(), modification.getAcceleration0100())) &&
+                        (NullOrEquals.compare(this.getFrontWheels(), modification.getFrontWheels())) &&
+                        (NullOrEquals.compare(this.getRearWheels(), modification.getRearWheels())) &&
+                        (NullOrEquals.compare(this.getGearCount(), modification.getGearCount())) &&
+                        (NullOrEquals.compare(this.getMtr(), modification.getMtr())) &&
+                        (NullOrEquals.compare(this.getSeatCount(), modification.getSeatCount())) &&
+                        (NullOrEquals.compare(this.getSeatRowCount(), modification.getSeatRowCount())) &&
+                        (NullOrEquals.compare(this.getClearance(), modification.getClearance())) &&
+                        (NullOrEquals.compare(this.getCountryBuild(), modification.getCountryBuild())) &&
+                        (NullOrEquals.compare(this.getCountryStore(), modification.getCountryStore())) &&
+                        (NullOrEquals.compare(this.getDoorCount(), modification.getDoorCount())) &&
+                        (NullOrEquals.compare(this.getWeight(), modification.getWeight()))
+        ) return true;
+        else return false;
+    }
 }

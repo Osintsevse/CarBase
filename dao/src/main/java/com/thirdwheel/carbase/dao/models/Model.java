@@ -19,10 +19,18 @@ public class Model {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @ManyToOne(optional=false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "vendor_id")
     private Vendor vendor;
 
-    @OneToMany(mappedBy="model", fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "model", fetch = FetchType.LAZY)
     private List<Generation> generations;
+
+    public boolean equals(Model model) {
+        if (
+                (this.getName().equals(model.getName())) &&
+                        (this.getVendor() == model.getVendor())
+        ) return true;
+        else return false;
+    }
 }

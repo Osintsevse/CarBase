@@ -1,5 +1,6 @@
 package com.thirdwheel.carbase.dao.models;
 
+import com.thirdwheel.carbase.dao.models.common.NullOrEquals;
 import com.thirdwheel.carbase.dao.models.enums.EngineType;
 import com.thirdwheel.carbase.dao.models.enums.FuelType;
 import lombok.Data;
@@ -46,7 +47,22 @@ public class Engine {
     @Column(name = "stroke")
     private Double stroke;
 
-    @ManyToOne(optional=false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "vendor_id")
     private Vendor vendor;
+
+    public boolean equals(Engine engine) {
+        if (
+                (this.getName().equals(engine.getName())) &&
+                        (this.getFuelType() == engine.getFuelType()) &&
+                        (this.getEngineType() == engine.getEngineType()) &&
+                        (NullOrEquals.compare(this.getVolume(), engine.getVolume())) &&
+                        (NullOrEquals.compare(this.getCylinderCount(), engine.getCylinderCount())) &&
+                        (NullOrEquals.compare(this.getValveCount(), engine.getValveCount())) &&
+                        (NullOrEquals.compare(this.getValvePerCylinder(), engine.getValvePerCylinder())) &&
+                        (NullOrEquals.compare(this.getBore(), engine.getBore())) &&
+                        (NullOrEquals.compare(this.getStroke(), engine.getStroke()))
+        ) return true;
+        else return false;
+    }
 }

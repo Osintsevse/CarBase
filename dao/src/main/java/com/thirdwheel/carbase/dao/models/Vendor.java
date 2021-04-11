@@ -19,6 +19,13 @@ public class Vendor {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @OneToMany(mappedBy="vendor", fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "vendor", fetch = FetchType.LAZY)
     private List<Model> models;
+
+    public boolean equals(Vendor vendor) {
+        if (
+                (this.getName().equals(vendor.getName()))
+        ) return true;
+        else return false;
+    }
 }

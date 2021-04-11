@@ -1,5 +1,6 @@
 package com.thirdwheel.carbase.dao.models;
 
+import com.thirdwheel.carbase.dao.models.common.NullOrEquals;
 import lombok.Data;
 import lombok.ToString;
 
@@ -29,10 +30,19 @@ public class Generation {
     @Column(name = "image_src")
     private String imageSrc;
 
-    @ManyToOne(optional=false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "model_id")
     private Model model;
 
-    @OneToMany(mappedBy="generation", fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "generation", fetch = FetchType.LAZY)
     private List<Chassis> chassises;
+
+    public boolean equals(Generation generation) {
+        if (
+                (this.getName().equals(generation.getName())) &&
+                        (NullOrEquals.compare(this.getStart(), generation.getStart())) &&
+                        (NullOrEquals.compare(this.getEnd(), generation.getEnd()))
+        ) return true;
+        else return false;
+    }
 }

@@ -18,4 +18,10 @@ public class Suspension {
     @Column(name = "name", nullable = false)
     private String name;
 
+    public boolean equals(Suspension suspension) {
+        if (
+                (this.getName().equals(suspension.getName()))
+        ) return true;
+        else return false;
+    }
 }
