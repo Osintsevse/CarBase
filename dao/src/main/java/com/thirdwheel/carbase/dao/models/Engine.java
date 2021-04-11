@@ -60,7 +60,6 @@ public class Engine {
             return (this.getName().equals(engine.getName())) &&
                     (this.getFuelType() == engine.getFuelType()) &&
                     (this.getEngineType() == engine.getEngineType()) &&
-                    (this.getVendor().equals(engine.getVendor())) &&
                     (NullOrEquals.compare(this.getVolume(), engine.getVolume())) &&
                     (NullOrEquals.compare(this.getCylinderCount(), engine.getCylinderCount())) &&
                     (NullOrEquals.compare(this.getValveCount(), engine.getValveCount())) &&
