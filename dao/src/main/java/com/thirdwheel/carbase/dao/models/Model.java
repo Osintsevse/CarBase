@@ -36,4 +36,9 @@ public class Model {
                     (this.getVendor().equals(model.getVendor()));
         }
     }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode()+vendor.hashCode();
+    }
 }

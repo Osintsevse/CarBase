@@ -27,4 +27,9 @@ public class Suspension {
             return this.getName().equals(suspension.getName());
         }
     }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
 }

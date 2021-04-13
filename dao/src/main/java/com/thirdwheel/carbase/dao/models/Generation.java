@@ -49,4 +49,9 @@ public class Generation {
                     (NullOrEquals.compare(this.getEnd(), generation.getEnd()));
         }
     }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
 }

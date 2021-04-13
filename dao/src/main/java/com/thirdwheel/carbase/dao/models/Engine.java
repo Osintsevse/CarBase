@@ -68,4 +68,9 @@ public class Engine {
                     (NullOrEquals.compare(this.getStroke(), engine.getStroke()));
         }
     }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode()+vendor.hashCode();
+    }
 }

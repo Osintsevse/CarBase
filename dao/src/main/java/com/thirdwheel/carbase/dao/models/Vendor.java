@@ -31,4 +31,9 @@ public class Vendor {
             return this.getName().equals(vendor.getName());
         }
     }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
 }

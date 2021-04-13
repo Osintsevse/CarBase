@@ -115,4 +115,9 @@ public class Modification {
                     (NullOrEquals.compare(this.getWeight(), modification.getWeight()));
         }
     }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode()+transmissionType.ordinal();
+    }
 }

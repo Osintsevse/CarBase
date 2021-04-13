@@ -89,5 +89,9 @@ public class Chassis {
                     (NullOrEquals.compare(this.getRearSuspension(),chassis.getRearSuspension())));
         }
     }
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
 }
 

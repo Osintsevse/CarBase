@@ -59,4 +59,9 @@ public class EngineModification {
                     (NullOrEquals.compare(this.getCompressionRatio(), engineModification.getCompressionRatio()));
         }
     }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
 }
