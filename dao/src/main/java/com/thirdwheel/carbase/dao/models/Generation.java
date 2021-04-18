@@ -14,7 +14,8 @@ import java.util.List;
 @ToString(exclude = "chassises")
 public class Generation {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name="generations_pk_sequence",sequenceName="generations_pk_sequence", allocationSize=500)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator="generations_pk_sequence")
     @Column(name = "id", nullable = false)
     private int id;
 

@@ -13,7 +13,9 @@ import javax.persistence.*;
 @ToString
 public class EngineModification {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name="engine_modifications_pk_sequence",
+            sequenceName="engine_modifications_pk_sequence", allocationSize=500)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator="engine_modifications_pk_sequence")
     @Column(name = "id", nullable = false)
     private int id;
 

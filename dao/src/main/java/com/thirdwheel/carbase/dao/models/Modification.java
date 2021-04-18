@@ -18,7 +18,8 @@ import java.time.LocalDate;
 @ToString
 public class Modification {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name="modifications_pk_sequence",sequenceName="modifications_pk_sequence", allocationSize=500)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator="modifications_pk_sequence")
     @Column(name = "id", nullable = false)
     private int id;
 

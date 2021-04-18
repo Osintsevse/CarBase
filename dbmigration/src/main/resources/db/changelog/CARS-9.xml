@@ -11,19 +11,163 @@
             http://www.liquibase.org/xml/ns/pro
             http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd ">
 
-    <changeSet  id="1" author="Stas">
+    <changeSet id="1" author="Stas">
         <renameColumn
                 tableName="chassises"
                 oldColumnName="body_type"
                 newColumnName="body_style"/>
     </changeSet>
-    <changeSet  id="2" author="Stas">
+    <changeSet id="2" author="Stas">
         <modifyDataType tableName="generations" columnName="start" newDataType="DATE"/>
         <modifyDataType tableName="generations" columnName="end" newDataType="DATE"/>
     </changeSet>
-    <changeSet  id="3" author="Stas">
+    <changeSet id="3" author="Stas">
         <modifyDataType tableName="modifications" columnName="start" newDataType="DATE"/>
         <modifyDataType tableName="modifications" columnName="end" newDataType="DATE"/>
+    </changeSet>
+
+    <changeSet id="4" author="Stas">
+        <createSequence cycle="false"
+                        dataType="int"
+                        incrementBy="500"
+                        maxValue="900000"
+                        minValue="1"
+                        sequenceName="modifications_pk_sequence"
+                        startValue="500"/>
+    </changeSet>
+    <changeSet id="5" author="Stas">
+        <sql>ALTER TABLE modifications ALTER COLUMN id DROP IDENTITY;</sql>
+        <sql>ALTER TABLE modifications ALTER COLUMN id SET DEFAULT nextval('modifications_pk_sequence');</sql>
+        <rollback>
+            <sql>ALTER TABLE modifications ALTER COLUMN id DROP DEFAULT nextval('modifications_pk_sequence');</sql>
+            <sql>ALTER TABLE modifications ALTER COLUMN id SET IDENTITY;</sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="6" author="Stas">
+        <createSequence cycle="false"
+                        dataType="int"
+                        incrementBy="500"
+                        maxValue="900000"
+                        minValue="1"
+                        sequenceName="chassises_pk_sequence"
+                        startValue="500"/>
+    </changeSet>
+    <changeSet id="7" author="Stas">
+        <sql>ALTER TABLE chassises ALTER COLUMN id DROP IDENTITY;</sql>
+        <sql>ALTER TABLE chassises ALTER COLUMN id SET DEFAULT nextval('chassises_pk_sequence');</sql>
+        <rollback>
+            <sql>ALTER TABLE chassises ALTER COLUMN id DROP DEFAULT nextval('chassises_pk_sequence');</sql>
+            <sql>ALTER TABLE chassises ALTER COLUMN id SET IDENTITY;</sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="8" author="Stas">
+        <createSequence cycle="false"
+                        dataType="int"
+                        incrementBy="500"
+                        maxValue="900000"
+                        minValue="1"
+                        sequenceName="engines_pk_sequence"
+                        startValue="500"/>
+    </changeSet>
+    <changeSet id="9" author="Stas">
+        <sql>ALTER TABLE engines ALTER COLUMN id DROP IDENTITY;</sql>
+        <sql>ALTER TABLE engines ALTER COLUMN id SET DEFAULT nextval('engines_pk_sequence');</sql>
+        <rollback>
+            <sql>ALTER TABLE engines ALTER COLUMN id DROP DEFAULT nextval('engines_pk_sequence');</sql>
+            <sql>ALTER TABLE engines ALTER COLUMN id SET IDENTITY;</sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="10" author="Stas">
+        <createSequence cycle="false"
+                        dataType="int"
+                        incrementBy="500"
+                        maxValue="900000"
+                        minValue="1"
+                        sequenceName="engine_modifications_pk_sequence"
+                        startValue="500"/>
+    </changeSet>
+    <changeSet id="11" author="Stas">
+        <sql>ALTER TABLE engine_modifications ALTER COLUMN id DROP IDENTITY;</sql>
+        <sql>ALTER TABLE engine_modifications ALTER COLUMN id SET DEFAULT nextval('engine_modifications_pk_sequence');</sql>
+        <rollback>
+            <sql>ALTER TABLE engine_modifications ALTER COLUMN id DROP DEFAULT nextval('engine_modifications_pk_sequence');</sql>
+            <sql>ALTER TABLE engine_modifications ALTER COLUMN id SET IDENTITY;</sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="12" author="Stas">
+        <createSequence cycle="false"
+                        dataType="int"
+                        incrementBy="500"
+                        maxValue="900000"
+                        minValue="1"
+                        sequenceName="generations_pk_sequence"
+                        startValue="500"/>
+    </changeSet>
+    <changeSet id="13" author="Stas">
+        <sql>ALTER TABLE generations ALTER COLUMN id DROP IDENTITY;</sql>
+        <sql>ALTER TABLE generations ALTER COLUMN id SET DEFAULT nextval('generations_pk_sequence');</sql>
+        <rollback>
+            <sql>ALTER TABLE generations ALTER COLUMN id DROP DEFAULT nextval('generations_pk_sequence');</sql>
+            <sql>ALTER TABLE generations ALTER COLUMN id SET IDENTITY;</sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="14" author="Stas">
+        <createSequence cycle="false"
+                        dataType="int"
+                        incrementBy="500"
+                        maxValue="900000"
+                        minValue="1"
+                        sequenceName="models_pk_sequence"
+                        startValue="500"/>
+    </changeSet>
+    <changeSet id="15" author="Stas">
+        <sql>ALTER TABLE models ALTER COLUMN id DROP IDENTITY;</sql>
+        <sql>ALTER TABLE models ALTER COLUMN id SET DEFAULT nextval('models_pk_sequence');</sql>
+        <rollback>
+            <sql>ALTER TABLE models ALTER COLUMN id DROP DEFAULT nextval('models_pk_sequence');</sql>
+            <sql>ALTER TABLE models ALTER COLUMN id SET IDENTITY;</sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="16" author="Stas">
+        <createSequence cycle="false"
+                        dataType="int"
+                        incrementBy="500"
+                        maxValue="900000"
+                        minValue="1"
+                        sequenceName="vendors_pk_sequence"
+                        startValue="500"/>
+    </changeSet>
+    <changeSet id="17" author="Stas">
+        <sql>ALTER TABLE vendors ALTER COLUMN id DROP IDENTITY;</sql>
+        <sql>ALTER TABLE vendors ALTER COLUMN id SET DEFAULT nextval('vendors_pk_sequence');</sql>
+        <rollback>
+            <sql>ALTER TABLE vendors ALTER COLUMN id DROP DEFAULT nextval('vendors_pk_sequence');</sql>
+            <sql>ALTER TABLE vendors ALTER COLUMN id SET IDENTITY;</sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="18" author="Stas">
+        <createSequence cycle="false"
+                        dataType="int"
+                        incrementBy="500"
+                        maxValue="900000"
+                        minValue="1"
+                        sequenceName="suspensions_pk_sequence"
+                        startValue="500"/>
+    </changeSet>
+    <changeSet id="19" author="Stas">
+        <sql>ALTER TABLE suspensions ALTER COLUMN id DROP IDENTITY;</sql>
+        <sql>ALTER TABLE suspensions ALTER COLUMN id SET DEFAULT nextval('suspensions_pk_sequence');</sql>
+        <rollback>
+            <sql>ALTER TABLE suspensions ALTER COLUMN id DROP DEFAULT nextval('suspensions_pk_sequence');</sql>
+            <sql>ALTER TABLE suspensions ALTER COLUMN id SET IDENTITY;</sql>
+        </rollback>
     </changeSet>
 
 </databaseChangeLog>

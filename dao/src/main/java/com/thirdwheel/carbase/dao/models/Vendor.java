@@ -12,7 +12,8 @@ import java.util.List;
 @ToString(exclude = "models")
 public class Vendor {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "vendors_pk_sequence", sequenceName = "vendors_pk_sequence", allocationSize = 500)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "vendors_pk_sequence")
     @Column(name = "id", nullable = false)
     private int id;
 
@@ -24,7 +25,7 @@ public class Vendor {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj.getClass() != this.getClass()){
+        if (obj.getClass() != this.getClass()) {
             return false;
         } else {
             Vendor vendor = (Vendor) obj;
