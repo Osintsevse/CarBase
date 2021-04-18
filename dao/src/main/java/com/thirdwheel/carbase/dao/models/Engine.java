@@ -72,6 +72,6 @@ public class Engine {
 
     @Override
     public int hashCode() {
-        return name.hashCode()+vendor.hashCode();
+        return name.hashCode();
     }
 }
