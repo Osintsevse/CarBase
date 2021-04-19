@@ -1,6 +1,6 @@
 package com.thirdwheel.carbase.dao.models;
 
-import com.thirdwheel.carbase.dao.models.common.NullOrEquals;
+import com.thirdwheel.carbase.dao.models.common.BothNullOrEquals;
 import com.thirdwheel.carbase.dao.models.enums.ChargerType;
 import lombok.Data;
 import lombok.ToString;
@@ -53,12 +53,12 @@ public class EngineModification {
             EngineModification engineModification = (EngineModification) obj;
             return (this.getName().equals(engineModification.getName())) &&
                     (this.getChargerType() == engineModification.getChargerType()) &&
-                    (NullOrEquals.compare(this.getMaxPower(), engineModification.getMaxPower())) &&
-                    (NullOrEquals.compare(this.getMaxPowerRPM(), engineModification.getMaxPowerRPM())) &&
-                    (NullOrEquals.compare(this.getMaxTorque(), engineModification.getMaxTorque())) &&
+                    (BothNullOrEquals.compare(this.getMaxPower(), engineModification.getMaxPower())) &&
+                    (BothNullOrEquals.compare(this.getMaxPowerRPM(), engineModification.getMaxPowerRPM())) &&
+                    (BothNullOrEquals.compare(this.getMaxTorque(), engineModification.getMaxTorque())) &&
                     (this.getEngine().equals(engineModification.getEngine())) &&
-                    (NullOrEquals.compare(this.getMaxTorqueRPM(), engineModification.getMaxTorqueRPM())) &&
-                    (NullOrEquals.compare(this.getCompressionRatio(), engineModification.getCompressionRatio()));
+                    (BothNullOrEquals.compare(this.getMaxTorqueRPM(), engineModification.getMaxTorqueRPM())) &&
+                    (BothNullOrEquals.compare(this.getCompressionRatio(), engineModification.getCompressionRatio()));
         }
     }
 

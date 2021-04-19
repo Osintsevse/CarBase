@@ -1,6 +1,6 @@
 package com.thirdwheel.carbase.dao.models;
 
-import com.thirdwheel.carbase.dao.models.common.NullOrEquals;
+import com.thirdwheel.carbase.dao.models.common.BothNullOrEquals;
 import lombok.Data;
 import lombok.ToString;
 
@@ -45,9 +45,9 @@ public class Generation {
         } else {
             Generation generation = (Generation) obj;
             return (this.getName().equals(generation.getName())) &&
-                    (NullOrEquals.compare(this.getStart(), generation.getStart())) &&
+                    (BothNullOrEquals.compare(this.getStart(), generation.getStart())) &&
                     (this.getModel().equals(generation.getModel())) &&
-                    (NullOrEquals.compare(this.getEnd(), generation.getEnd()));
+                    (BothNullOrEquals.compare(this.getEnd(), generation.getEnd()));
         }
     }
 

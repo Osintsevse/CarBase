@@ -1,7 +1,7 @@
 package com.thirdwheel.carbase.dao.models;
 
 
-import com.thirdwheel.carbase.dao.models.common.NullOrEquals;
+import com.thirdwheel.carbase.dao.models.common.BothNullOrEquals;
 import com.thirdwheel.carbase.dao.models.enums.SteeringWheelPosition;
 import com.thirdwheel.carbase.dao.models.enums.TransmissionType;
 import com.thirdwheel.carbase.dao.models.enums.WDType;
@@ -100,20 +100,20 @@ public class Modification {
                     (this.getTransmissionType() == modification.getTransmissionType()) &&
                     (this.getWdType() == modification.getWdType()) &&
                     (this.getChassis().equals(modification.getChassis())) &&
-                    (NullOrEquals.compare(this.getStart(), modification.getStart())) &&
-                    (NullOrEquals.compare(this.getEnd(), modification.getEnd())) &&
-                    (NullOrEquals.compare(this.getAcceleration0100(), modification.getAcceleration0100())) &&
-                    (NullOrEquals.compare(this.getFrontWheels(), modification.getFrontWheels())) &&
-                    (NullOrEquals.compare(this.getRearWheels(), modification.getRearWheels())) &&
-                    (NullOrEquals.compare(this.getGearCount(), modification.getGearCount())) &&
-                    (NullOrEquals.compare(this.getMtr(), modification.getMtr())) &&
-                    (NullOrEquals.compare(this.getSeatCount(), modification.getSeatCount())) &&
-                    (NullOrEquals.compare(this.getSeatRowCount(), modification.getSeatRowCount())) &&
-                    (NullOrEquals.compare(this.getClearance(), modification.getClearance())) &&
-                    (NullOrEquals.compare(this.getCountryBuild(), modification.getCountryBuild())) &&
-                    (NullOrEquals.compare(this.getCountryStore(), modification.getCountryStore())) &&
-                    (NullOrEquals.compare(this.getDoorCount(), modification.getDoorCount())) &&
-                    (NullOrEquals.compare(this.getWeight(), modification.getWeight()));
+                    (BothNullOrEquals.compare(this.getStart(), modification.getStart())) &&
+                    (BothNullOrEquals.compare(this.getEnd(), modification.getEnd())) &&
+                    (BothNullOrEquals.compare(this.getAcceleration0100(), modification.getAcceleration0100())) &&
+                    (BothNullOrEquals.compare(this.getFrontWheels(), modification.getFrontWheels())) &&
+                    (BothNullOrEquals.compare(this.getRearWheels(), modification.getRearWheels())) &&
+                    (BothNullOrEquals.compare(this.getGearCount(), modification.getGearCount())) &&
+                    (BothNullOrEquals.compare(this.getMtr(), modification.getMtr())) &&
+                    (BothNullOrEquals.compare(this.getSeatCount(), modification.getSeatCount())) &&
+                    (BothNullOrEquals.compare(this.getSeatRowCount(), modification.getSeatRowCount())) &&
+                    (BothNullOrEquals.compare(this.getClearance(), modification.getClearance())) &&
+                    (BothNullOrEquals.compare(this.getCountryBuild(), modification.getCountryBuild())) &&
+                    (BothNullOrEquals.compare(this.getCountryStore(), modification.getCountryStore())) &&
+                    (BothNullOrEquals.compare(this.getDoorCount(), modification.getDoorCount())) &&
+                    (BothNullOrEquals.compare(this.getWeight(), modification.getWeight()));
         }
     }
 

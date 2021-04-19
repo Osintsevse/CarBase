@@ -1,6 +1,8 @@
 package com.thirdwheel.carbase.dao.models;
 
-import com.thirdwheel.carbase.dao.models.common.NullOrEquals;
+import com.thirdwheel.carbase.dao.models.common.BothNullOrEquals;
+import com.thirdwheel.carbase.dao.models.common.SomeNullOrEquals;
+import com.thirdwheel.carbase.dao.models.common.UnknownOrEquals;
 import com.thirdwheel.carbase.dao.models.enums.EngineType;
 import com.thirdwheel.carbase.dao.models.enums.FuelType;
 import lombok.Data;
@@ -59,14 +61,14 @@ public class Engine {
         } else {
             Engine engine = (Engine) obj;
             return (this.getName().equals(engine.getName())) &&
-                    (this.getFuelType() == engine.getFuelType()) &&
-                    (this.getEngineType() == engine.getEngineType()) &&
-                    (NullOrEquals.compare(this.getVolume(), engine.getVolume())) &&
-                    (NullOrEquals.compare(this.getCylinderCount(), engine.getCylinderCount())) &&
-                    (NullOrEquals.compare(this.getValveCount(), engine.getValveCount())) &&
-                    (NullOrEquals.compare(this.getValvePerCylinder(), engine.getValvePerCylinder())) &&
-                    (NullOrEquals.compare(this.getBore(), engine.getBore())) &&
-                    (NullOrEquals.compare(this.getStroke(), engine.getStroke()));
+                    (UnknownOrEquals.compare(this.getFuelType(),engine.getFuelType())) &&
+                    (UnknownOrEquals.compare(this.getEngineType(),engine.getEngineType())) &&
+                    (SomeNullOrEquals.compare(this.getVolume(), engine.getVolume())) &&
+                    (SomeNullOrEquals.compare(this.getCylinderCount(), engine.getCylinderCount())) &&
+                    (SomeNullOrEquals.compare(this.getValveCount(), engine.getValveCount())) &&
+                    (SomeNullOrEquals.compare(this.getValvePerCylinder(), engine.getValvePerCylinder())) &&
+                    (SomeNullOrEquals.compare(this.getBore(), engine.getBore())) &&
+                    (SomeNullOrEquals.compare(this.getStroke(), engine.getStroke()));
         }
     }
 

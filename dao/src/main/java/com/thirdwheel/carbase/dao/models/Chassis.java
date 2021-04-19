@@ -1,6 +1,6 @@
 package com.thirdwheel.carbase.dao.models;
 
-import com.thirdwheel.carbase.dao.models.common.NullOrEquals;
+import com.thirdwheel.carbase.dao.models.common.BothNullOrEquals;
 import com.thirdwheel.carbase.dao.models.enums.BodyStyle;
 import lombok.Data;
 import lombok.ToString;
@@ -76,18 +76,18 @@ public class Chassis {
             Chassis chassis = (Chassis) obj;
             return (this.getName().equals(chassis.getName())) &&
                     (this.isNameGenerated == chassis.isNameGenerated) &&
-                    (NullOrEquals.compare(this.getLength(), chassis.getLength())) &&
-                    (NullOrEquals.compare(this.getWidth(), chassis.getWidth())) &&
-                    (NullOrEquals.compare(this.getWheelBase(), chassis.getWheelBase())) &&
-                    (NullOrEquals.compare(this.getFrontOverhang(), chassis.getFrontOverhang())) &&
-                    (NullOrEquals.compare(this.getRearOverhang(), chassis.getRearOverhang())) &&
-                    (NullOrEquals.compare(this.getFrontTrack(), chassis.getFrontTrack())) &&
-                    (NullOrEquals.compare(this.getRearTrack(), chassis.getRearTrack())) &&
-                    (NullOrEquals.compare(this.getHeight(), chassis.getHeight())) &&
+                    (BothNullOrEquals.compare(this.getLength(), chassis.getLength())) &&
+                    (BothNullOrEquals.compare(this.getWidth(), chassis.getWidth())) &&
+                    (BothNullOrEquals.compare(this.getWheelBase(), chassis.getWheelBase())) &&
+                    (BothNullOrEquals.compare(this.getFrontOverhang(), chassis.getFrontOverhang())) &&
+                    (BothNullOrEquals.compare(this.getRearOverhang(), chassis.getRearOverhang())) &&
+                    (BothNullOrEquals.compare(this.getFrontTrack(), chassis.getFrontTrack())) &&
+                    (BothNullOrEquals.compare(this.getRearTrack(), chassis.getRearTrack())) &&
+                    (BothNullOrEquals.compare(this.getHeight(), chassis.getHeight())) &&
                     (this.getBodyStyle() == chassis.getBodyStyle()) &&
                     (this.getGeneration().equals(chassis.getGeneration())) &&
-                    (NullOrEquals.compare(this.getFrontSuspension(),chassis.getFrontSuspension()) &&
-                    (NullOrEquals.compare(this.getRearSuspension(),chassis.getRearSuspension())));
+                    (BothNullOrEquals.compare(this.getFrontSuspension(),chassis.getFrontSuspension()) &&
+                    (BothNullOrEquals.compare(this.getRearSuspension(),chassis.getRearSuspension())));
         }
     }
     @Override
