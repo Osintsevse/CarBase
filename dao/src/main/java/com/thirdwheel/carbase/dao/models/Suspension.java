@@ -11,7 +11,7 @@ import javax.persistence.*;
 @ToString
 public class Suspension {
     @Id
-    @SequenceGenerator(name="suspensions_pk_sequence",sequenceName="suspensions_pk_sequence", allocationSize=500)
+    @SequenceGenerator(name="suspensions_pk_sequence",sequenceName="suspensions_pk_sequence", allocationSize=1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator="suspensions_pk_sequence")
     @Column(name = "id", nullable = false)
     private int id;

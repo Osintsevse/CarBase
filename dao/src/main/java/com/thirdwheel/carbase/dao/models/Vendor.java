@@ -12,7 +12,7 @@ import java.util.List;
 @ToString(exclude = "models")
 public class Vendor {
     @Id
-    @SequenceGenerator(name = "vendors_pk_sequence", sequenceName = "vendors_pk_sequence", allocationSize = 500)
+    @SequenceGenerator(name = "vendors_pk_sequence", sequenceName = "vendors_pk_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "vendors_pk_sequence")
     @Column(name = "id", nullable = false)
     private int id;

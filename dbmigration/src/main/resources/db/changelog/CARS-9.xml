@@ -23,11 +23,11 @@
     <changeSet id="4" author="Stas">
         <createSequence cycle="false"
                         dataType="int"
-                        incrementBy="500"
+                        incrementBy="1"
                         maxValue="900000"
                         minValue="1"
                         sequenceName="modifications_pk_sequence"
-                        startValue="500"/>
+                        startValue="1"/>
     </changeSet>
     <changeSet id="5" author="Stas">
         <sql>ALTER TABLE modifications ALTER COLUMN id DROP IDENTITY;</sql>
@@ -41,11 +41,11 @@
     <changeSet id="6" author="Stas">
         <createSequence cycle="false"
                         dataType="int"
-                        incrementBy="500"
+                        incrementBy="1"
                         maxValue="900000"
                         minValue="1"
                         sequenceName="chassises_pk_sequence"
-                        startValue="500"/>
+                        startValue="1"/>
     </changeSet>
     <changeSet id="7" author="Stas">
         <sql>ALTER TABLE chassises ALTER COLUMN id DROP IDENTITY;</sql>
@@ -59,11 +59,11 @@
     <changeSet id="8" author="Stas">
         <createSequence cycle="false"
                         dataType="int"
-                        incrementBy="500"
+                        incrementBy="1"
                         maxValue="900000"
                         minValue="1"
                         sequenceName="engines_pk_sequence"
-                        startValue="500"/>
+                        startValue="1"/>
     </changeSet>
     <changeSet id="9" author="Stas">
         <sql>ALTER TABLE engines ALTER COLUMN id DROP IDENTITY;</sql>
@@ -77,11 +77,11 @@
     <changeSet id="10" author="Stas">
         <createSequence cycle="false"
                         dataType="int"
-                        incrementBy="500"
+                        incrementBy="1"
                         maxValue="900000"
                         minValue="1"
                         sequenceName="engine_modifications_pk_sequence"
-                        startValue="500"/>
+                        startValue="1"/>
     </changeSet>
     <changeSet id="11" author="Stas">
         <sql>ALTER TABLE engine_modifications ALTER COLUMN id DROP IDENTITY;</sql>
@@ -98,11 +98,11 @@
     <changeSet id="12" author="Stas">
         <createSequence cycle="false"
                         dataType="int"
-                        incrementBy="500"
+                        incrementBy="1"
                         maxValue="900000"
                         minValue="1"
                         sequenceName="generations_pk_sequence"
-                        startValue="500"/>
+                        startValue="1"/>
     </changeSet>
     <changeSet id="13" author="Stas">
         <sql>ALTER TABLE generations ALTER COLUMN id DROP IDENTITY;</sql>
@@ -116,11 +116,11 @@
     <changeSet id="14" author="Stas">
         <createSequence cycle="false"
                         dataType="int"
-                        incrementBy="500"
+                        incrementBy="1"
                         maxValue="900000"
                         minValue="1"
                         sequenceName="models_pk_sequence"
-                        startValue="500"/>
+                        startValue="1"/>
     </changeSet>
     <changeSet id="15" author="Stas">
         <sql>ALTER TABLE models ALTER COLUMN id DROP IDENTITY;</sql>
@@ -134,11 +134,11 @@
     <changeSet id="16" author="Stas">
         <createSequence cycle="false"
                         dataType="int"
-                        incrementBy="500"
+                        incrementBy="1"
                         maxValue="900000"
                         minValue="1"
                         sequenceName="vendors_pk_sequence"
-                        startValue="500"/>
+                        startValue="1"/>
     </changeSet>
     <changeSet id="17" author="Stas">
         <sql>ALTER TABLE vendors ALTER COLUMN id DROP IDENTITY;</sql>
@@ -152,11 +152,11 @@
     <changeSet id="18" author="Stas">
         <createSequence cycle="false"
                         dataType="int"
-                        incrementBy="500"
+                        incrementBy="1"
                         maxValue="900000"
                         minValue="1"
                         sequenceName="suspensions_pk_sequence"
-                        startValue="500"/>
+                        startValue="1"/>
     </changeSet>
     <changeSet id="19" author="Stas">
         <sql>ALTER TABLE suspensions ALTER COLUMN id DROP IDENTITY;</sql>
