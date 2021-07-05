@@ -1,6 +1,5 @@
 package com.thirdwheel.carbase.dao.models;
 
-import com.thirdwheel.carbase.dao.models.common.BothNullOrEquals;
 import com.thirdwheel.carbase.dao.models.common.SomeNullOrEquals;
 import com.thirdwheel.carbase.dao.models.common.UnknownOrEquals;
 import com.thirdwheel.carbase.dao.models.enums.EngineType;
@@ -16,8 +15,8 @@ import javax.persistence.*;
 @ToString
 public class Engine {
     @Id
-    @SequenceGenerator(name="engines_pk_sequence",sequenceName="engines_pk_sequence", allocationSize=1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator="engines_pk_sequence")
+    @SequenceGenerator(name = "engines_pk_sequence", sequenceName = "engines_pk_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "engines_pk_sequence")
     @Column(name = "id", nullable = false)
     private int id;
 
@@ -56,13 +55,13 @@ public class Engine {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj.getClass() != this.getClass()){
+        if (obj.getClass() != this.getClass()) {
             return false;
         } else {
             Engine engine = (Engine) obj;
             return (this.getName().equals(engine.getName())) &&
-                    (UnknownOrEquals.compare(this.getFuelType(),engine.getFuelType())) &&
-                    (UnknownOrEquals.compare(this.getEngineType(),engine.getEngineType())) &&
+                    (UnknownOrEquals.compare(this.getFuelType(), engine.getFuelType())) &&
+                    (UnknownOrEquals.compare(this.getEngineType(), engine.getEngineType())) &&
                     (SomeNullOrEquals.compare(this.getVolume(), engine.getVolume())) &&
                     (SomeNullOrEquals.compare(this.getCylinderCount(), engine.getCylinderCount())) &&
                     (SomeNullOrEquals.compare(this.getValveCount(), engine.getValveCount())) &&

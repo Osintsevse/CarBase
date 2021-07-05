@@ -18,8 +18,8 @@ import java.time.LocalDate;
 @ToString
 public class Modification {
     @Id
-    @SequenceGenerator(name="modifications_pk_sequence",sequenceName="modifications_pk_sequence", allocationSize=1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator="modifications_pk_sequence")
+    @SequenceGenerator(name = "modifications_pk_sequence", sequenceName = "modifications_pk_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "modifications_pk_sequence")
     @Column(name = "id", nullable = false)
     private int id;
 
@@ -90,7 +90,7 @@ public class Modification {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj.getClass() != this.getClass()){
+        if (obj.getClass() != this.getClass()) {
             return false;
         } else {
             Modification modification = (Modification) obj;
@@ -119,6 +119,6 @@ public class Modification {
 
     @Override
     public int hashCode() {
-        return name.hashCode()+transmissionType.ordinal();
+        return name.hashCode() + transmissionType.ordinal();
     }
 }

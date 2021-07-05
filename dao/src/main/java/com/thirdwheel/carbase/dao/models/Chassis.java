@@ -14,8 +14,8 @@ import java.util.List;
 @ToString(exclude = "modifications")
 public class Chassis {
     @Id
-    @SequenceGenerator(name="chassises_pk_sequence",sequenceName="chassises_pk_sequence", allocationSize=1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator="chassises_pk_sequence")
+    @SequenceGenerator(name = "chassises_pk_sequence", sequenceName = "chassises_pk_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "chassises_pk_sequence")
     @Column(name = "id", nullable = false)
     private int id;
 
@@ -70,7 +70,7 @@ public class Chassis {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj.getClass() != this.getClass()){
+        if (obj.getClass() != this.getClass()) {
             return false;
         } else {
             Chassis chassis = (Chassis) obj;
@@ -86,10 +86,11 @@ public class Chassis {
                     (BothNullOrEquals.compare(this.getHeight(), chassis.getHeight())) &&
                     (this.getBodyStyle() == chassis.getBodyStyle()) &&
                     (this.getGeneration().equals(chassis.getGeneration())) &&
-                    (BothNullOrEquals.compare(this.getFrontSuspension(),chassis.getFrontSuspension()) &&
-                    (BothNullOrEquals.compare(this.getRearSuspension(),chassis.getRearSuspension())));
+                    (BothNullOrEquals.compare(this.getFrontSuspension(), chassis.getFrontSuspension()) &&
+                            (BothNullOrEquals.compare(this.getRearSuspension(), chassis.getRearSuspension())));
         }
     }
+
     @Override
     public int hashCode() {
         return name.hashCode();

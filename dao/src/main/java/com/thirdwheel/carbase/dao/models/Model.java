@@ -12,8 +12,8 @@ import java.util.List;
 @ToString(exclude = "generations")
 public class Model {
     @Id
-    @SequenceGenerator(name="models_pk_sequence",sequenceName="models_pk_sequence", allocationSize=1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator="models_pk_sequence")
+    @SequenceGenerator(name = "models_pk_sequence", sequenceName = "models_pk_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "models_pk_sequence")
     @Column(name = "id", nullable = false)
     private int id;
 
@@ -29,7 +29,7 @@ public class Model {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj.getClass() != this.getClass()){
+        if (obj.getClass() != this.getClass()) {
             return false;
         } else {
             Model model = (Model) obj;
@@ -40,6 +40,6 @@ public class Model {
 
     @Override
     public int hashCode() {
-        return name.hashCode()+vendor.hashCode();
+        return name.hashCode() + vendor.hashCode();
     }
 }

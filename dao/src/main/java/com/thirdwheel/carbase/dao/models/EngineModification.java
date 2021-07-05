@@ -13,9 +13,9 @@ import javax.persistence.*;
 @ToString
 public class EngineModification {
     @Id
-    @SequenceGenerator(name="engine_modifications_pk_sequence",
-            sequenceName="engine_modifications_pk_sequence", allocationSize=1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator="engine_modifications_pk_sequence")
+    @SequenceGenerator(name = "engine_modifications_pk_sequence",
+            sequenceName = "engine_modifications_pk_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "engine_modifications_pk_sequence")
     @Column(name = "id", nullable = false)
     private int id;
 
@@ -47,7 +47,7 @@ public class EngineModification {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj.getClass() != this.getClass()){
+        if (obj.getClass() != this.getClass()) {
             return false;
         } else {
             EngineModification engineModification = (EngineModification) obj;

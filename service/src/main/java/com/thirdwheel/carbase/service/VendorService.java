@@ -13,13 +13,13 @@ public class VendorService {
     private final GeneralRepository<Vendor> repository;
 
     @Transactional
-    public void save(String name){
+    public void save(String name) {
         final Vendor vendor = new Vendor();
         vendor.setName(name);
         repository.save(vendor);
     }
 
-    public Vendor getBiId(int id){
+    public Vendor getBiId(int id) {
         return repository.getById(id);
     }
 }
