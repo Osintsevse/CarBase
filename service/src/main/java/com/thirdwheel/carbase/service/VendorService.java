@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -21,5 +22,9 @@ public class VendorService {
 
     public Vendor getBiId(int id) {
         return repository.getById(id);
+    }
+
+    public List<Vendor> getAllVendors() {
+        return repository.getAll();
     }
 }

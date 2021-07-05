@@ -4,6 +4,11 @@ import lombok.RequiredArgsConstructor;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import java.util.List;
 
 @RequiredArgsConstructor
 public class GeneralRepository<T> {
@@ -21,5 +26,14 @@ public class GeneralRepository<T> {
 
     public T getById(int id) {
         return entityManager.find(tClass, id);
+    }
+
+    public List<T> getAll() {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<T> cq = cb.createQuery(tClass);
+        Root<T> rootEntry = cq.from(tClass);
+        CriteriaQuery<T> all = cq.select(rootEntry);
+        TypedQuery<T> allQuery = entityManager.createQuery(all);
+        return allQuery.getResultList();
     }
 }
