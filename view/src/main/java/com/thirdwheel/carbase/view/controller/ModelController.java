@@ -22,7 +22,7 @@ public class ModelController {
     @RequestMapping(method = RequestMethod.GET, path = "/models")
     public ResponseEntity<List<UniversalEntityForResponse>> getVendors
             (@RequestBody ModelRequest modelRequest) {
-        List<Model> models = vendorService.getModels(modelRequest.getVendorId(),modelRequest.getNameBeginning());
+        List<Model> models = vendorService.getModels(modelRequest.getVendorId(), modelRequest.getNameBeginning());
         return ResponseEntity.ok(new EntitiesListResponse(models).getEntities());
     }
 }

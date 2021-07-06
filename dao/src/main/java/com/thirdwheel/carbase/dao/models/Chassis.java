@@ -12,7 +12,7 @@ import java.util.List;
 @Entity
 @Table(name = "chassises")
 @ToString(exclude = "modifications")
-public class Chassis implements IEntity{
+public class Chassis implements IEntity {
     @Id
     @SequenceGenerator(name = "chassises_pk_sequence", sequenceName = "chassises_pk_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "chassises_pk_sequence")

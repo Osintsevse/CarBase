@@ -10,7 +10,7 @@ import java.util.List;
 @Entity
 @Table(name = "vendors")
 @ToString(exclude = "models")
-public class Vendor implements IEntity{
+public class Vendor implements IEntity {
     @Id
     @SequenceGenerator(name = "vendors_pk_sequence", sequenceName = "vendors_pk_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "vendors_pk_sequence")

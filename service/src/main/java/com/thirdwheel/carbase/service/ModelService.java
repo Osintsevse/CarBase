@@ -15,8 +15,8 @@ public class ModelService extends GeneralService<Model> {
     public List<Model> getModels(Integer vendorId, String nameBeginning) {
         if (nameBeginning == null) {
             return ((ModelRepository) repository).getModels(vendorId);
-        }else{
-            return ((ModelRepository) repository).getModels(vendorId,nameBeginning);
+        } else {
+            return ((ModelRepository) repository).getModels(vendorId, nameBeginning);
         }
 
     }

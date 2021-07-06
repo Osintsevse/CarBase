@@ -10,7 +10,7 @@ import java.util.List;
 @Entity
 @Table(name = "models")
 @ToString(exclude = "generations")
-public class Model implements IEntity{
+public class Model implements IEntity {
     @Id
     @SequenceGenerator(name = "models_pk_sequence", sequenceName = "models_pk_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "models_pk_sequence")

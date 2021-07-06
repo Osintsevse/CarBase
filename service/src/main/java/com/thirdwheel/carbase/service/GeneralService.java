@@ -14,9 +14,9 @@ public class GeneralService<T> {
     }
 
     public List<T> getByNameBeginnig(String nameBeginning) {
-        if (nameBeginning==null){
+        if (nameBeginning == null) {
             return repository.getAll();
-        }else {
+        } else {
             return repository.getByNameBeginning(nameBeginning);
         }
     }

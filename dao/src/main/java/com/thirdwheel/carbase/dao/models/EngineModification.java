@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "engine_modifications")
 @ToString
-public class EngineModification implements IEntity{
+public class EngineModification implements IEntity {
     @Id
     @SequenceGenerator(name = "engine_modifications_pk_sequence",
             sequenceName = "engine_modifications_pk_sequence", allocationSize = 1)

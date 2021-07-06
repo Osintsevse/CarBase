@@ -1,11 +1,8 @@
 package com.thirdwheel.carbase.dao.repositories;
 
 import com.thirdwheel.carbase.dao.models.Model;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -19,7 +16,7 @@ public class ModelRepository extends GeneralRepository<Model> {
         super(Model.class);
     }
 
-    public List<Model> getModels(Integer vendorId){
+    public List<Model> getModels(Integer vendorId) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Model> cq = cb.createQuery(tClass);
         Root<Model> modelRoot = cq.from(tClass);
@@ -28,13 +25,13 @@ public class ModelRepository extends GeneralRepository<Model> {
         return query.getResultList();
     }
 
-    public List<Model> getModels(Integer vendorId, String nameBeginning){
+    public List<Model> getModels(Integer vendorId, String nameBeginning) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Model> cq = cb.createQuery(tClass);
         Root<Model> modelRoot = cq.from(tClass);
         Predicate nameIsLike = cb.like(cb.upper(modelRoot.get("name")), nameBeginning.toUpperCase() + "%");
         Predicate vendorIdEquals = cb.equal(modelRoot.get("vendor"), vendorId);
-        CriteriaQuery<Model> cqm = cq.where(cb.and(vendorIdEquals,nameIsLike));
+        CriteriaQuery<Model> cqm = cq.where(cb.and(vendorIdEquals, nameIsLike));
         TypedQuery<Model> query = entityManager.createQuery(cqm);
         return query.getResultList();
     }

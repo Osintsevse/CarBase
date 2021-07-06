@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "modifications")
 @ToString
-public class Modification implements IEntity{
+public class Modification implements IEntity {
     @Id
     @SequenceGenerator(name = "modifications_pk_sequence", sequenceName = "modifications_pk_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "modifications_pk_sequence")
