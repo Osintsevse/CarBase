@@ -23,11 +23,6 @@ public class RepositoriesConfig {
     }
 
     @Bean
-    public GeneralRepository<Model> modelGeneralRepository() {
-        return new GeneralRepository<>(Model.class);
-    }
-
-    @Bean
     public GeneralRepository<Generation> generationGeneralRepository() {
         return new GeneralRepository<>(Generation.class);
     }

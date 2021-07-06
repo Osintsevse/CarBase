@@ -33,16 +33,16 @@ public class GeneralRepository<T> {
         CriteriaQuery<T> cq = cb.createQuery(tClass);
         Root<T> rootEntry = cq.from(tClass);
         CriteriaQuery<T> all = cq.select(rootEntry);
-        TypedQuery<T> allQuery = entityManager.createQuery(all);
-        return allQuery.getResultList();
+        TypedQuery<T> query = entityManager.createQuery(all);
+        return query.getResultList();
     }
 
-    public List<T> getByFirstLetter(String s) {
+    public List<T> getByNameBeginning(String nameBeginning) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<T> cq = cb.createQuery(tClass);
         Root<T> rootEntry = cq.from(tClass);
-        CriteriaQuery<T> all = cq.where(cb.like(cb.upper(rootEntry.get("name")), s.toUpperCase() + "%"));
-        TypedQuery<T> query = entityManager.createQuery(all);
+        CriteriaQuery<T> cqByNameBeginning = cq.where(cb.like(cb.upper(rootEntry.get("name")), nameBeginning.toUpperCase() + "%"));
+        TypedQuery<T> query = entityManager.createQuery(cqByNameBeginning);
         return query.getResultList();
     }
 }
