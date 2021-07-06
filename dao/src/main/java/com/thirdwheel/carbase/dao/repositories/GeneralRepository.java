@@ -36,4 +36,13 @@ public class GeneralRepository<T> {
         TypedQuery<T> allQuery = entityManager.createQuery(all);
         return allQuery.getResultList();
     }
+
+    public List<T> getByFirstLetter(String s) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<T> cq = cb.createQuery(tClass);
+        Root<T> rootEntry = cq.from(tClass);
+        CriteriaQuery<T> all = cq.where(cb.like(cb.upper(rootEntry.get("name")), s.toUpperCase() + "%"));
+        TypedQuery<T> query = entityManager.createQuery(all);
+        return query.getResultList();
+    }
 }

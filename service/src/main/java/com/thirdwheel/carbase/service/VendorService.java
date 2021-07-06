@@ -24,6 +24,10 @@ public class VendorService {
         return repository.getById(id);
     }
 
+    public List<Vendor> getVendorsByFirstLetter(String firstLetter) {
+        return repository.getByFirstLetter(firstLetter.substring(0, 1));
+    }
+
     public List<Vendor> getAllVendors() {
         return repository.getAll();
     }
