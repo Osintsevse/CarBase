@@ -1,8 +1,8 @@
 package com.thirdwheel.carbase.dao.models;
 
-import com.thirdwheel.carbase.dao.models.common.BothNullOrEquals;
 import com.thirdwheel.carbase.dao.models.enums.BodyStyle;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -12,7 +12,9 @@ import java.util.List;
 @Entity
 @Table(name = "chassises")
 @ToString(exclude = "modifications")
+@EqualsAndHashCode
 public class Chassis implements IEntity {
+    @EqualsAndHashCode.Exclude
     @Id
     @SequenceGenerator(name = "chassises_pk_sequence", sequenceName = "chassises_pk_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "chassises_pk_sequence")
@@ -65,35 +67,8 @@ public class Chassis implements IEntity {
     @JoinColumn(name = "rear_suspension_id")
     private Suspension rearSuspension;
 
+    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "chassis", fetch = FetchType.LAZY)
     private List<Modification> modifications;
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj.getClass() != this.getClass()) {
-            return false;
-        } else {
-            Chassis chassis = (Chassis) obj;
-            return (this.getName().equals(chassis.getName())) &&
-                    (this.isNameGenerated == chassis.isNameGenerated) &&
-                    (BothNullOrEquals.compare(this.getLength(), chassis.getLength())) &&
-                    (BothNullOrEquals.compare(this.getWidth(), chassis.getWidth())) &&
-                    (BothNullOrEquals.compare(this.getWheelBase(), chassis.getWheelBase())) &&
-                    (BothNullOrEquals.compare(this.getFrontOverhang(), chassis.getFrontOverhang())) &&
-                    (BothNullOrEquals.compare(this.getRearOverhang(), chassis.getRearOverhang())) &&
-                    (BothNullOrEquals.compare(this.getFrontTrack(), chassis.getFrontTrack())) &&
-                    (BothNullOrEquals.compare(this.getRearTrack(), chassis.getRearTrack())) &&
-                    (BothNullOrEquals.compare(this.getHeight(), chassis.getHeight())) &&
-                    (this.getBodyStyle() == chassis.getBodyStyle()) &&
-                    (this.getGeneration().equals(chassis.getGeneration())) &&
-                    (BothNullOrEquals.compare(this.getFrontSuspension(), chassis.getFrontSuspension()) &&
-                            (BothNullOrEquals.compare(this.getRearSuspension(), chassis.getRearSuspension())));
-        }
-    }
-
-    @Override
-    public int hashCode() {
-        return name.hashCode();
-    }
 }
 

@@ -1,11 +1,11 @@
 package com.thirdwheel.carbase.dao.models;
 
 
-import com.thirdwheel.carbase.dao.models.common.BothNullOrEquals;
 import com.thirdwheel.carbase.dao.models.enums.SteeringWheelPosition;
 import com.thirdwheel.carbase.dao.models.enums.TransmissionType;
 import com.thirdwheel.carbase.dao.models.enums.WDType;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -16,7 +16,9 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "modifications")
 @ToString
+@EqualsAndHashCode
 public class Modification implements IEntity {
+    @EqualsAndHashCode.Exclude
     @Id
     @SequenceGenerator(name = "modifications_pk_sequence", sequenceName = "modifications_pk_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "modifications_pk_sequence")
@@ -87,38 +89,4 @@ public class Modification implements IEntity {
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "engine_modification_id")
     private EngineModification engineModification;
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj.getClass() != this.getClass()) {
-            return false;
-        } else {
-            Modification modification = (Modification) obj;
-            return (this.getName().equals(modification.getName())) &&
-                    (this.getEngineModification().equals(modification.getEngineModification())) &&
-                    (this.getSteeringWheelPosition() == modification.getSteeringWheelPosition()) &&
-                    (this.getTransmissionType() == modification.getTransmissionType()) &&
-                    (this.getWdType() == modification.getWdType()) &&
-                    (this.getChassis().equals(modification.getChassis())) &&
-                    (BothNullOrEquals.compare(this.getStart(), modification.getStart())) &&
-                    (BothNullOrEquals.compare(this.getEnd(), modification.getEnd())) &&
-                    (BothNullOrEquals.compare(this.getAcceleration0100(), modification.getAcceleration0100())) &&
-                    (BothNullOrEquals.compare(this.getFrontWheels(), modification.getFrontWheels())) &&
-                    (BothNullOrEquals.compare(this.getRearWheels(), modification.getRearWheels())) &&
-                    (BothNullOrEquals.compare(this.getGearCount(), modification.getGearCount())) &&
-                    (BothNullOrEquals.compare(this.getMtr(), modification.getMtr())) &&
-                    (BothNullOrEquals.compare(this.getSeatCount(), modification.getSeatCount())) &&
-                    (BothNullOrEquals.compare(this.getSeatRowCount(), modification.getSeatRowCount())) &&
-                    (BothNullOrEquals.compare(this.getClearance(), modification.getClearance())) &&
-                    (BothNullOrEquals.compare(this.getCountryBuild(), modification.getCountryBuild())) &&
-                    (BothNullOrEquals.compare(this.getCountryStore(), modification.getCountryStore())) &&
-                    (BothNullOrEquals.compare(this.getDoorCount(), modification.getDoorCount())) &&
-                    (BothNullOrEquals.compare(this.getWeight(), modification.getWeight()));
-        }
-    }
-
-    @Override
-    public int hashCode() {
-        return name.hashCode() + transmissionType.ordinal();
-    }
 }

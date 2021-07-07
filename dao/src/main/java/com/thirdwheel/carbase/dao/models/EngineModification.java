@@ -1,8 +1,8 @@
 package com.thirdwheel.carbase.dao.models;
 
-import com.thirdwheel.carbase.dao.models.common.BothNullOrEquals;
 import com.thirdwheel.carbase.dao.models.enums.ChargerType;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -11,7 +11,9 @@ import javax.persistence.*;
 @Entity
 @Table(name = "engine_modifications")
 @ToString
+@EqualsAndHashCode
 public class EngineModification implements IEntity {
+    @EqualsAndHashCode.Exclude
     @Id
     @SequenceGenerator(name = "engine_modifications_pk_sequence",
             sequenceName = "engine_modifications_pk_sequence", allocationSize = 1)
@@ -44,26 +46,4 @@ public class EngineModification implements IEntity {
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "engine_id")
     private Engine engine;
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj.getClass() != this.getClass()) {
-            return false;
-        } else {
-            EngineModification engineModification = (EngineModification) obj;
-            return (this.getName().equals(engineModification.getName())) &&
-                    (this.getChargerType() == engineModification.getChargerType()) &&
-                    (BothNullOrEquals.compare(this.getMaxPower(), engineModification.getMaxPower())) &&
-                    (BothNullOrEquals.compare(this.getMaxPowerRPM(), engineModification.getMaxPowerRPM())) &&
-                    (BothNullOrEquals.compare(this.getMaxTorque(), engineModification.getMaxTorque())) &&
-                    (this.getEngine().equals(engineModification.getEngine())) &&
-                    (BothNullOrEquals.compare(this.getMaxTorqueRPM(), engineModification.getMaxTorqueRPM())) &&
-                    (BothNullOrEquals.compare(this.getCompressionRatio(), engineModification.getCompressionRatio()));
-        }
-    }
-
-    @Override
-    public int hashCode() {
-        return name.hashCode();
-    }
 }

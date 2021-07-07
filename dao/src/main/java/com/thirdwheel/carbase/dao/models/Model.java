@@ -1,6 +1,7 @@
 package com.thirdwheel.carbase.dao.models;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -10,7 +11,9 @@ import java.util.List;
 @Entity
 @Table(name = "models")
 @ToString(exclude = "generations")
+@EqualsAndHashCode
 public class Model implements IEntity {
+    @EqualsAndHashCode.Exclude
     @Id
     @SequenceGenerator(name = "models_pk_sequence", sequenceName = "models_pk_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "models_pk_sequence")
@@ -24,22 +27,7 @@ public class Model implements IEntity {
     @JoinColumn(name = "vendor_id")
     private Vendor vendor;
 
+    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "model", fetch = FetchType.LAZY)
     private List<Generation> generations;
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj.getClass() != this.getClass()) {
-            return false;
-        } else {
-            Model model = (Model) obj;
-            return (this.getName().equals(model.getName())) &&
-                    (this.getVendor().equals(model.getVendor()));
-        }
-    }
-
-    @Override
-    public int hashCode() {
-        return name.hashCode() + vendor.hashCode();
-    }
 }

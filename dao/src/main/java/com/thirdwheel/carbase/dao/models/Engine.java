@@ -1,7 +1,6 @@
 package com.thirdwheel.carbase.dao.models;
 
-import com.thirdwheel.carbase.dao.models.common.SomeNullOrEquals;
-import com.thirdwheel.carbase.dao.models.common.UnknownOrEquals;
+import com.thirdwheel.carbase.dao.models.common.SpecificEquals;
 import com.thirdwheel.carbase.dao.models.enums.EngineType;
 import com.thirdwheel.carbase.dao.models.enums.FuelType;
 import lombok.Data;
@@ -60,14 +59,14 @@ public class Engine implements IEntity {
         } else {
             Engine engine = (Engine) obj;
             return (this.getName().equals(engine.getName())) &&
-                    (UnknownOrEquals.compare(this.getFuelType(), engine.getFuelType())) &&
-                    (UnknownOrEquals.compare(this.getEngineType(), engine.getEngineType())) &&
-                    (SomeNullOrEquals.compare(this.getVolume(), engine.getVolume())) &&
-                    (SomeNullOrEquals.compare(this.getCylinderCount(), engine.getCylinderCount())) &&
-                    (SomeNullOrEquals.compare(this.getValveCount(), engine.getValveCount())) &&
-                    (SomeNullOrEquals.compare(this.getValvePerCylinder(), engine.getValvePerCylinder())) &&
-                    (SomeNullOrEquals.compare(this.getBore(), engine.getBore())) &&
-                    (SomeNullOrEquals.compare(this.getStroke(), engine.getStroke()));
+                    (SpecificEquals.unknownOrEquals(this.getFuelType(), engine.getFuelType())) &&
+                    (SpecificEquals.unknownOrEquals(this.getEngineType(), engine.getEngineType())) &&
+                    (SpecificEquals.someNullOrEquals(this.getVolume(), engine.getVolume())) &&
+                    (SpecificEquals.someNullOrEquals(this.getCylinderCount(), engine.getCylinderCount())) &&
+                    (SpecificEquals.someNullOrEquals(this.getValveCount(), engine.getValveCount())) &&
+                    (SpecificEquals.someNullOrEquals(this.getValvePerCylinder(), engine.getValvePerCylinder())) &&
+                    (SpecificEquals.someNullOrEquals(this.getBore(), engine.getBore())) &&
+                    (SpecificEquals.someNullOrEquals(this.getStroke(), engine.getStroke()));
         }
     }
 

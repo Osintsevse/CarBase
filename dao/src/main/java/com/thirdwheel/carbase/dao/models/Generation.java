@@ -1,7 +1,7 @@
 package com.thirdwheel.carbase.dao.models;
 
-import com.thirdwheel.carbase.dao.models.common.BothNullOrEquals;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -12,7 +12,9 @@ import java.util.List;
 @Entity
 @Table(name = "generations")
 @ToString(exclude = "chassises")
+@EqualsAndHashCode
 public class Generation implements IEntity {
+    @EqualsAndHashCode.Exclude
     @Id
     @SequenceGenerator(name = "generations_pk_sequence", sequenceName = "generations_pk_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generations_pk_sequence")
@@ -28,6 +30,7 @@ public class Generation implements IEntity {
     @Column(name = "\"end\"")
     private LocalDate end;
 
+    @EqualsAndHashCode.Exclude
     @Column(name = "image_src")
     private String imageSrc;
 
@@ -35,24 +38,7 @@ public class Generation implements IEntity {
     @JoinColumn(name = "model_id")
     private Model model;
 
+    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "generation", fetch = FetchType.LAZY)
     private List<Chassis> chassises;
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj.getClass() != this.getClass()) {
-            return false;
-        } else {
-            Generation generation = (Generation) obj;
-            return (this.getName().equals(generation.getName())) &&
-                    (BothNullOrEquals.compare(this.getStart(), generation.getStart())) &&
-                    (this.getModel().equals(generation.getModel())) &&
-                    (BothNullOrEquals.compare(this.getEnd(), generation.getEnd()));
-        }
-    }
-
-    @Override
-    public int hashCode() {
-        return name.hashCode();
-    }
 }
