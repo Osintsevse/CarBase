@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Table(name = "engine_modifications")
 @ToString
 @EqualsAndHashCode
-public class EngineModification implements IEntity {
+public class EngineModification implements IEntityWithName {
     @EqualsAndHashCode.Exclude
     @Id
     @SequenceGenerator(name = "engine_modifications_pk_sequence",

@@ -13,7 +13,7 @@ import java.util.List;
 @Table(name = "generations")
 @ToString(exclude = "chassises")
 @EqualsAndHashCode
-public class Generation implements IEntity {
+public class Generation implements IEntityWithName {
     @EqualsAndHashCode.Exclude
     @Id
     @SequenceGenerator(name = "generations_pk_sequence", sequenceName = "generations_pk_sequence", allocationSize = 1)

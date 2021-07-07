@@ -12,7 +12,7 @@ import java.util.List;
 @Table(name = "vendors")
 @ToString(exclude = "models")
 @EqualsAndHashCode
-public class Vendor implements IEntity {
+public class Vendor implements IEntityWithName {
     @EqualsAndHashCode.Exclude
     @Id
     @SequenceGenerator(name = "vendors_pk_sequence", sequenceName = "vendors_pk_sequence", allocationSize = 1)

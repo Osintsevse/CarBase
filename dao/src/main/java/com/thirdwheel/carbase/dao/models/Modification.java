@@ -17,7 +17,7 @@ import java.time.LocalDate;
 @Table(name = "modifications")
 @ToString
 @EqualsAndHashCode
-public class Modification implements IEntity {
+public class Modification implements IEntityWithName {
     @EqualsAndHashCode.Exclude
     @Id
     @SequenceGenerator(name = "modifications_pk_sequence", sequenceName = "modifications_pk_sequence", allocationSize = 1)
