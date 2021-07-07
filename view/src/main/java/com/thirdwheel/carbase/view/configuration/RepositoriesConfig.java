@@ -1,44 +1,44 @@
 package com.thirdwheel.carbase.view.configuration;
 
 import com.thirdwheel.carbase.dao.models.*;
-import com.thirdwheel.carbase.dao.repositories.GeneralRepository;
+import com.thirdwheel.carbase.dao.repositories.GeneralEntityWithNameRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RepositoriesConfig {
     @Bean
-    public GeneralRepository<Vendor> vendorGeneralRepository() {
-        return new GeneralRepository<>(Vendor.class);
+    public GeneralEntityWithNameRepository<Vendor> vendorGeneralRepository() {
+        return new GeneralEntityWithNameRepository<>(Vendor.class);
     }
 
     @Bean
-    public GeneralRepository<Suspension> suspensionGeneralRepository() {
-        return new GeneralRepository<>(Suspension.class);
+    public GeneralEntityWithNameRepository<Suspension> suspensionGeneralRepository() {
+        return new GeneralEntityWithNameRepository<>(Suspension.class);
     }
 
     @Bean
-    public GeneralRepository<Modification> modificationGeneralRepository() {
-        return new GeneralRepository<>(Modification.class);
+    public GeneralEntityWithNameRepository<Modification> modificationGeneralRepository() {
+        return new GeneralEntityWithNameRepository<>(Modification.class);
     }
 
     @Bean
-    public GeneralRepository<Generation> generationGeneralRepository() {
-        return new GeneralRepository<>(Generation.class);
+    public GeneralEntityWithNameRepository<Generation> generationGeneralRepository() {
+        return new GeneralEntityWithNameRepository<>(Generation.class);
     }
 
     @Bean
-    public GeneralRepository<EngineModification> engineModificationGeneralRepository() {
-        return new GeneralRepository<>(EngineModification.class);
+    public GeneralEntityWithNameRepository<EngineModification> engineModificationGeneralRepository() {
+        return new GeneralEntityWithNameRepository<>(EngineModification.class);
     }
 
     @Bean
-    public GeneralRepository<Engine> engineGeneralRepository() {
-        return new GeneralRepository<>(Engine.class);
+    public GeneralEntityWithNameRepository<Engine> engineGeneralRepository() {
+        return new GeneralEntityWithNameRepository<>(Engine.class);
     }
 
     @Bean
-    public GeneralRepository<Chassis> chassisGeneralRepository() {
-        return new GeneralRepository<>(Chassis.class);
+    public GeneralEntityWithNameRepository<Chassis> chassisGeneralRepository() {
+        return new GeneralEntityWithNameRepository<>(Chassis.class);
     }
 }

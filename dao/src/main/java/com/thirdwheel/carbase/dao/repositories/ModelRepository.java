@@ -11,7 +11,7 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 
 @Service
-public class ModelRepository extends GeneralRepository<Model> {
+public class ModelRepository extends GeneralEntityWithNameRepository<Model> {
     public ModelRepository() {
         super(Model.class);
     }

@@ -20,12 +20,12 @@ public class VendorController {
 
     @RequestMapping(method = RequestMethod.GET, path = "/vendors")
     public ResponseEntity<List<UniversalEntityForResponse>> getVendors
-            (@RequestParam(value="nameBeginning",required = false) String nameBeginning) {
+            (@RequestParam(value = "nameBeginning", required = false) String nameBeginning) {
         List<Vendor> vendors;
         if (nameBeginning == null) {
             vendors = vendorService.getAll();
         } else {
-            vendors = vendorService.getByNameBeginnig(nameBeginning);
+            vendors = vendorService.getByNameBeginning(nameBeginning);
         }
         return ResponseEntity.ok(new EntitiesListResponse(vendors).getEntities());
     }

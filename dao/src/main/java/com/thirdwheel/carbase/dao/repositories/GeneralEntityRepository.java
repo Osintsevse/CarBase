@@ -1,5 +1,6 @@
 package com.thirdwheel.carbase.dao.repositories;
 
+import com.thirdwheel.carbase.dao.models.IEntity;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.EntityManager;
@@ -11,7 +12,7 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class GeneralRepository<T> {
+public class GeneralEntityRepository<T extends IEntity> {
     final protected Class<T> tClass;
     protected EntityManager entityManager;
 
