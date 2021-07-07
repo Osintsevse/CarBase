@@ -18,11 +18,6 @@ public class RepositoriesConfig {
     }
 
     @Bean
-    public GeneralEntityWithNameRepository<Modification> modificationGeneralRepository() {
-        return new GeneralEntityWithNameRepository<>(Modification.class);
-    }
-
-    @Bean
     public GeneralEntityWithNameRepository<Generation> generationGeneralRepository() {
         return new GeneralEntityWithNameRepository<>(Generation.class);
     }

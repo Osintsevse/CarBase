@@ -7,12 +7,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Getter
-public class EntitiesListResponse {
-    private final List<UniversalEntityForResponse> entities;
+public class EntitiesWithNameListResponse {
+    private final List<EntityWithNameForResponse> entities;
 
-    public EntitiesListResponse(List<? extends IEntityWithName> daoEntities) {
+    public EntitiesWithNameListResponse(List<? extends IEntityWithName> daoEntities) {
         entities = new LinkedList<>();
         daoEntities.forEach(x ->
-                entities.add(new UniversalEntityForResponse(x)));
+                entities.add(new EntityWithNameForResponse(x)));
     }
 }
