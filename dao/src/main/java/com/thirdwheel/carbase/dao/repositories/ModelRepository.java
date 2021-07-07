@@ -16,7 +16,7 @@ public class ModelRepository extends GeneralRepository<Model> {
         super(Model.class);
     }
 
-    public List<Model> getModels(Integer vendorId) {
+    public List<Model> getByVendor(Integer vendorId) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Model> cq = cb.createQuery(tClass);
         Root<Model> modelRoot = cq.from(tClass);
@@ -25,7 +25,7 @@ public class ModelRepository extends GeneralRepository<Model> {
         return query.getResultList();
     }
 
-    public List<Model> getModels(Integer vendorId, String nameBeginning) {
+    public List<Model> getByVendor(Integer vendorId, String nameBeginning) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Model> cq = cb.createQuery(tClass);
         Root<Model> modelRoot = cq.from(tClass);

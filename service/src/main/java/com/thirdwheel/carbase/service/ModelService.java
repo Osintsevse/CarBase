@@ -12,11 +12,11 @@ public class ModelService extends GeneralService<Model> {
         super(repository);
     }
 
-    public List<Model> getModels(Integer vendorId, String nameBeginning) {
+    public List<Model> getByVendor(Integer vendorId, String nameBeginning) {
         if (nameBeginning == null) {
-            return ((ModelRepository) repository).getModels(vendorId);
+            return ((ModelRepository) repository).getByVendor(vendorId);
         } else {
-            return ((ModelRepository) repository).getModels(vendorId, nameBeginning);
+            return ((ModelRepository) repository).getByVendor(vendorId, nameBeginning);
         }
 
     }

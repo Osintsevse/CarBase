@@ -17,9 +17,10 @@ public class ModelController {
     private final ModelService vendorService;
 
     @RequestMapping(method = RequestMethod.GET, path = "/vendors/{vendorID}/models")
-    public ResponseEntity<List<UniversalEntityForResponse>> getVendors
-            (@PathVariable(value="vendorID") String vendorID,@RequestParam(value="nameBeginning",required = false) String nameBeginning ) {
-        List<Model> models = vendorService.getModels(Integer.parseInt(vendorID), nameBeginning);
+    public ResponseEntity<List<UniversalEntityForResponse>> getVendors(
+            @PathVariable(value="vendorID") String vendorID,
+             @RequestParam(value="nameBeginning",required = false) String nameBeginning) {
+        List<Model> models = vendorService.getByVendor(Integer.parseInt(vendorID), nameBeginning);
         return ResponseEntity.ok(new EntitiesListResponse(models).getEntities());
     }
 }
