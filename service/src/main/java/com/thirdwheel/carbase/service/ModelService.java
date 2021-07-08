@@ -18,6 +18,6 @@ public class ModelService extends GeneralService<Model> {
         } else {
             return ((ModelRepository) repository).getByVendor(vendorId, nameBeginning);
         }
-
     }
+
 }

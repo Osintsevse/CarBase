@@ -10,7 +10,7 @@ import java.util.List;
 public class GeneralService<T extends IEntityWithName> {
     protected final GeneralEntityWithNameRepository<T> repository;
 
-    public T getBiId(int id) {
+    public T getById(int id) {
         return repository.getById(id);
     }
 

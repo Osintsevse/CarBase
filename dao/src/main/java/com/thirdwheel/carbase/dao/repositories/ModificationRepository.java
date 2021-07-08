@@ -9,8 +9,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
-public class ModifficationRepository extends GeneralEntityWithNameRepository<Modification> {
-    public ModifficationRepository() {
+public class ModificationRepository extends GeneralEntityWithNameRepository<Modification> {
+    public ModificationRepository() {
         super(Modification.class);
     }
 
@@ -45,14 +45,24 @@ public class ModifficationRepository extends GeneralEntityWithNameRepository<Mod
         return query.getResultList();
     }
 
-    public List<Modification> getByVendorAndNameBeginning(Integer vendorId, String nameBeginning) {
+    public List<Modification> getByVendor(Integer vendorId, String nameBeginning) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Modification> cq = cb.createQuery(tClass);
         Root<Modification> modelRoot = cq.from(tClass);
-        Predicate modelIdEquals = cb.equal(modelRoot.get("chassis").get("generation").get("model").get("vendor"), vendorId);
+        Predicate idEquals = cb.equal(modelRoot.get("chassis").get("generation").get("model").get("vendor"), vendorId);
         Predicate nameIsLike = cb.like(cb.upper(modelRoot.get("name")), nameBeginning.toUpperCase() + "%");
-        CriteriaQuery<Modification> generationsByModelId = cq.where(cb.and(modelIdEquals, nameIsLike));
-        TypedQuery<Modification> query = entityManager.createQuery(generationsByModelId);
+        CriteriaQuery<Modification> byIdAndName = cq.where(cb.and(idEquals, nameIsLike));
+        TypedQuery<Modification> query = entityManager.createQuery(byIdAndName);
+        return query.getResultList();
+    }
+
+    public List<Modification> getByVendor(Integer vendorId) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Modification> cq = cb.createQuery(tClass);
+        Root<Modification> modelRoot = cq.from(tClass);
+        Predicate idEquals = cb.equal(modelRoot.get("chassis").get("generation").get("model").get("vendor"), vendorId);
+        CriteriaQuery<Modification> byIdAndName = cq.where(idEquals);
+        TypedQuery<Modification> query = entityManager.createQuery(byIdAndName);
         return query.getResultList();
     }
 }
