@@ -28,7 +28,6 @@ public class Vendor implements IEntityWithName {
     private List<Model> models;
 
     @EqualsAndHashCode.Exclude
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "vendors_configurations_id")
+    @OneToOne(mappedBy = "vendor")
     private VendorsConfiguration vendorsConfiguration;
 }

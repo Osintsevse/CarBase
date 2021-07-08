@@ -14,8 +14,8 @@ import java.util.EnumSet;
 public class VendorsConfiguration implements IEntity {
     @EqualsAndHashCode.Exclude
     @Id
-    @SequenceGenerator(name = "vendors_pk_sequence", sequenceName = "vendors_pk_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "vendors_pk_sequence")
+    @SequenceGenerator(name = "vendors_configurations_pk_sequence", sequenceName = "vendors_configurations_pk_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "vendors_configurations_pk_sequence")
     @Column(name = "id", nullable = false)
     private int id;
 
@@ -23,7 +23,9 @@ public class VendorsConfiguration implements IEntity {
     private int searchFieldsBitMask;
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    @JoinColumn(name = "vendor_id")
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "vendor_id", referencedColumnName = "id")
     private Vendor vendor;
 
     @Override
