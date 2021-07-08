@@ -27,4 +27,8 @@ public class Vendor implements IEntityWithName {
     @OneToMany(mappedBy = "vendor", fetch = FetchType.LAZY)
     private List<Model> models;
 
+    @EqualsAndHashCode.Exclude
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "vendors_configurations_id")
+    private VendorsConfiguration vendorsConfiguration;
 }
