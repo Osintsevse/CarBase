@@ -17,7 +17,8 @@ public class GeneralEntityWithNameRepository<T extends IEntityWithName> extends 
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<T> cq = cb.createQuery(tClass);
         Root<T> rootEntry = cq.from(tClass);
-        CriteriaQuery<T> cqByNameBeginning = cq.where(cb.like(cb.upper(rootEntry.get("name")), nameBeginning.toUpperCase() + "%"));
+        CriteriaQuery<T> cqByNameBeginning = cq.where(
+                cb.like(cb.upper(rootEntry.get("name")), nameBeginning.toUpperCase() + "%"));
         TypedQuery<T> query = entityManager.createQuery(cqByNameBeginning);
         return query.getResultList();
     }

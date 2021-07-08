@@ -11,7 +11,7 @@ import java.util.EnumSet;
 @Entity
 @Table(name = "vendors_configurations")
 @EqualsAndHashCode
-public class VendorsConfiguration {
+public class VendorsConfiguration implements IEntity {
     @EqualsAndHashCode.Exclude
     @Id
     @SequenceGenerator(name = "vendors_pk_sequence", sequenceName = "vendors_pk_sequence", allocationSize = 1)
