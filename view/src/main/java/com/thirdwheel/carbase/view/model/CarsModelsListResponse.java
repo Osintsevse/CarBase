@@ -8,14 +8,14 @@ import java.util.List;
 import java.util.Map;
 
 @Getter
-public class ModelsOfCarsListResponse {
-    private final List<ModelOfCarForResponse> entities;
+public class CarsModelsListResponse {
+    private final List<CarsModelForResponse> entities;
 
-    public ModelsOfCarsListResponse(Map<String, ModelOfCar> byVendorAndText) {
+    public CarsModelsListResponse(Map<String, ModelOfCar> byVendorAndText) {
         this.entities = new LinkedList<>();
         byVendorAndText.forEach((x, y) -> {
             this.entities.add(
-                    new ModelOfCarForResponse(y.getId(), y.getName(), y.getTypeOfModelOfCar()));
+                    new CarsModelForResponse(y.getName()));
         });
     }
 }

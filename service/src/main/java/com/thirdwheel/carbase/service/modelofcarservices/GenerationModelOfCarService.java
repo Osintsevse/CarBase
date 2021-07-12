@@ -2,7 +2,7 @@ package com.thirdwheel.carbase.service.modelofcarservices;
 
 import com.thirdwheel.carbase.dao.models.Generation;
 import com.thirdwheel.carbase.service.GenerationService;
-import com.thirdwheel.carbase.service.enums.TypeOfModelOfCar;
+import com.thirdwheel.carbase.service.enums.CarsModelsType;
 import com.thirdwheel.carbase.service.model.ModelOfCar;
 import lombok.RequiredArgsConstructor;
 
@@ -23,7 +23,7 @@ public class GenerationModelOfCarService extends AModelOfCarService {
         Map<String, ModelOfCar> modelOfCarByVendorAndText = super.getByVendorAndText(vendorId, nameBeginning);
         List<Generation> modelByVendor = generationService.getByVendor(vendorId, nameBeginning);
         modelByVendor.forEach(x -> {
-            modelOfCarByVendorAndText.putIfAbsent(x.getName(), new ModelOfCar(x.getId(), x.getName(), TypeOfModelOfCar.GENERATION));
+            modelOfCarByVendorAndText.putIfAbsent(x.getName(), new ModelOfCar(x.getId(), x.getName(), CarsModelsType.GENERATION));
         });
         return modelOfCarByVendorAndText;
     }

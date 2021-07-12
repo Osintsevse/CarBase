@@ -10,9 +10,9 @@ import java.util.List;
 public class EntitiesWithNameListResponse {
     private final List<EntityWithNameForResponse> entities;
 
-    public EntitiesWithNameListResponse(List<? extends IEntityWithName> daoEntities) {
+    public EntitiesWithNameListResponse(List<? extends IEntityWithName> entitiesInput) {
         entities = new LinkedList<>();
-        daoEntities.forEach(x ->
+        entitiesInput.forEach(x ->
                 entities.add(new EntityWithNameForResponse(x)));
     }
 }

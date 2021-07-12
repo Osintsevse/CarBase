@@ -1,4 +1,4 @@
-package com.thirdwheel.carbase.service.model;
+package com.thirdwheel.carbase.view.model;
 
 import com.thirdwheel.carbase.service.enums.CarsModelsType;
 import lombok.Getter;
@@ -6,8 +6,6 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Getter
-public class ModelOfCar {
-    private final int id;
+public class CarsModelForResponse {
     private final String name;
-    private final CarsModelsType carsModelsType;
 }

@@ -6,9 +6,11 @@ import com.thirdwheel.carbase.service.model.ModelOfCar;
 import com.thirdwheel.carbase.service.modelofcarservices.ModelOfCarService;
 import com.thirdwheel.carbase.view.model.CarForListResponse;
 import com.thirdwheel.carbase.view.model.CarsListResponse;
-import com.thirdwheel.carbase.view.model.ModelOfCarForResponse;
-import com.thirdwheel.carbase.view.model.ModelsOfCarsListResponse;
+import com.thirdwheel.carbase.view.model.CarsModelForResponse;
+import com.thirdwheel.carbase.view.model.CarsModelsListResponse;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -41,16 +43,18 @@ public class CarController {
             @PathVariable(value = "vendorId") @Pattern(regexp = "[0-9]+") String vendorId,
             @RequestParam(value = "nameBeginning") String nameBeginning) {
         List<Modification> modifications = modificationService.getByVendorAndNameBeginning(Integer.parseInt(vendorId), nameBeginning);
-        System.out.println("Found " + modifications.size() + " cars for VendorId " + vendorId + " and name beginning " + nameBeginning);
+        Logger logger = LoggerFactory.getLogger(CarController.class);
+        logger.info("Found " + modifications.size() + " cars for VendorId " + vendorId + " and name beginning " + nameBeginning);
         return ResponseEntity.ok(new CarsListResponse(modifications).getEntities());
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/vendors/{vendorId}/cars")
-    public ResponseEntity<List<ModelOfCarForResponse>> getByVendorAndNameBeginning(
+    public ResponseEntity<List<CarsModelForResponse>> getByVendorAndNameBeginning(
             @PathVariable(value = "vendorId") @Pattern(regexp = "[0-9]+") String vendorId,
             @RequestParam(value = "nameBeginning", required = false) String nameBeginning) {
         Map<String, ModelOfCar> byVendorAndText = modelOfCarService.getByVendorAndText(Integer.parseInt(vendorId), nameBeginning);
-        System.out.println("Found " + byVendorAndText.size() + " cars for VendorId " + vendorId + " and name beginning " + nameBeginning);
-        return ResponseEntity.ok(new ModelsOfCarsListResponse(byVendorAndText).getEntities());
+        Logger logger = LoggerFactory.getLogger(CarController.class);
+        logger.info("Found " + byVendorAndText.size() + " cars for VendorId " + vendorId + " and name beginning " + nameBeginning);
+        return ResponseEntity.ok(new CarsModelsListResponse(byVendorAndText).getEntities());
     }
 }

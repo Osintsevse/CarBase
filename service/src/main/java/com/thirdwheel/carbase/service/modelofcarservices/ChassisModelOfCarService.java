@@ -2,7 +2,7 @@ package com.thirdwheel.carbase.service.modelofcarservices;
 
 import com.thirdwheel.carbase.dao.models.Chassis;
 import com.thirdwheel.carbase.service.ChassisService;
-import com.thirdwheel.carbase.service.enums.TypeOfModelOfCar;
+import com.thirdwheel.carbase.service.enums.CarsModelsType;
 import com.thirdwheel.carbase.service.model.ModelOfCar;
 import lombok.RequiredArgsConstructor;
 
@@ -23,7 +23,7 @@ public class ChassisModelOfCarService extends AModelOfCarService {
         Map<String, ModelOfCar> modelOfCarByVendorAndText = super.getByVendorAndText(vendorId, nameBeginning);
         List<Chassis> modelByVendor = chassisService.getByVendor(vendorId, nameBeginning);
         modelByVendor.forEach(x -> {
-            modelOfCarByVendorAndText.putIfAbsent(x.getName(), new ModelOfCar(x.getId(), x.getName(), TypeOfModelOfCar.CHASSSIS));
+            modelOfCarByVendorAndText.putIfAbsent(x.getName(), new ModelOfCar(x.getId(), x.getName(), CarsModelsType.CHASSSIS));
         });
         return modelOfCarByVendorAndText;
     }

@@ -22,8 +22,6 @@ public class VendorsConfiguration implements IEntity {
     @Column(name = "search_fields_bit_mask", nullable = false)
     private int searchFieldsBitMask;
 
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "vendor_id", referencedColumnName = "id")
     private Vendor vendor;
