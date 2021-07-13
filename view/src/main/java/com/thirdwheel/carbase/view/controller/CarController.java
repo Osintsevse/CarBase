@@ -30,7 +30,7 @@ public class CarController {
     private final CarService carService;
 
     @RequestMapping(method = RequestMethod.GET, path = "/vendors/{vendorId}/cars")
-    public ResponseEntity<List<ModificationForListResponse>> getByVendorsNameBeginningAndYear(
+    public ResponseEntity<List<ModificationForListResponse>> getByVendorAndCarsModelNameAndYear(
             @PathVariable(value = "vendorId") @Pattern(regexp = "[0-9]+") String vendorId,
             @RequestParam(value = "carsModelName") String carsModelName,
             @RequestParam(value = "year") @Pattern(regexp = "[0-9]{4}") String year) {

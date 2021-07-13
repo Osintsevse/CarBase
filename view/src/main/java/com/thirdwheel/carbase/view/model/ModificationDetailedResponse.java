@@ -20,7 +20,7 @@ public class ModificationDetailedResponse {
     private final LocalDate endDate;
     private final WDType wdType;
     private final TransmissionType transmissionType;
-    private final EngineResponse engineResponse;
+    private final EngineResponse engine;
     private final Long length;
     private final Long width;
     private final Long wheelBase;
@@ -42,7 +42,7 @@ public class ModificationDetailedResponse {
         this.endDate = modification.getEnd();
         this.wdType = modification.getWdType();
         this.transmissionType = modification.getTransmissionType();
-        this.engineResponse = new EngineResponse(modification.getEngineModification());
+        this.engine = new EngineResponse(modification.getEngineModification());
         this.length = modification.getChassis().getLength();
         this.width = modification.getChassis().getWidth();
         this.wheelBase = modification.getChassis().getWheelBase();
