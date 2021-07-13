@@ -16,8 +16,8 @@ public class ModificationDetailedResponse {
     private final String modelName;
     private final String vendorName;
     private final String wholeName;
-    private final LocalDate startDate;
-    private final LocalDate endDate;
+    private final LocalDate manufacturingStartDate;
+    private final LocalDate manufacturingEndDate;
     private final WDType wdType;
     private final TransmissionType transmissionType;
     private final EngineResponse engine;
@@ -38,8 +38,8 @@ public class ModificationDetailedResponse {
         this.vendorName = modification.getChassis().getGeneration().getModel().getVendor().getName();
         this.wholeName = this.vendorName + ", " + this.modelName + ", " + this.generationName + ", " + this.chassisName
                 + ", " + this.modificationName;
-        this.startDate = modification.getStart();
-        this.endDate = modification.getEnd();
+        this.manufacturingStartDate = modification.getStart();
+        this.manufacturingEndDate = modification.getEnd();
         this.wdType = modification.getWdType();
         this.transmissionType = modification.getTransmissionType();
         this.engine = new EngineResponse(modification.getEngineModification());
