@@ -11,18 +11,18 @@ import java.util.*;
 
 @Service
 @RequiredArgsConstructor
-public class ModelOfCarService implements IModelOfCarService {
+public class CarsModelService implements ICarsModelService {
     private final GeneralService<Vendor> vendorService;
-    private final ModelOfCarServiceFabric modelOfCarServiceFabric;
+    private final CarsModelServiceFabric carsModelServiceFabric;
 
     @Override
     public Map<String, CarsModel> getByVendorAndNameBeginning(int vendorId, String nameBeginning) {
         Vendor byId = vendorService.getById(vendorId);
         EnumSet<SearchFieldForVendor> fieldsForVendors =
                 SearchFieldForVendor.fromInt(byId.getVendorsConfiguration().getSearchFieldsBitMask());
-        IModelOfCarService carService = null;
+        ICarsModelService carService = null;
         for (SearchFieldForVendor fieldsForVendor : fieldsForVendors) {
-            carService = modelOfCarServiceFabric.getModelOfCarService(fieldsForVendor, carService);
+            carService = carsModelServiceFabric.getCarsModelService(fieldsForVendor, carService);
         }
         if (carService == null) {
             return new TreeMap<>();
@@ -36,9 +36,9 @@ public class ModelOfCarService implements IModelOfCarService {
         Vendor byId = vendorService.getById(vendorId);
         EnumSet<SearchFieldForVendor> fieldsForVendors =
                 SearchFieldForVendor.fromInt(byId.getVendorsConfiguration().getSearchFieldsBitMask());
-        IModelOfCarService carService = null;
+        ICarsModelService carService = null;
         for (SearchFieldForVendor fieldsForVendor : fieldsForVendors) {
-            carService = modelOfCarServiceFabric.getModelOfCarService(fieldsForVendor, carService);
+            carService = carsModelServiceFabric.getCarsModelService(fieldsForVendor, carService);
         }
         if (carService == null) {
             return new ArrayList<>();

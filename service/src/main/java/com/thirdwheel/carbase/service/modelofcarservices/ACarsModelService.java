@@ -11,13 +11,13 @@ import java.util.TreeMap;
 
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class AModelOfCarService implements IModelOfCarService {
-    private IModelOfCarService nextModelOfCarService;
+public abstract class ACarsModelService implements ICarsModelService {
+    private ICarsModelService nextCarsModelService;
 
     @Override
     public Map<String, CarsModel> getByVendorAndNameBeginning(int vendorId, String nameBeginning) {
-        if (nextModelOfCarService != null) {
-            return nextModelOfCarService.getByVendorAndNameBeginning(vendorId, nameBeginning);
+        if (nextCarsModelService != null) {
+            return nextCarsModelService.getByVendorAndNameBeginning(vendorId, nameBeginning);
         } else {
             return new TreeMap<>();
         }
@@ -25,8 +25,8 @@ public abstract class AModelOfCarService implements IModelOfCarService {
 
     @Override
     public List<CarsModel> getByVendorAndCarsModelAndYear(int vendorId, String carsModelName, String year) {
-        if (nextModelOfCarService != null) {
-            return nextModelOfCarService.getByVendorAndCarsModelAndYear(vendorId, carsModelName, year);
+        if (nextCarsModelService != null) {
+            return nextCarsModelService.getByVendorAndCarsModelAndYear(vendorId, carsModelName, year);
         } else {
             return new ArrayList<>();
         }

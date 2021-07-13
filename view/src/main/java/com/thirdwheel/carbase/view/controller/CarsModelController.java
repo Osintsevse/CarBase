@@ -1,7 +1,7 @@
 package com.thirdwheel.carbase.view.controller;
 
 import com.thirdwheel.carbase.service.model.CarsModel;
-import com.thirdwheel.carbase.service.modelofcarservices.ModelOfCarService;
+import com.thirdwheel.carbase.service.modelofcarservices.CarsModelService;
 import com.thirdwheel.carbase.view.model.CarsModelsAsStringListResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,14 +22,14 @@ import java.util.Map;
 @AllArgsConstructor
 @Slf4j
 public class CarsModelController {
-    private final ModelOfCarService modelOfCarService;
+    private final CarsModelService carsModelService;
 
     @RequestMapping(method = RequestMethod.GET, path = "/vendors/{vendorId}/carsmodels")
     public ResponseEntity<List<String>> getByVendorAndNameBeginning(
             @PathVariable(value = "vendorId") @Pattern(regexp = "[0-9]+") String vendorId,
             @RequestParam(value = "nameBeginning", required = false) String nameBeginning) {
         Map<String, CarsModel> byVendorAndText =
-                modelOfCarService.getByVendorAndNameBeginning(Integer.parseInt(vendorId), nameBeginning);
+                carsModelService.getByVendorAndNameBeginning(Integer.parseInt(vendorId), nameBeginning);
         log.info("Found " + byVendorAndText.size() + " cars for VendorId \""
                 + vendorId + "\" and name beginning \"" + nameBeginning + "\"");
         return ResponseEntity.ok(new CarsModelsAsStringListResponse(byVendorAndText).getCarsModels());
