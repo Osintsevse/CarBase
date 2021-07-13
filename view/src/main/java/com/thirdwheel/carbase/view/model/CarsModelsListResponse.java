@@ -9,13 +9,13 @@ import java.util.Map;
 
 @Getter
 public class CarsModelsListResponse {
-    private final List<CarsModelForResponse> entities;
+    private final List<String> carsModels;
 
     public CarsModelsListResponse(Map<String, ModelOfCar> byVendorAndText) {
-        this.entities = new LinkedList<>();
+        this.carsModels = new LinkedList<>();
         byVendorAndText.forEach((x, y) -> {
-            this.entities.add(
-                    new CarsModelForResponse(y.getName()));
+            this.carsModels.add(
+                    y.getName());
         });
     }
 }

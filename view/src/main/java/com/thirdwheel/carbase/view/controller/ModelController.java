@@ -17,8 +17,8 @@ import javax.validation.constraints.Pattern;
 import java.util.List;
 
 @Validated
-@Controller
 @AllArgsConstructor
+@Deprecated
 public class ModelController {
     private final ModelService vendorService;
 
