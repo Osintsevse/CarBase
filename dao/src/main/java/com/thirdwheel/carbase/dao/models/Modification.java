@@ -17,7 +17,7 @@ import java.time.LocalDate;
 @Table(name = "modifications")
 @ToString
 @EqualsAndHashCode
-public class Modification implements IEntityWithName {
+public class Modification implements IEntityWithName, Comparable<Modification> {
     @EqualsAndHashCode.Exclude
     @Id
     @SequenceGenerator(name = "modifications_pk_sequence", sequenceName = "modifications_pk_sequence", allocationSize = 1)
@@ -89,4 +89,9 @@ public class Modification implements IEntityWithName {
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "engine_modification_id")
     private EngineModification engineModification;
+
+    @Override
+    public int compareTo(Modification o) {
+        return this.getName().compareTo(o.getName());
+    }
 }

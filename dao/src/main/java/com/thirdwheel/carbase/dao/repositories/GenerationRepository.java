@@ -1,11 +1,14 @@
 package com.thirdwheel.carbase.dao.repositories;
 
 import com.thirdwheel.carbase.dao.models.Generation;
+import com.thirdwheel.carbase.dao.models.common.PredicateCreator;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.*;
-import java.time.LocalDate;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 @Service
@@ -14,53 +17,36 @@ public class GenerationRepository extends GeneralEntityWithNameRepository<Genera
         super(Generation.class);
     }
 
-    public List<Generation> getByModel(Integer modelId) {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Generation> cq = cb.createQuery(tClass);
-        Root<Generation> modelRoot = cq.from(tClass);
-        CriteriaQuery<Generation> generationsByModelId = cq.where(cb.equal(modelRoot.get("model"), modelId));
-        TypedQuery<Generation> query = entityManager.createQuery(generationsByModelId);
-        return query.getResultList();
-    }
-
-    public List<Generation> getByModel(Integer modelId, String year) {
-        LocalDate beginningOfYear = LocalDate.parse(year + "-01-01");
-        LocalDate endOfYear = LocalDate.parse(year + "-12-31");
-
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Generation> cq = cb.createQuery(tClass);
-        Root<Generation> modelRoot = cq.from(tClass);
-        Predicate modelIdEquals = cb.equal(modelRoot.get("model"), modelId);
-        Path<LocalDate> start = modelRoot.get("start");
-        Predicate startPredicate = cb.or(
-                cb.lessThanOrEqualTo(start, cb.literal(endOfYear)),
-                cb.isNull(start));
-        Path<LocalDate> end = modelRoot.get("end");
-        Predicate endPredicate = cb.or(
-                cb.greaterThanOrEqualTo(end, beginningOfYear),
-                cb.isNull(end));
-        CriteriaQuery<Generation> generationsByModelId = cq.where(cb.and(modelIdEquals, startPredicate, endPredicate));
-        TypedQuery<Generation> query = entityManager.createQuery(generationsByModelId);
-        return query.getResultList();
-    }
-
-    public List<Generation> getByVendor(Integer vendorId, String nameBeginning) {
+    public List<Generation> getByVendor(Integer vendorId) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Generation> cq = cb.createQuery(tClass);
         Root<Generation> root = cq.from(tClass);
-        Predicate nameIsLike = cb.like(cb.upper(root.get("name")), nameBeginning.toUpperCase() + "%");
-        Predicate vendorIdEquals = cb.equal(root.get("model").get("vendor"), vendorId);
+        Predicate vendorIdEquals = PredicateCreator.intIsEqual(root.get("model").get("vendor"), vendorId, cb);
+        CriteriaQuery<Generation> cqm = cq.where(vendorIdEquals);
+        TypedQuery<Generation> query = entityManager.createQuery(cqm);
+        return query.getResultList();
+    }
+
+    public List<Generation> getByVendorAndNameBeginning(Integer vendorId, String nameBeginning) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Generation> cq = cb.createQuery(tClass);
+        Root<Generation> root = cq.from(tClass);
+        Predicate vendorIdEquals = PredicateCreator.intIsEqual(root.get("model").get("vendor"), vendorId, cb);
+        Predicate nameIsLike = PredicateCreator.stringIsLike(root.get("name"), nameBeginning, cb);
         CriteriaQuery<Generation> cqm = cq.where(cb.and(vendorIdEquals, nameIsLike));
         TypedQuery<Generation> query = entityManager.createQuery(cqm);
         return query.getResultList();
     }
 
-    public List<Generation> getByVendor(Integer vendorId) {
+    public List<Generation> getByVendorAndCarsModelAndYear(int vendorId, String carsModelName, String year) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Generation> cq = cb.createQuery(tClass);
         Root<Generation> root = cq.from(tClass);
-        Predicate vendorIdEquals = cb.equal(root.get("model").get("vendor"), vendorId);
-        CriteriaQuery<Generation> cqm = cq.where(vendorIdEquals);
+        Predicate vendorIdEquals = PredicateCreator.intIsEqual(root.get("model").get("vendor"), vendorId, cb);
+        Predicate nameIsEq = PredicateCreator.stringIsEqual(root.get("name"), carsModelName, cb);
+        Predicate yearBetweenStartAndEnd = PredicateCreator
+                .yearBetweenStartAndEnd(root.get("start"), root.get("end"), year, cb);
+        CriteriaQuery<Generation> cqm = cq.where(cb.and(vendorIdEquals, nameIsEq, yearBetweenStartAndEnd));
         TypedQuery<Generation> query = entityManager.createQuery(cqm);
         return query.getResultList();
     }

@@ -2,11 +2,13 @@ package com.thirdwheel.carbase.dao.repositories;
 
 import com.thirdwheel.carbase.dao.models.Vendor;
 import com.thirdwheel.carbase.dao.models.VendorsConfiguration;
+import com.thirdwheel.carbase.dao.models.common.PredicateCreator;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
@@ -20,7 +22,8 @@ public class VendorsConfigurationRepository extends GeneralEntityRepository<Vend
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<VendorsConfiguration> cq = cb.createQuery(tClass);
         Root<VendorsConfiguration> modelRoot = cq.from(tClass);
-        CriteriaQuery<VendorsConfiguration> modelsByVendorId = cq.where(cb.equal(modelRoot.get("vendor"), vendorId));
+        Predicate vendorIdEq = PredicateCreator.intIsEqual(modelRoot.get("vendor"), vendorId, cb);
+        CriteriaQuery<VendorsConfiguration> modelsByVendorId = cq.where(vendorIdEq);
         TypedQuery<VendorsConfiguration> query = entityManager.createQuery(modelsByVendorId);
         List<VendorsConfiguration> resultList = query.getResultList();
         if (resultList.size() > 0) {

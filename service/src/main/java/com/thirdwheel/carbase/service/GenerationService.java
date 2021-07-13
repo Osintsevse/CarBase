@@ -16,8 +16,12 @@ public class GenerationService extends GeneralService<Generation> {
         if (nameBeginning == null) {
             return ((GenerationRepository) repository).getByVendor(vendorId);
         } else {
-            return ((GenerationRepository) repository).getByVendor(vendorId, nameBeginning);
+            return ((GenerationRepository) repository).getByVendorAndNameBeginning(vendorId, nameBeginning);
         }
+    }
+
+    public List<Generation> getByVendorAndCarsModelAndYear(int vendorId, String carsModelName, String year) {
+        return ((GenerationRepository) repository).getByVendorAndCarsModelAndYear(vendorId, carsModelName, year);
     }
 
 }

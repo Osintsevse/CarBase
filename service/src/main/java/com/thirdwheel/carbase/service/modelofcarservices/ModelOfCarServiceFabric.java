@@ -28,7 +28,7 @@ public class ModelOfCarServiceFabric {
         return new ChassisModelOfCarService(nextModelOfCarService, chassisService);
     }
 
-    public ModificationModelOfCarService getModifficationModelOfCarService(IModelOfCarService nextModelOfCarService) {
+    public ModificationModelOfCarService getModificationModelOfCarService(IModelOfCarService nextModelOfCarService) {
         return new ModificationModelOfCarService(nextModelOfCarService, modificationService);
     }
 
@@ -40,7 +40,7 @@ public class ModelOfCarServiceFabric {
         } else if (searchFieldForVendor == SearchFieldForVendor.SEARCH_IN_CHASSIS) {
             return getChassisModelOfCarService(nextModelOfCarService);
         } else if (searchFieldForVendor == SearchFieldForVendor.SEARCH_IN_MODIFICATIONS) {
-            return getModifficationModelOfCarService(nextModelOfCarService);
+            return getModificationModelOfCarService(nextModelOfCarService);
         }
         return null;
     }

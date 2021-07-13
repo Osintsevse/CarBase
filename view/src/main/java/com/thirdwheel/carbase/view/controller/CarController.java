@@ -1,16 +1,13 @@
 package com.thirdwheel.carbase.view.controller;
 
 import com.thirdwheel.carbase.dao.models.Modification;
+import com.thirdwheel.carbase.service.CarService;
 import com.thirdwheel.carbase.service.ModificationService;
-import com.thirdwheel.carbase.service.model.ModelOfCar;
-import com.thirdwheel.carbase.service.modelofcarservices.ModelOfCarService;
-import com.thirdwheel.carbase.view.model.CarForListResponse;
-import com.thirdwheel.carbase.view.model.CarsListResponse;
-import com.thirdwheel.carbase.view.model.CarsModelsListResponse;
+import com.thirdwheel.carbase.view.model.ModificationDetailedResponse;
+import com.thirdwheel.carbase.view.model.ModificationForListResponse;
+import com.thirdwheel.carbase.view.model.ModificationsListResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -20,8 +17,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.constraints.Pattern;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.TreeSet;
 
 @Validated
 @Controller
@@ -29,49 +27,33 @@ import java.util.Map;
 @Slf4j
 public class CarController {
     private final ModificationService modificationService;
-    private final ModelOfCarService modelOfCarService;
-
-    @Deprecated
-    @RequestMapping(method = RequestMethod.GET, path = "/vendors/models/{modelId}/cars")
-    public ResponseEntity<List<CarForListResponse>> getCarsByModelAndYear(
-            @PathVariable(value = "modelId") @Pattern(regexp = "[0-9]+") String modelId,
-            @RequestParam(value = "year", required = false) @Pattern(regexp = "[0-9]{4}") String year) {
-        List<Modification> modifications = modificationService.getByVendor(Integer.parseInt(modelId), year);
-        return ResponseEntity.ok(new CarsListResponse(modifications).getEntities());
-    }
-
-    @Deprecated
-    @RequestMapping(method = RequestMethod.GET, path = "/vendors/{vendorId}/models/cars")
-    public ResponseEntity<List<CarForListResponse>> getModificationByVendorAndNameBeginning(
-            @PathVariable(value = "vendorId") @Pattern(regexp = "[0-9]+") String vendorId,
-            @RequestParam(value = "nameBeginning") String nameBeginning) {
-        List<Modification> modifications =
-                modificationService.getByVendorAndNameBeginning(Integer.parseInt(vendorId), nameBeginning);
-        log.info("Found " + modifications.size() + " cars for VendorId \""
-                + vendorId + "\" and name beginning \"" + nameBeginning+"\"");
-        return ResponseEntity.ok(new CarsListResponse(modifications).getEntities());
-    }
-
-    @RequestMapping(method = RequestMethod.GET, path = "/vendors/{vendorId}/carsmodels")
-    public ResponseEntity<List<String>> getByVendorAndNameBeginning(
-            @PathVariable(value = "vendorId") @Pattern(regexp = "[0-9]+") String vendorId,
-            @RequestParam(value = "nameBeginning", required = false) String nameBeginning) {
-        Map<String, ModelOfCar> byVendorAndText =
-                modelOfCarService.getByVendorAndText(Integer.parseInt(vendorId), nameBeginning);
-        log.info("Found " + byVendorAndText.size() + " cars for VendorId \""
-                + vendorId + "\" and name beginning \"" + nameBeginning+"\"");
-        return ResponseEntity.ok(new CarsModelsListResponse(byVendorAndText).getCarsModels());
-    }
+    private final CarService carService;
 
     @RequestMapping(method = RequestMethod.GET, path = "/vendors/{vendorId}/cars")
-    public ResponseEntity<List<String>> getByVendorsNameBeginningAndYear(
+    public ResponseEntity<List<ModificationForListResponse>> getByVendorsNameBeginningAndYear(
             @PathVariable(value = "vendorId") @Pattern(regexp = "[0-9]+") String vendorId,
             @RequestParam(value = "carsModelName") String carsModelName,
-            @RequestParam(value = "year", required = false) String year) {
-        Map<String, ModelOfCar> byVendorAndText =
-                modelOfCarService.getByVendorAndText(Integer.parseInt(vendorId), carsModelName);
-        log.info("Found " + byVendorAndText.size() + " cars for VendorId \""
-                + vendorId + "\" and name beginning \"" + carsModelName+"\"");
-        return ResponseEntity.ok(new CarsModelsListResponse(byVendorAndText).getCarsModels());
+            @RequestParam(value = "year") @Pattern(regexp = "[0-9]{4}") String year) {
+        TreeSet<Modification> byVendorAndCarsModelAndYear =
+                carService.getByVendorAndCarsModelAndYear(Integer.parseInt(vendorId), carsModelName, year);
+        log.info("Found " + byVendorAndCarsModelAndYear.size() + " cars for VendorId \""
+                + vendorId + "\", car's model name \"" + carsModelName + "\" and year \"" + year + "\"");
+        return ResponseEntity.ok(new ModificationsListResponse(byVendorAndCarsModelAndYear).getModificationsResponse());
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/vendors/cars/{modificationId}/similar")
+    public ResponseEntity<List<ModificationForListResponse>> getSimilarByModification(
+            @PathVariable(value = "modificationId") @Pattern(regexp = "[0-9]+") String modificationId) {
+        Modification byId = modificationService.getById(Integer.parseInt(modificationId));
+        ArrayList<ModificationForListResponse> modificationForListResponses = new ArrayList<>();
+        modificationForListResponses.add(new ModificationForListResponse(byId));
+        return ResponseEntity.ok(modificationForListResponses);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/vendors/cars/{modificationId}")
+    public ResponseEntity<ModificationDetailedResponse> getById(
+            @PathVariable(value = "modificationId") @Pattern(regexp = "[0-9]+") String modificationId) {
+        Modification byId = modificationService.getById(Integer.parseInt(modificationId));
+        return ResponseEntity.ok(new ModificationDetailedResponse(byId));
     }
 }

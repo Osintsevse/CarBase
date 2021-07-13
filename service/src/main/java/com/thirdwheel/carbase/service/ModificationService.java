@@ -12,20 +12,36 @@ public class ModificationService extends GeneralService<Modification> {
         super(repository);
     }
 
-    public List<Modification> getByVendor(Integer modelId, String year) {
+    public List<Modification> getByVendorAndYear(Integer modelId, String year) {
         if (year == null) {
             return ((ModificationRepository) repository).getByModel(modelId);
         } else {
-            return ((ModificationRepository) repository).getByModel(modelId, year);
+            return ((ModificationRepository) repository).getByModelAndYear(modelId, year);
         }
-
     }
+
 
     public List<Modification> getByVendorAndNameBeginning(Integer vendorId, String nameBeginning) {
         if (nameBeginning == null) {
             return ((ModificationRepository) repository).getByVendor(vendorId);
         } else {
-            return ((ModificationRepository) repository).getByVendor(vendorId, nameBeginning);
+            return ((ModificationRepository) repository).getByVendorAndNameBeginning(vendorId, nameBeginning);
         }
+    }
+
+    public List<Modification> getByVendorAndCarsModelAndYear(int vendorId, String carsModelName, String year) {
+        return ((ModificationRepository) repository).getByVendorAndCarsModelAndYear(vendorId, carsModelName, year);
+    }
+
+    public List<Modification> getByChassisAndYear(int chassisId, String year) {
+        return ((ModificationRepository) repository).getByChassisAndYear(chassisId, year);
+    }
+
+    public List<Modification> getByGenerationAndYear(int generationId, String year) {
+        return ((ModificationRepository) repository).getByGenerationAndYear(generationId, year);
+    }
+
+    public List<Modification> getByModelAndYear(int modelId, String year) {
+        return ((ModificationRepository) repository).getByModelAndYear(modelId, year);
     }
 }

@@ -16,8 +16,12 @@ public class ModelService extends GeneralService<Model> {
         if (nameBeginning == null) {
             return ((ModelRepository) repository).getByVendor(vendorId);
         } else {
-            return ((ModelRepository) repository).getByVendor(vendorId, nameBeginning);
+            return ((ModelRepository) repository).getByVendorAndNameBeginning(vendorId, nameBeginning);
         }
+    }
+
+    public List<Model> getByVendorAndCarsModelAndYear(int vendorId, String carsModelName) {
+        return ((ModelRepository) repository).getByVendorAndCarsModelAndYear(vendorId, carsModelName);
     }
 
 }

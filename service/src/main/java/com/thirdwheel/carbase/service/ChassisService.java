@@ -16,8 +16,12 @@ public class ChassisService extends GeneralService<Chassis> {
         if (nameBeginning == null) {
             return ((ChassisRepository) repository).getByVendor(vendorId);
         } else {
-            return ((ChassisRepository) repository).getByVendor(vendorId, nameBeginning);
+            return ((ChassisRepository) repository).getByVendorAndName(vendorId, nameBeginning);
         }
+    }
+
+    public List<Chassis> getByVendorAndCarsModel(int vendorId, String carsModelName) {
+        return ((ChassisRepository) repository).getByVendorAndCarsModelAndYear(vendorId, carsModelName);
     }
 
 }
