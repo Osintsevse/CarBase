@@ -1,4 +1,4 @@
-package com.thirdwheel.carbase.service.modelofcarservices;
+package com.thirdwheel.carbase.service.carsmodelservices;
 
 import com.thirdwheel.carbase.dao.models.Vendor;
 import com.thirdwheel.carbase.dao.models.enums.SearchFieldForVendor;
@@ -11,16 +11,15 @@ import java.util.*;
 
 @Service
 @RequiredArgsConstructor
-public class CarsModelService implements ICarsModelService {
+public class CarsModelService {
     private final GeneralService<Vendor> vendorService;
     private final CarsModelServiceFabric carsModelServiceFabric;
 
-    @Override
     public Map<String, CarsModel> getByVendorAndNameBeginning(int vendorId, String nameBeginning) {
         Vendor byId = vendorService.getById(vendorId);
         EnumSet<SearchFieldForVendor> fieldsForVendors =
                 SearchFieldForVendor.fromInt(byId.getVendorsConfiguration().getSearchFieldsBitMask());
-        ICarsModelService carService = null;
+        AbstractCarsModelService carService = null;
         for (SearchFieldForVendor fieldsForVendor : fieldsForVendors) {
             carService = carsModelServiceFabric.getCarsModelService(fieldsForVendor, carService);
         }
@@ -31,12 +30,11 @@ public class CarsModelService implements ICarsModelService {
         }
     }
 
-    @Override
     public List<CarsModel> getByVendorAndCarsModelAndYear(int vendorId, String carsModelName, String year) {
         Vendor byId = vendorService.getById(vendorId);
         EnumSet<SearchFieldForVendor> fieldsForVendors =
                 SearchFieldForVendor.fromInt(byId.getVendorsConfiguration().getSearchFieldsBitMask());
-        ICarsModelService carService = null;
+        AbstractCarsModelService carService = null;
         for (SearchFieldForVendor fieldsForVendor : fieldsForVendors) {
             carService = carsModelServiceFabric.getCarsModelService(fieldsForVendor, carService);
         }

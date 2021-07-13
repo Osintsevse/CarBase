@@ -1,4 +1,4 @@
-package com.thirdwheel.carbase.service.modelofcarservices;
+package com.thirdwheel.carbase.service.carsmodelservices;
 
 import com.thirdwheel.carbase.dao.models.Modification;
 import com.thirdwheel.carbase.service.ModificationService;
@@ -10,10 +10,10 @@ import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor
-public class ModificationCarsModelService extends ACarsModelService {
+public class ModificationCarsModelService extends AbstractCarsModelService {
     private final ModificationService modificationService;
 
-    public ModificationCarsModelService(ICarsModelService nextModelOfCarService, ModificationService modificationService) {
+    public ModificationCarsModelService(AbstractCarsModelService nextModelOfCarService, ModificationService modificationService) {
         super(nextModelOfCarService);
         this.modificationService = modificationService;
     }

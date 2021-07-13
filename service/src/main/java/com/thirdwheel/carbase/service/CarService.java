@@ -3,7 +3,7 @@ package com.thirdwheel.carbase.service;
 import com.thirdwheel.carbase.dao.models.Modification;
 import com.thirdwheel.carbase.service.enums.CarsModelsType;
 import com.thirdwheel.carbase.service.model.CarsModel;
-import com.thirdwheel.carbase.service.modelofcarservices.CarsModelService;
+import com.thirdwheel.carbase.service.carsmodelservices.CarsModelService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

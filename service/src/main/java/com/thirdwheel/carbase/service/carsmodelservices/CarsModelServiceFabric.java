@@ -1,4 +1,4 @@
-package com.thirdwheel.carbase.service.modelofcarservices;
+package com.thirdwheel.carbase.service.carsmodelservices;
 
 import com.thirdwheel.carbase.dao.models.enums.SearchFieldForVendor;
 import com.thirdwheel.carbase.service.ChassisService;
@@ -16,23 +16,23 @@ public class CarsModelServiceFabric {
     private final ModelService modelService;
     private final ModificationService modificationService;
 
-    public ModelCarsModelService getModelCarsModelService(ICarsModelService nextCarsModelService) {
+    public ModelCarsModelService getModelCarsModelService(AbstractCarsModelService nextCarsModelService) {
         return new ModelCarsModelService(nextCarsModelService, modelService);
     }
 
-    public GenerationCarsModelService getGenerationCarsModelService(ICarsModelService nextCarsModelService) {
+    public GenerationCarsModelService getGenerationCarsModelService(AbstractCarsModelService nextCarsModelService) {
         return new GenerationCarsModelService(nextCarsModelService, generationService);
     }
 
-    public ChassisCarsModelService getChassisCarsModelService(ICarsModelService nextCarsModelService) {
+    public ChassisCarsModelService getChassisCarsModelService(AbstractCarsModelService nextCarsModelService) {
         return new ChassisCarsModelService(nextCarsModelService, chassisService);
     }
 
-    public ModificationCarsModelService getModificationCarsModelService(ICarsModelService nextCarsModelService) {
+    public ModificationCarsModelService getModificationCarsModelService(AbstractCarsModelService nextCarsModelService) {
         return new ModificationCarsModelService(nextCarsModelService, modificationService);
     }
 
-    public ICarsModelService getCarsModelService(SearchFieldForVendor searchFieldForVendor, ICarsModelService nextCarsModelService) {
+    public AbstractCarsModelService getCarsModelService(SearchFieldForVendor searchFieldForVendor, AbstractCarsModelService nextCarsModelService) {
         if (searchFieldForVendor == SearchFieldForVendor.SEARCH_IN_MODELS) {
             return getModelCarsModelService(nextCarsModelService);
         } else if (searchFieldForVendor == SearchFieldForVendor.SEARCH_IN_GENERATIONS) {

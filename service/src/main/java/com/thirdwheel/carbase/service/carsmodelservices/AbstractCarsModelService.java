@@ -1,4 +1,4 @@
-package com.thirdwheel.carbase.service.modelofcarservices;
+package com.thirdwheel.carbase.service.carsmodelservices;
 
 import com.thirdwheel.carbase.service.model.CarsModel;
 import lombok.AllArgsConstructor;
@@ -11,10 +11,9 @@ import java.util.TreeMap;
 
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class ACarsModelService implements ICarsModelService {
-    private ICarsModelService nextCarsModelService;
+public abstract class AbstractCarsModelService {
+    private AbstractCarsModelService nextCarsModelService;
 
-    @Override
     public Map<String, CarsModel> getByVendorAndNameBeginning(int vendorId, String nameBeginning) {
         if (nextCarsModelService != null) {
             return nextCarsModelService.getByVendorAndNameBeginning(vendorId, nameBeginning);
@@ -23,7 +22,6 @@ public abstract class ACarsModelService implements ICarsModelService {
         }
     }
 
-    @Override
     public List<CarsModel> getByVendorAndCarsModelAndYear(int vendorId, String carsModelName, String year) {
         if (nextCarsModelService != null) {
             return nextCarsModelService.getByVendorAndCarsModelAndYear(vendorId, carsModelName, year);

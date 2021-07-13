@@ -1,7 +1,7 @@
-package com.thirdwheel.carbase.service.modelofcarservices;
+package com.thirdwheel.carbase.service.carsmodelservices;
 
-import com.thirdwheel.carbase.dao.models.Model;
-import com.thirdwheel.carbase.service.ModelService;
+import com.thirdwheel.carbase.dao.models.Generation;
+import com.thirdwheel.carbase.service.GenerationService;
 import com.thirdwheel.carbase.service.enums.CarsModelsType;
 import com.thirdwheel.carbase.service.model.CarsModel;
 import lombok.RequiredArgsConstructor;
@@ -10,20 +10,20 @@ import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor
-public class ModelCarsModelService extends ACarsModelService {
-    private final ModelService modelService;
+public class GenerationCarsModelService extends AbstractCarsModelService {
+    private final GenerationService generationService;
 
-    public ModelCarsModelService(ICarsModelService nextModelOfCarService, ModelService modelService) {
+    public GenerationCarsModelService(AbstractCarsModelService nextModelOfCarService, GenerationService generationService) {
         super(nextModelOfCarService);
-        this.modelService = modelService;
+        this.generationService = generationService;
     }
 
     @Override
     public Map<String, CarsModel> getByVendorAndNameBeginning(int vendorId, String nameBeginning) {
         Map<String, CarsModel> modelOfCarByVendorAndText = super.getByVendorAndNameBeginning(vendorId, nameBeginning);
-        List<Model> modelByVendor = modelService.getByVendor(vendorId, nameBeginning);
+        List<Generation> modelByVendor = generationService.getByVendor(vendorId, nameBeginning);
         modelByVendor.forEach(x -> {
-            modelOfCarByVendorAndText.putIfAbsent(x.getName(), new CarsModel(x.getId(), x.getName(), CarsModelsType.MODEL));
+            modelOfCarByVendorAndText.putIfAbsent(x.getName(), new CarsModel(x.getId(), x.getName(), CarsModelsType.GENERATION));
         });
         return modelOfCarByVendorAndText;
     }
@@ -31,9 +31,9 @@ public class ModelCarsModelService extends ACarsModelService {
     @Override
     public List<CarsModel> getByVendorAndCarsModelAndYear(int vendorId, String carsModelName, String year) {
         List<CarsModel> byVendorAndCarsModelAndYear = super.getByVendorAndCarsModelAndYear(vendorId, carsModelName, year);
-        List<Model> modelByVendor = modelService.getByVendorAndCarsModelAndYear(vendorId, carsModelName);
+        List<Generation> modelByVendor = generationService.getByVendorAndCarsModelAndYear(vendorId, carsModelName, year);
         modelByVendor.forEach(x -> {
-            byVendorAndCarsModelAndYear.add(new CarsModel(x.getId(), x.getName(), CarsModelsType.MODEL));
+            byVendorAndCarsModelAndYear.add(new CarsModel(x.getId(), x.getName(), CarsModelsType.GENERATION));
         });
         return byVendorAndCarsModelAndYear;
     }
