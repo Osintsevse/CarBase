@@ -14,8 +14,8 @@ public class ModificationForListResponse {
     private final String modelName;
     private final String vendorName;
     private final String wholeName;
-    private final LocalDate startDate;
-    private final LocalDate endDate;
+    private final LocalDate manufacturingStartDate;
+    private final LocalDate manufacturingEndDate;
 
     public ModificationForListResponse(Modification modification) {
         this.id = modification.getId();
@@ -26,7 +26,7 @@ public class ModificationForListResponse {
         this.vendorName = modification.getChassis().getGeneration().getModel().getVendor().getName();
         this.wholeName = this.vendorName + ", " + this.modelName + ", " + this.generationName + ", " + this.chassisName
                 + ", " + this.modificationName;
-        this.startDate = modification.getStart();
-        this.endDate = modification.getEnd();
+        this.manufacturingStartDate = modification.getStart();
+        this.manufacturingEndDate = modification.getEnd();
     }
 }
