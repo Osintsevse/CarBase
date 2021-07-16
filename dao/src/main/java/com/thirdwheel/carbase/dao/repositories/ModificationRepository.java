@@ -44,7 +44,7 @@ public class ModificationRepository extends GeneralEntityWithNameRepository<Modi
         Root<Modification> root = cq.from(tClass);
         Predicate idEquals = PredicateCreator
                 .intIsEqual(root.get("chassis").get("generation").get("model").get("vendor"), vendorId, cb);
-        Predicate nameIsLike = PredicateCreator.stringIsLike(root.get("name"), nameBeginning, cb);
+        Predicate nameIsLike = PredicateCreator.stringStartsWith(root.get("name"), nameBeginning, cb);
         CriteriaQuery<Modification> byIdAndName = cq.where(cb.and(idEquals, nameIsLike));
         TypedQuery<Modification> query = entityManager.createQuery(byIdAndName);
         return query.getResultList();

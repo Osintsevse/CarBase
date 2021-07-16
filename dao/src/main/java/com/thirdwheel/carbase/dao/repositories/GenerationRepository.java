@@ -32,7 +32,7 @@ public class GenerationRepository extends GeneralEntityWithNameRepository<Genera
         CriteriaQuery<Generation> cq = cb.createQuery(tClass);
         Root<Generation> root = cq.from(tClass);
         Predicate vendorIdEquals = PredicateCreator.intIsEqual(root.get("model").get("vendor"), vendorId, cb);
-        Predicate nameIsLike = PredicateCreator.stringIsLike(root.get("name"), nameBeginning, cb);
+        Predicate nameIsLike = PredicateCreator.stringStartsWith(root.get("name"), nameBeginning, cb);
         CriteriaQuery<Generation> cqm = cq.where(cb.and(vendorIdEquals, nameIsLike));
         TypedQuery<Generation> query = entityManager.createQuery(cqm);
         return query.getResultList();

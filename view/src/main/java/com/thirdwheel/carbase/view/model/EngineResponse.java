@@ -1,13 +1,10 @@
 package com.thirdwheel.carbase.view.model;
 
 import com.thirdwheel.carbase.dao.models.EngineModification;
-import com.thirdwheel.carbase.dao.models.Vendor;
 import com.thirdwheel.carbase.dao.models.enums.ChargerType;
 import com.thirdwheel.carbase.dao.models.enums.EngineType;
 import com.thirdwheel.carbase.dao.models.enums.FuelType;
 import lombok.Getter;
-
-import javax.persistence.Column;
 
 @Getter
 public class EngineResponse {

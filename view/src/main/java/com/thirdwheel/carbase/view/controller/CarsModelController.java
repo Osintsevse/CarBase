@@ -1,7 +1,7 @@
 package com.thirdwheel.carbase.view.controller;
 
-import com.thirdwheel.carbase.service.model.CarsModel;
 import com.thirdwheel.carbase.service.carsmodelservices.CarsModelService;
+import com.thirdwheel.carbase.service.model.CarsModel;
 import com.thirdwheel.carbase.view.model.CarsModelsAsStringListResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

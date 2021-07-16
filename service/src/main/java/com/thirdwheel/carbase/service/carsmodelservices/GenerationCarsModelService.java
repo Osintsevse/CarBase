@@ -2,7 +2,7 @@ package com.thirdwheel.carbase.service.carsmodelservices;
 
 import com.thirdwheel.carbase.dao.models.Generation;
 import com.thirdwheel.carbase.service.GenerationService;
-import com.thirdwheel.carbase.service.enums.CarsModelsType;
+import com.thirdwheel.carbase.service.enums.CarsModelType;
 import com.thirdwheel.carbase.service.model.CarsModel;
 import lombok.RequiredArgsConstructor;
 
@@ -23,7 +23,7 @@ public class GenerationCarsModelService extends AbstractCarsModelService {
         Map<String, CarsModel> modelOfCarByVendorAndText = super.getByVendorAndNameBeginning(vendorId, nameBeginning);
         List<Generation> modelByVendor = generationService.getByVendor(vendorId, nameBeginning);
         modelByVendor.forEach(x -> {
-            modelOfCarByVendorAndText.putIfAbsent(x.getName(), new CarsModel(x.getId(), x.getName(), CarsModelsType.GENERATION));
+            modelOfCarByVendorAndText.putIfAbsent(x.getName(), new CarsModel(x.getId(), x.getName(), CarsModelType.GENERATION));
         });
         return modelOfCarByVendorAndText;
     }
@@ -33,7 +33,7 @@ public class GenerationCarsModelService extends AbstractCarsModelService {
         List<CarsModel> byVendorAndCarsModelAndYear = super.getByVendorAndCarsModelAndYear(vendorId, carsModelName, year);
         List<Generation> modelByVendor = generationService.getByVendorAndCarsModelAndYear(vendorId, carsModelName, year);
         modelByVendor.forEach(x -> {
-            byVendorAndCarsModelAndYear.add(new CarsModel(x.getId(), x.getName(), CarsModelsType.GENERATION));
+            byVendorAndCarsModelAndYear.add(new CarsModel(x.getId(), x.getName(), CarsModelType.GENERATION));
         });
         return byVendorAndCarsModelAndYear;
     }

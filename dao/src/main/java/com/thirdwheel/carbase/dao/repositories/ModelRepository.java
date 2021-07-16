@@ -32,7 +32,7 @@ public class ModelRepository extends GeneralEntityWithNameRepository<Model> {
         CriteriaQuery<Model> cq = cb.createQuery(tClass);
         Root<Model> root = cq.from(tClass);
         Predicate vendorIdEq = PredicateCreator.intIsEqual(root.get("vendor"), vendorId, cb);
-        Predicate nameIsLike = PredicateCreator.stringIsLike(root.get("name"), nameBeginning, cb);
+        Predicate nameIsLike = PredicateCreator.stringStartsWith(root.get("name"), nameBeginning, cb);
         CriteriaQuery<Model> cqm = cq.where(cb.and(vendorIdEq, nameIsLike));
         TypedQuery<Model> query = entityManager.createQuery(cqm);
         return query.getResultList();

@@ -32,7 +32,7 @@ public class ChassisRepository extends GeneralEntityWithNameRepository<Chassis> 
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Chassis> cq = cb.createQuery(tClass);
         Root<Chassis> root = cq.from(tClass);
-        Predicate nameIsLike = PredicateCreator.stringIsLike(root.get("name"), nameBeginning, cb);
+        Predicate nameIsLike = PredicateCreator.stringStartsWith(root.get("name"), nameBeginning, cb);
         Predicate vendorIdEquals = PredicateCreator
                 .intIsEqual(root.get("generation").get("model").get("vendor"), vendorId, cb);
         CriteriaQuery<Chassis> cqm = cq.where(cb.and(vendorIdEquals, nameIsLike));

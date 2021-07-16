@@ -12,6 +12,7 @@ public class GenerationService extends GeneralService<Generation> {
         super(repository);
     }
 
+
     public List<Generation> getByVendor(Integer vendorId, String nameBeginning) {
         if (nameBeginning == null) {
             return ((GenerationRepository) repository).getByVendor(vendorId);
