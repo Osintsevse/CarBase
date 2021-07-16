@@ -12,7 +12,7 @@ public class PredicateCreator {
                                                    Path<LocalDate> manufacturingEndDate,
                                                    String year,
                                                    CriteriaBuilder cb) {
-        Pattern pattern = Pattern.compile("[1-2]{4}");
+        Pattern pattern = Pattern.compile("[0-9]{4}");
         if (!pattern.matcher(year).matches()){
             throw new ConstraintViolationException("Year must match \""+pattern.pattern()+"\"",null);
         }
