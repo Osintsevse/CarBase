@@ -13,8 +13,8 @@ public class PredicateCreator {
                                                    String year,
                                                    CriteriaBuilder cb) {
         Pattern pattern = Pattern.compile("[0-9]{4}");
-        if (!pattern.matcher(year).matches()){
-            throw new ConstraintViolationException("Year must match \""+pattern.pattern()+"\"",null);
+        if (!pattern.matcher(year).matches()) {
+            throw new ConstraintViolationException("Year must match \"" + pattern.pattern() + "\"", null);
         }
         LocalDate beginningOfYear = LocalDate.parse(year + "-01-01");
         LocalDate endOfYear = LocalDate.parse(year + "-12-31");

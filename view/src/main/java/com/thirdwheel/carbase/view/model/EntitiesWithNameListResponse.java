@@ -3,16 +3,14 @@ package com.thirdwheel.carbase.view.model;
 import com.thirdwheel.carbase.dao.models.IEntityWithName;
 import lombok.Getter;
 
-import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 public class EntitiesWithNameListResponse {
     private final List<EntityWithNameForResponse> entities;
 
     public EntitiesWithNameListResponse(List<? extends IEntityWithName> entitiesInput) {
-        entities = new LinkedList<>();
-        entitiesInput.forEach(x ->
-                entities.add(new EntityWithNameForResponse(x)));
+        entities = entitiesInput.stream().map(EntityWithNameForResponse::new).collect(Collectors.toList());
     }
 }
