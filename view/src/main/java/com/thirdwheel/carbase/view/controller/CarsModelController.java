@@ -8,9 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.constraints.Pattern;
@@ -24,7 +23,7 @@ import java.util.Map;
 public class CarsModelController {
     private final CarsModelService carsModelService;
 
-    @RequestMapping(method = RequestMethod.GET, path = "/vendors/{vendorId}/carsmodels")
+    @GetMapping(path = "/vendors/{vendorId}/carsmodels")
     public ResponseEntity<List<String>> getByVendorAndNameBeginning(
             @PathVariable(value = "vendorId") @Pattern(regexp = "[0-9]+") String vendorId,
             @RequestParam(value = "nameBeginning", required = false) String nameBeginning) {
