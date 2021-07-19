@@ -36,7 +36,7 @@ public class CarController {
             @RequestParam(value = "year") @Pattern(regexp = "[0-9]{4}") String year) {
         TreeSet<Modification> byVendorAndCarsModelAndYear =
                 carService.getByVendorAndCarsModelAndYear(Integer.parseInt(vendorId), carsModelName, year);
-        log.info("Found " + byVendorAndCarsModelAndYear.size() + " cars for VendorId \""
+        log.debug("Found " + byVendorAndCarsModelAndYear.size() + " cars for VendorId \""
                 + vendorId + "\", car's model name \"" + carsModelName + "\" and year \"" + year + "\"");
         return ResponseEntity.ok(new ModificationsListResponse(byVendorAndCarsModelAndYear).getModificationsResponse());
     }

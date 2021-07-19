@@ -30,7 +30,7 @@ public class CarsModelController {
             @RequestParam(value = "nameBeginning", required = false) String nameBeginning) {
         Map<String, CarsModel> byVendorAndText =
                 carsModelService.getByVendorAndNameBeginning(Integer.parseInt(vendorId), nameBeginning);
-        log.info("Found " + byVendorAndText.size() + " cars for VendorId \""
+        log.debug("Found " + byVendorAndText.size() + " cars for VendorId \""
                 + vendorId + "\" and name beginning \"" + nameBeginning + "\"");
         return ResponseEntity.ok(new CarsModelsAsStringListResponse(byVendorAndText).getCarsModels());
     }

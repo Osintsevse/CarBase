@@ -1,6 +1,6 @@
 package com.thirdwheel.carbase.view.configuration;
 
-import com.thirdwheel.carbase.dao.models.*;
+import com.thirdwheel.carbase.dao.models.Vendor;
 import com.thirdwheel.carbase.dao.repositories.GeneralEntityWithNameRepository;
 import com.thirdwheel.carbase.service.GeneralService;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +13,7 @@ public class ServiceConfig {
     private final GeneralEntityWithNameRepository<Vendor> vendorRepository;
 
     @Bean
-    public GeneralService<Vendor,GeneralEntityWithNameRepository<Vendor>> vendorGeneralService() {
+    public GeneralService<Vendor, GeneralEntityWithNameRepository<Vendor>> vendorGeneralService() {
         return new GeneralService<>(vendorRepository);
     }
 

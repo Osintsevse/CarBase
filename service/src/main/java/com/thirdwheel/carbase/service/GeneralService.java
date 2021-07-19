@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class GeneralService<T extends IEntityWithName,R extends GeneralEntityWithNameRepository<T>> {
+public class GeneralService<T extends IEntityWithName, R extends GeneralEntityWithNameRepository<T>> {
     protected final R repository;
 
     public T getById(int id) {

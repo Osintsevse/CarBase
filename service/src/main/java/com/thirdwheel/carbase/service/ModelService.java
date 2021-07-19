@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ModelService extends GeneralService<Model,ModelRepository> {
+public class ModelService extends GeneralService<Model, ModelRepository> {
     public ModelService(ModelRepository repository) {
         super(repository);
     }

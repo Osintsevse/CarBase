@@ -7,14 +7,14 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ChassisService extends GeneralService<Chassis,ChassisRepository> {
+public class ChassisService extends GeneralService<Chassis, ChassisRepository> {
     public ChassisService(ChassisRepository repository) {
         super(repository);
     }
 
     public List<Chassis> getByVendor(Integer vendorId, String nameBeginning) {
         if (nameBeginning == null) {
-            return  repository.getByVendor(vendorId);
+            return repository.getByVendor(vendorId);
         } else {
             return repository.getByVendorAndName(vendorId, nameBeginning);
         }
