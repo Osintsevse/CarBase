@@ -7,21 +7,21 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ModelService extends GeneralService<Model> {
+public class ModelService extends GeneralService<Model,ModelRepository> {
     public ModelService(ModelRepository repository) {
         super(repository);
     }
 
     public List<Model> getByVendor(Integer vendorId, String nameBeginning) {
         if (nameBeginning == null) {
-            return ((ModelRepository) repository).getByVendor(vendorId);
+            return repository.getByVendor(vendorId);
         } else {
-            return ((ModelRepository) repository).getByVendorAndNameBeginning(vendorId, nameBeginning);
+            return repository.getByVendorAndNameBeginning(vendorId, nameBeginning);
         }
     }
 
     public List<Model> getByVendorAndCarsModelAndYear(int vendorId, String carsModelName) {
-        return ((ModelRepository) repository).getByVendorAndCarsModelAndYear(vendorId, carsModelName);
+        return repository.getByVendorAndCarsModelAndYear(vendorId, carsModelName);
     }
 
 }

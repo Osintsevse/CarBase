@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class GenerationService extends GeneralService<Generation> {
+public class GenerationService extends GeneralService<Generation,GenerationRepository> {
     public GenerationService(GenerationRepository repository) {
         super(repository);
     }
@@ -15,14 +15,14 @@ public class GenerationService extends GeneralService<Generation> {
 
     public List<Generation> getByVendor(Integer vendorId, String nameBeginning) {
         if (nameBeginning == null) {
-            return ((GenerationRepository) repository).getByVendor(vendorId);
+            return repository.getByVendor(vendorId);
         } else {
-            return ((GenerationRepository) repository).getByVendorAndNameBeginning(vendorId, nameBeginning);
+            return repository.getByVendorAndNameBeginning(vendorId, nameBeginning);
         }
     }
 
     public List<Generation> getByVendorAndCarsModelAndYear(int vendorId, String carsModelName, String year) {
-        return ((GenerationRepository) repository).getByVendorAndCarsModelAndYear(vendorId, carsModelName, year);
+        return repository.getByVendorAndCarsModelAndYear(vendorId, carsModelName, year);
     }
 
 }

@@ -2,6 +2,7 @@ package com.thirdwheel.carbase.service.carsmodelservices;
 
 import com.thirdwheel.carbase.dao.models.Vendor;
 import com.thirdwheel.carbase.dao.models.enums.SearchFieldForVendor;
+import com.thirdwheel.carbase.dao.repositories.GeneralEntityWithNameRepository;
 import com.thirdwheel.carbase.service.GeneralService;
 import com.thirdwheel.carbase.service.model.CarsModel;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +13,7 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 public class CarsModelService {
-    private final GeneralService<Vendor> vendorService;
+    private final GeneralService<Vendor, GeneralEntityWithNameRepository<Vendor>> vendorService;
     private final CarsModelServiceFabric carsModelServiceFabric;
 
     public Map<String, CarsModel> getByVendorAndNameBeginning(int vendorId, String nameBeginning) {
