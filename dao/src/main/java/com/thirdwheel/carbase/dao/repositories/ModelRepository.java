@@ -1,7 +1,6 @@
 package com.thirdwheel.carbase.dao.repositories;
 
 import com.thirdwheel.carbase.dao.models.Model;
-import com.thirdwheel.carbase.dao.models.common.PredicateCreator;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.TypedQuery;
@@ -32,7 +31,7 @@ public class ModelRepository extends GeneralEntityWithNameRepository<Model> {
         CriteriaQuery<Model> cq = cb.createQuery(tClass);
         Root<Model> root = cq.from(tClass);
         Predicate vendorIdEq = predicateCreator.intIsEqual(root.get("vendor"), vendorId);
-        Predicate nameIsLike =predicateCreator.stringStartsWith(root.get("name"), nameBeginning);
+        Predicate nameIsLike = predicateCreator.stringStartsWith(root.get("name"), nameBeginning);
         CriteriaQuery<Model> cqm = cq.where(cb.and(vendorIdEq, nameIsLike));
         TypedQuery<Model> query = entityManager.createQuery(cqm);
         return query.getResultList();

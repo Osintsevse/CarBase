@@ -1,7 +1,8 @@
-package com.thirdwheel.carbase.service.carsmodelservices;
+package com.thirdwheel.carbase.service.carsmodelservices.specificservices;
 
 import com.thirdwheel.carbase.dao.models.Generation;
 import com.thirdwheel.carbase.service.GenerationService;
+import com.thirdwheel.carbase.service.carsmodelservices.AbstractCarsModelService;
 import com.thirdwheel.carbase.service.enums.CarsModelType;
 import com.thirdwheel.carbase.service.model.CarsModel;
 import lombok.RequiredArgsConstructor;

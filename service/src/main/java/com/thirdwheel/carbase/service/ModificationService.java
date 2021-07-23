@@ -2,6 +2,7 @@ package com.thirdwheel.carbase.service;
 
 import com.thirdwheel.carbase.dao.models.Modification;
 import com.thirdwheel.carbase.dao.repositories.ModificationRepository;
+import com.thirdwheel.carbase.dao.repositories.similaritytagservices.SimilarityTag;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -43,5 +44,9 @@ public class ModificationService extends GeneralService<Modification, Modificati
 
     public List<Modification> getByModelAndYear(int modelId, String year) {
         return repository.getByModelAndYear(modelId, year);
+    }
+
+    public List<Modification> getSimilar(Integer modificationId, String tags) {
+        return repository.getSimilar(this.getById(modificationId), SimilarityTag.getByTagsString(tags));
     }
 }

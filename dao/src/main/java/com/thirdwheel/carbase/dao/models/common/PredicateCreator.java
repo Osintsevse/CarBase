@@ -17,8 +17,8 @@ public class PredicateCreator {
     protected EntityManager entityManager;
 
     public Predicate yearBetweenStartAndEnd(Path<LocalDate> manufacturingStartDate,
-                                                   Path<LocalDate> manufacturingEndDate,
-                                                   String year) {
+                                            Path<LocalDate> manufacturingEndDate,
+                                            String year) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         Pattern pattern = Pattern.compile("[0-9]{4}");
         if (!pattern.matcher(year).matches()) {

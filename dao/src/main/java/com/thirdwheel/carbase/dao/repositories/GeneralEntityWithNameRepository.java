@@ -1,7 +1,6 @@
 package com.thirdwheel.carbase.dao.repositories;
 
 import com.thirdwheel.carbase.dao.models.IEntityWithName;
-import com.thirdwheel.carbase.dao.models.common.PredicateCreator;
 
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;

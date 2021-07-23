@@ -5,6 +5,10 @@ import com.thirdwheel.carbase.service.ChassisService;
 import com.thirdwheel.carbase.service.GenerationService;
 import com.thirdwheel.carbase.service.ModelService;
 import com.thirdwheel.carbase.service.ModificationService;
+import com.thirdwheel.carbase.service.carsmodelservices.specificservices.ChassisCarsModelService;
+import com.thirdwheel.carbase.service.carsmodelservices.specificservices.GenerationCarsModelService;
+import com.thirdwheel.carbase.service.carsmodelservices.specificservices.ModelCarsModelService;
+import com.thirdwheel.carbase.service.carsmodelservices.specificservices.ModificationCarsModelService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

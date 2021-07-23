@@ -1,7 +1,9 @@
 package com.thirdwheel.carbase.dao.repositories;
 
 import com.thirdwheel.carbase.dao.models.Modification;
-import com.thirdwheel.carbase.dao.models.common.PredicateCreator;
+import com.thirdwheel.carbase.dao.repositories.similaritytagservices.SimilarityTag;
+import com.thirdwheel.carbase.dao.repositories.similaritytagservices.SimilarityTagPredicate;
+import com.thirdwheel.carbase.dao.repositories.similaritytagservices.SimilarityTagPredicateFactory;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.TypedQuery;
@@ -9,12 +11,19 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class ModificationRepository extends GeneralEntityWithNameRepository<Modification> {
-    public ModificationRepository() {
+    private final SimilarityTagPredicateFactory similarityTagPredicateFactory;
+    private final Map<SimilarityTag, SimilarityTagPredicate> similarityTagPredicates = new HashMap<>();
+
+    public ModificationRepository(SimilarityTagPredicateFactory similarityTagPredicateFactory) {
         super(Modification.class);
+        this.similarityTagPredicateFactory = similarityTagPredicateFactory;
     }
 
     public List<Modification> getByModel(int modelId) {
@@ -101,5 +110,26 @@ public class ModificationRepository extends GeneralEntityWithNameRepository<Modi
         CriteriaQuery<Modification> generationsByModelId = cq.where(cb.and(modelIdEq, yearBetweenStartAndEnd));
         TypedQuery<Modification> query = entityManager.createQuery(generationsByModelId);
         return query.getResultList();
+    }
+
+    public List<Modification> getSimilar(Modification modification, List<SimilarityTag> tagList) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Modification> cq = cb.createQuery(tClass);
+        Root<Modification> root = cq.from(tClass);
+
+        List<Predicate> predicates = tagList.stream()
+                .map(x -> similarityTagPredicateFromMap(x).getPredicate(modification, root))
+                .collect(Collectors.toList());
+        CriteriaQuery<Modification> byPredicates = cq.where(cb.and(predicates.toArray(new Predicate[]{})));
+
+        TypedQuery<Modification> query = entityManager.createQuery(byPredicates);
+        return query.getResultList();
+    }
+
+    private SimilarityTagPredicate similarityTagPredicateFromMap(SimilarityTag similarityTag) {
+        if (!similarityTagPredicates.containsKey(similarityTag)) {
+            similarityTagPredicates.put(similarityTag, similarityTagPredicateFactory.getByTag(similarityTag));
+        }
+        return similarityTagPredicates.get(similarityTag);
     }
 }

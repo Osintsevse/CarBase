@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.constraints.Pattern;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -42,11 +41,12 @@ public class CarController {
 
     @GetMapping(path = "/vendors/cars/{modificationId}/similar")
     public ResponseEntity<List<ModificationForListResponse>> getSimilarByModification(
-            @PathVariable(value = "modificationId") @Pattern(regexp = "[0-9]+") String modificationId) {
-        Modification byId = modificationService.getById(Integer.parseInt(modificationId));
-        ArrayList<ModificationForListResponse> modificationForListResponses = new ArrayList<>();
-        modificationForListResponses.add(new ModificationForListResponse(byId));
-        return ResponseEntity.ok(modificationForListResponses);
+            @PathVariable(value = "modificationId") @Pattern(regexp = "[0-9]+") String modificationId,
+            @RequestParam(value = "tags") String tags) {
+        List<Modification> similar = modificationService.getSimilar(Integer.parseInt(modificationId), tags);
+        log.debug("Found " + similar.size() + " cars for ModificationId \""
+                + modificationId + "\" and tags \"" + tags + "\"");
+        return ResponseEntity.ok(new ModificationsListResponse(similar).getModificationsResponse());
     }
 
     @GetMapping(path = "/vendors/cars/{modificationId}")

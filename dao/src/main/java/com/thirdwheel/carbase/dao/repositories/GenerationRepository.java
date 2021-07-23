@@ -1,7 +1,6 @@
 package com.thirdwheel.carbase.dao.repositories;
 
 import com.thirdwheel.carbase.dao.models.Generation;
-import com.thirdwheel.carbase.dao.models.common.PredicateCreator;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.TypedQuery;

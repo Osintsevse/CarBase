@@ -1,4 +1,4 @@
-package com.thirdwheel.carbase.service.enums;
+package com.thirdwheel.carbase.dao.repositories.similaritytagservices;
 
 import java.util.Arrays;
 import java.util.List;
