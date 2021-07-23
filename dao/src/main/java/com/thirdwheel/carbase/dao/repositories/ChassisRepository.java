@@ -21,8 +21,8 @@ public class ChassisRepository extends GeneralEntityWithNameRepository<Chassis> 
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Chassis> cq = cb.createQuery(tClass);
         Root<Chassis> root = cq.from(tClass);
-        Predicate vendorIdEquals = PredicateCreator
-                .intIsEqual(root.get("generation").get("model").get("vendor"), vendorId, cb);
+        Predicate vendorIdEquals = predicateCreator
+                .intIsEqual(root.get("generation").get("model").get("vendor"), vendorId);
         CriteriaQuery<Chassis> cqm = cq.where(vendorIdEquals);
         TypedQuery<Chassis> query = entityManager.createQuery(cqm);
         return query.getResultList();
@@ -32,9 +32,9 @@ public class ChassisRepository extends GeneralEntityWithNameRepository<Chassis> 
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Chassis> cq = cb.createQuery(tClass);
         Root<Chassis> root = cq.from(tClass);
-        Predicate nameIsLike = PredicateCreator.stringStartsWith(root.get("name"), nameBeginning, cb);
-        Predicate vendorIdEquals = PredicateCreator
-                .intIsEqual(root.get("generation").get("model").get("vendor"), vendorId, cb);
+        Predicate nameIsLike = predicateCreator.stringStartsWith(root.get("name"), nameBeginning);
+        Predicate vendorIdEquals = predicateCreator
+                .intIsEqual(root.get("generation").get("model").get("vendor"), vendorId);
         CriteriaQuery<Chassis> cqm = cq.where(cb.and(vendorIdEquals, nameIsLike));
         TypedQuery<Chassis> query = entityManager.createQuery(cqm);
         return query.getResultList();
@@ -44,9 +44,9 @@ public class ChassisRepository extends GeneralEntityWithNameRepository<Chassis> 
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Chassis> cq = cb.createQuery(tClass);
         Root<Chassis> root = cq.from(tClass);
-        Predicate nameIsEq = PredicateCreator.stringIsEqual(root.get("name"), carsModelName, cb);
-        Predicate vendorIdEquals = PredicateCreator
-                .intIsEqual(root.get("generation").get("model").get("vendor"), vendorId, cb);
+        Predicate nameIsEq = predicateCreator.stringIsEqual(root.get("name"), carsModelName);
+        Predicate vendorIdEquals = predicateCreator
+                .intIsEqual(root.get("generation").get("model").get("vendor"), vendorId);
         CriteriaQuery<Chassis> cqm = cq.where(cb.and(vendorIdEquals, nameIsEq));
         TypedQuery<Chassis> query = entityManager.createQuery(cqm);
         return query.getResultList();

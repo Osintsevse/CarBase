@@ -21,7 +21,7 @@ public class ModificationRepository extends GeneralEntityWithNameRepository<Modi
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Modification> cq = cb.createQuery(tClass);
         Root<Modification> root = cq.from(tClass);
-        Predicate modelIdEq = PredicateCreator.intIsEqual(root.get("chassis").get("generation").get("model"), modelId, cb);
+        Predicate modelIdEq = predicateCreator.intIsEqual(root.get("chassis").get("generation").get("model"), modelId);
         CriteriaQuery<Modification> byModelId = cq.where(modelIdEq);
         TypedQuery<Modification> query = entityManager.createQuery(byModelId);
         return query.getResultList();
@@ -31,8 +31,8 @@ public class ModificationRepository extends GeneralEntityWithNameRepository<Modi
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Modification> cq = cb.createQuery(tClass);
         Root<Modification> root = cq.from(tClass);
-        Predicate idEquals = PredicateCreator
-                .intIsEqual(root.get("chassis").get("generation").get("model").get("vendor"), vendorId, cb);
+        Predicate idEquals = predicateCreator
+                .intIsEqual(root.get("chassis").get("generation").get("model").get("vendor"), vendorId);
         CriteriaQuery<Modification> byIdAndName = cq.where(idEquals);
         TypedQuery<Modification> query = entityManager.createQuery(byIdAndName);
         return query.getResultList();
@@ -42,9 +42,9 @@ public class ModificationRepository extends GeneralEntityWithNameRepository<Modi
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Modification> cq = cb.createQuery(tClass);
         Root<Modification> root = cq.from(tClass);
-        Predicate idEquals = PredicateCreator
-                .intIsEqual(root.get("chassis").get("generation").get("model").get("vendor"), vendorId, cb);
-        Predicate nameIsLike = PredicateCreator.stringStartsWith(root.get("name"), nameBeginning, cb);
+        Predicate idEquals = predicateCreator
+                .intIsEqual(root.get("chassis").get("generation").get("model").get("vendor"), vendorId);
+        Predicate nameIsLike = predicateCreator.stringStartsWith(root.get("name"), nameBeginning);
         CriteriaQuery<Modification> byIdAndName = cq.where(cb.and(idEquals, nameIsLike));
         TypedQuery<Modification> query = entityManager.createQuery(byIdAndName);
         return query.getResultList();
@@ -54,11 +54,11 @@ public class ModificationRepository extends GeneralEntityWithNameRepository<Modi
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Modification> cq = cb.createQuery(tClass);
         Root<Modification> root = cq.from(tClass);
-        Predicate idEquals = PredicateCreator
-                .intIsEqual(root.get("chassis").get("generation").get("model").get("vendor"), vendorId, cb);
-        Predicate nameIsLike = PredicateCreator.stringIsEqual(root.get("name"), carsModelName, cb);
-        Predicate yearBetweenStartAndEnd = PredicateCreator
-                .yearBetweenStartAndEnd(root.get("start"), root.get("end"), year, cb);
+        Predicate idEquals = predicateCreator
+                .intIsEqual(root.get("chassis").get("generation").get("model").get("vendor"), vendorId);
+        Predicate nameIsLike = predicateCreator.stringIsEqual(root.get("name"), carsModelName);
+        Predicate yearBetweenStartAndEnd = predicateCreator
+                .yearBetweenStartAndEnd(root.get("start"), root.get("end"), year);
         CriteriaQuery<Modification> byIdAndName = cq.where(cb.and(idEquals, nameIsLike, yearBetweenStartAndEnd));
         TypedQuery<Modification> query = entityManager.createQuery(byIdAndName);
         return query.getResultList();
@@ -68,10 +68,10 @@ public class ModificationRepository extends GeneralEntityWithNameRepository<Modi
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Modification> cq = cb.createQuery(tClass);
         Root<Modification> root = cq.from(tClass);
-        Predicate idEquals = PredicateCreator
-                .intIsEqual(root.get("chassis"), chassisId, cb);
-        Predicate yearBetweenStartAndEnd = PredicateCreator
-                .yearBetweenStartAndEnd(root.get("start"), root.get("end"), year, cb);
+        Predicate idEquals = predicateCreator
+                .intIsEqual(root.get("chassis"), chassisId);
+        Predicate yearBetweenStartAndEnd = predicateCreator
+                .yearBetweenStartAndEnd(root.get("start"), root.get("end"), year);
         CriteriaQuery<Modification> byIdAndName = cq.where(cb.and(idEquals, yearBetweenStartAndEnd));
         TypedQuery<Modification> query = entityManager.createQuery(byIdAndName);
         return query.getResultList();
@@ -81,10 +81,10 @@ public class ModificationRepository extends GeneralEntityWithNameRepository<Modi
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Modification> cq = cb.createQuery(tClass);
         Root<Modification> root = cq.from(tClass);
-        Predicate idEquals = PredicateCreator
-                .intIsEqual(root.get("chassis").get("generation"), generationId, cb);
-        Predicate yearBetweenStartAndEnd = PredicateCreator
-                .yearBetweenStartAndEnd(root.get("start"), root.get("end"), year, cb);
+        Predicate idEquals = predicateCreator
+                .intIsEqual(root.get("chassis").get("generation"), generationId);
+        Predicate yearBetweenStartAndEnd = predicateCreator
+                .yearBetweenStartAndEnd(root.get("start"), root.get("end"), year);
         CriteriaQuery<Modification> byIdAndName = cq.where(cb.and(idEquals, yearBetweenStartAndEnd));
         TypedQuery<Modification> query = entityManager.createQuery(byIdAndName);
         return query.getResultList();
@@ -94,10 +94,10 @@ public class ModificationRepository extends GeneralEntityWithNameRepository<Modi
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Modification> cq = cb.createQuery(tClass);
         Root<Modification> root = cq.from(tClass);
-        Predicate modelIdEq = PredicateCreator
-                .intIsEqual(root.get("chassis").get("generation").get("model"), modelId, cb);
-        Predicate yearBetweenStartAndEnd = PredicateCreator
-                .yearBetweenStartAndEnd(root.get("start"), root.get("end"), year, cb);
+        Predicate modelIdEq = predicateCreator
+                .intIsEqual(root.get("chassis").get("generation").get("model"), modelId);
+        Predicate yearBetweenStartAndEnd = predicateCreator
+                .yearBetweenStartAndEnd(root.get("start"), root.get("end"), year);
         CriteriaQuery<Modification> generationsByModelId = cq.where(cb.and(modelIdEq, yearBetweenStartAndEnd));
         TypedQuery<Modification> query = entityManager.createQuery(generationsByModelId);
         return query.getResultList();

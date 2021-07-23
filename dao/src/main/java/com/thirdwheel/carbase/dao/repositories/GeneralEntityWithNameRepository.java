@@ -19,7 +19,7 @@ public class GeneralEntityWithNameRepository<T extends IEntityWithName> extends 
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<T> cq = cb.createQuery(tClass);
         Root<T> rootEntry = cq.from(tClass);
-        Predicate nameIsLike = PredicateCreator.stringStartsWith(rootEntry.get("name"), nameBeginning, cb);
+        Predicate nameIsLike = predicateCreator.stringStartsWith(rootEntry.get("name"), nameBeginning);
         CriteriaQuery<T> cqByNameBeginning = cq.where(nameIsLike);
         TypedQuery<T> query = entityManager.createQuery(cqByNameBeginning);
         return query.getResultList();

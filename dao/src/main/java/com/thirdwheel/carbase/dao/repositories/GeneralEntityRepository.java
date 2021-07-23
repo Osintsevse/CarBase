@@ -1,7 +1,9 @@
 package com.thirdwheel.carbase.dao.repositories;
 
 import com.thirdwheel.carbase.dao.models.IEntity;
+import com.thirdwheel.carbase.dao.models.common.PredicateCreator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -14,12 +16,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GeneralEntityRepository<T extends IEntity> {
     final protected Class<T> tClass;
-    protected EntityManager entityManager;
-
+    @Autowired
+    protected PredicateCreator predicateCreator;
     @PersistenceContext
-    public void setEntityManager(EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
+    protected EntityManager entityManager;
 
     public void save(T entity) {
         entityManager.persist(entity);
