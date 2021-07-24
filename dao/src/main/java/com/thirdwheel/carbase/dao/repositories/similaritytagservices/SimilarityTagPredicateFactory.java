@@ -1,6 +1,7 @@
 package com.thirdwheel.carbase.dao.repositories.similaritytagservices;
 
 import com.thirdwheel.carbase.dao.repositories.similaritytagservices.specificservices.Acceleration0100TagPredicate;
+import com.thirdwheel.carbase.dao.repositories.similaritytagservices.specificservices.MaxPowerTagPredicate;
 import com.thirdwheel.carbase.dao.repositories.similaritytagservices.specificservices.WDTypeTagPredicate;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,8 @@ public class SimilarityTagPredicateFactory {
                 return new WDTypeTagPredicate(entityManager);
             case ACCELERATION0100:
                 return new Acceleration0100TagPredicate(entityManager);
+            case MAX_POWER:
+                return new MaxPowerTagPredicate(entityManager);
         }
         return null;
     }

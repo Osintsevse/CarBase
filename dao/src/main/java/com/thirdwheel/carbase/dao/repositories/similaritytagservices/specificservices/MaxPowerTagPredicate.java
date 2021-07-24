@@ -10,20 +10,20 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 
-public class Acceleration0100TagPredicate extends AbstractTagPredicate {
-    public static final int DEVIATION_PERCENT = 5;
+public class MaxPowerTagPredicate extends AbstractTagPredicate {
+    public static final int DEVIATION_PERCENT = 10;
 
-    public Acceleration0100TagPredicate(EntityManager entityManager) {
-        super(SimilarityTag.ACCELERATION0100, entityManager);
+    public MaxPowerTagPredicate(EntityManager entityManager) {
+        super(SimilarityTag.MAX_POWER, entityManager);
     }
 
     @Override
     public Predicate getPredicate(Modification modification, Root<Modification> root) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        double lowerAcceleration = modification.getAcceleration0100() * (100 - DEVIATION_PERCENT) / 100;
-        double higherAcceleration = modification.getAcceleration0100() * (100 + DEVIATION_PERCENT) / 100;
+        int lower = (int) (modification.getEngineModification().getMaxPower() * (100 - DEVIATION_PERCENT) / 100);
+        int higher = (int) (modification.getEngineModification().getMaxPower() * (100 + DEVIATION_PERCENT) / 100);
         return cb.and(
-                cb.greaterThanOrEqualTo(root.get("acceleration0100"), lowerAcceleration),
-                cb.lessThanOrEqualTo(root.get("acceleration0100"), higherAcceleration));
+                cb.greaterThanOrEqualTo(root.get("engineModification").get("maxPower"), lower),
+                cb.lessThanOrEqualTo(root.get("engineModification").get("maxPower"), higher));
     }
 }
