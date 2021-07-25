@@ -1,6 +1,9 @@
 package com.thirdwheel.carbase.dao.repositories;
 
 import com.thirdwheel.carbase.dao.models.Chassis;
+import com.thirdwheel.carbase.dao.models.Generation;
+import com.thirdwheel.carbase.dao.models.Model;
+import com.thirdwheel.carbase.dao.models.Vendor;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.TypedQuery;
@@ -21,7 +24,10 @@ public class ChassisRepository extends GeneralEntityWithNameRepository<Chassis> 
         CriteriaQuery<Chassis> cq = cb.createQuery(tClass);
         Root<Chassis> root = cq.from(tClass);
         Predicate vendorIdEquals = predicateCreator
-                .intIsEqual(root.get("generation").get("model").get("vendor"), vendorId);
+                .intIsEqual(root.get(Chassis.Fields.generation)
+                        .get(Generation.Fields.model)
+                        .get(Model.Fields.vendor)
+                        .get(Vendor.Fields.id), vendorId);
         CriteriaQuery<Chassis> cqm = cq.where(vendorIdEquals);
         TypedQuery<Chassis> query = entityManager.createQuery(cqm);
         return query.getResultList();
@@ -31,9 +37,12 @@ public class ChassisRepository extends GeneralEntityWithNameRepository<Chassis> 
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Chassis> cq = cb.createQuery(tClass);
         Root<Chassis> root = cq.from(tClass);
-        Predicate nameIsLike = predicateCreator.stringStartsWith(root.get("name"), nameBeginning);
+        Predicate nameIsLike = predicateCreator.stringStartsWith(root.get(Chassis.Fields.name), nameBeginning);
         Predicate vendorIdEquals = predicateCreator
-                .intIsEqual(root.get("generation").get("model").get("vendor"), vendorId);
+                .intIsEqual(root.get(Chassis.Fields.generation)
+                        .get(Generation.Fields.model)
+                        .get(Model.Fields.vendor)
+                        .get(Vendor.Fields.id), vendorId);
         CriteriaQuery<Chassis> cqm = cq.where(cb.and(vendorIdEquals, nameIsLike));
         TypedQuery<Chassis> query = entityManager.createQuery(cqm);
         return query.getResultList();
@@ -43,9 +52,12 @@ public class ChassisRepository extends GeneralEntityWithNameRepository<Chassis> 
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Chassis> cq = cb.createQuery(tClass);
         Root<Chassis> root = cq.from(tClass);
-        Predicate nameIsEq = predicateCreator.stringIsEqual(root.get("name"), carsModelName);
+        Predicate nameIsEq = predicateCreator.stringIsEqual(root.get(Chassis.Fields.name), carsModelName);
         Predicate vendorIdEquals = predicateCreator
-                .intIsEqual(root.get("generation").get("model").get("vendor"), vendorId);
+                .intIsEqual(root.get(Chassis.Fields.generation)
+                        .get(Generation.Fields.model)
+                        .get(Model.Fields.vendor)
+                        .get(Vendor.Fields.id), vendorId);
         CriteriaQuery<Chassis> cqm = cq.where(cb.and(vendorIdEquals, nameIsEq));
         TypedQuery<Chassis> query = entityManager.createQuery(cqm);
         return query.getResultList();

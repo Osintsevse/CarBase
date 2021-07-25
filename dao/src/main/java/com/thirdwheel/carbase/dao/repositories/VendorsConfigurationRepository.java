@@ -21,7 +21,9 @@ public class VendorsConfigurationRepository extends GeneralEntityRepository<Vend
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<VendorsConfiguration> cq = cb.createQuery(tClass);
         Root<VendorsConfiguration> modelRoot = cq.from(tClass);
-        Predicate vendorIdEq = predicateCreator.intIsEqual(modelRoot.get("vendor"), vendorId);
+        Predicate vendorIdEq = predicateCreator
+                .intIsEqual(modelRoot.get(VendorsConfiguration.Fields.vendor)
+                        .get(Vendor.Fields.id), vendorId);
         CriteriaQuery<VendorsConfiguration> modelsByVendorId = cq.where(vendorIdEq);
         TypedQuery<VendorsConfiguration> query = entityManager.createQuery(modelsByVendorId);
         List<VendorsConfiguration> resultList = query.getResultList();

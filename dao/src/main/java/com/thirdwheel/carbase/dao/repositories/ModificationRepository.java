@@ -1,7 +1,6 @@
 package com.thirdwheel.carbase.dao.repositories;
 
-import com.thirdwheel.carbase.dao.models.Chassis;
-import com.thirdwheel.carbase.dao.models.Modification;
+import com.thirdwheel.carbase.dao.models.*;
 import com.thirdwheel.carbase.dao.repositories.similaritytagservices.SimilarityPredicateAndGroupElement;
 import com.thirdwheel.carbase.dao.repositories.similaritytagservices.SimilarityTag;
 import com.thirdwheel.carbase.dao.repositories.similaritytagservices.SimilarityTagFiltersService;
@@ -27,7 +26,11 @@ public class ModificationRepository extends GeneralEntityWithNameRepository<Modi
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Modification> cq = cb.createQuery(tClass);
         Root<Modification> root = cq.from(tClass);
-        Predicate modelIdEq = predicateCreator.intIsEqual(root.get("chassis").get("generation").get("model"), modelId);
+        Predicate modelIdEq = predicateCreator
+                .intIsEqual(root.get(Modification.Fields.chassis)
+                        .get(Chassis.Fields.generation)
+                        .get(Generation.Fields.model)
+                        .get(Model.Fields.id), modelId);
         CriteriaQuery<Modification> byModelId = cq.where(modelIdEq);
         TypedQuery<Modification> query = entityManager.createQuery(byModelId);
         return query.getResultList();
@@ -38,7 +41,11 @@ public class ModificationRepository extends GeneralEntityWithNameRepository<Modi
         CriteriaQuery<Modification> cq = cb.createQuery(tClass);
         Root<Modification> root = cq.from(tClass);
         Predicate idEquals = predicateCreator
-                .intIsEqual(root.get("chassis").get("generation").get("model").get("vendor"), vendorId);
+                .intIsEqual(root.get(Modification.Fields.chassis)
+                        .get(Chassis.Fields.generation)
+                        .get(Generation.Fields.model)
+                        .get(Model.Fields.vendor)
+                        .get(Vendor.Fields.id), vendorId);
         CriteriaQuery<Modification> byIdAndName = cq.where(idEquals);
         TypedQuery<Modification> query = entityManager.createQuery(byIdAndName);
         return query.getResultList();
@@ -49,8 +56,12 @@ public class ModificationRepository extends GeneralEntityWithNameRepository<Modi
         CriteriaQuery<Modification> cq = cb.createQuery(tClass);
         Root<Modification> root = cq.from(tClass);
         Predicate idEquals = predicateCreator
-                .intIsEqual(root.get("chassis").get("generation").get("model").get("vendor"), vendorId);
-        Predicate nameIsLike = predicateCreator.stringStartsWith(root.get("name"), nameBeginning);
+                .intIsEqual(root.get(Modification.Fields.chassis)
+                        .get(Chassis.Fields.generation)
+                        .get(Generation.Fields.model)
+                        .get(Model.Fields.vendor)
+                        .get(Vendor.Fields.id), vendorId);
+        Predicate nameIsLike = predicateCreator.stringStartsWith(root.get(Modification.Fields.name), nameBeginning);
         CriteriaQuery<Modification> byIdAndName = cq.where(cb.and(idEquals, nameIsLike));
         TypedQuery<Modification> query = entityManager.createQuery(byIdAndName);
         return query.getResultList();
@@ -61,10 +72,14 @@ public class ModificationRepository extends GeneralEntityWithNameRepository<Modi
         CriteriaQuery<Modification> cq = cb.createQuery(tClass);
         Root<Modification> root = cq.from(tClass);
         Predicate idEquals = predicateCreator
-                .intIsEqual(root.get("chassis").get("generation").get("model").get("vendor"), vendorId);
-        Predicate nameIsLike = predicateCreator.stringIsEqual(root.get("name"), carsModelName);
+                .intIsEqual(root.get(Modification.Fields.chassis)
+                        .get(Chassis.Fields.generation)
+                        .get(Generation.Fields.model)
+                        .get(Model.Fields.vendor)
+                        .get(Vendor.Fields.id), vendorId);
+        Predicate nameIsLike = predicateCreator.stringIsEqual(root.get(Modification.Fields.name), carsModelName);
         Predicate yearBetweenStartAndEnd = predicateCreator
-                .yearBetweenStartAndEnd(root.get("start"), root.get("end"), year);
+                .yearBetweenStartAndEnd(root.get(Modification.Fields.start), root.get(Modification.Fields.end), year);
         CriteriaQuery<Modification> byIdAndName = cq.where(cb.and(idEquals, nameIsLike, yearBetweenStartAndEnd));
         TypedQuery<Modification> query = entityManager.createQuery(byIdAndName);
         return query.getResultList();
@@ -75,9 +90,10 @@ public class ModificationRepository extends GeneralEntityWithNameRepository<Modi
         CriteriaQuery<Modification> cq = cb.createQuery(tClass);
         Root<Modification> root = cq.from(tClass);
         Predicate idEquals = predicateCreator
-                .intIsEqual(root.get("chassis"), chassisId);
+                .intIsEqual(root.get(Modification.Fields.chassis)
+                        .get(Chassis.Fields.id), chassisId);
         Predicate yearBetweenStartAndEnd = predicateCreator
-                .yearBetweenStartAndEnd(root.get("start"), root.get("end"), year);
+                .yearBetweenStartAndEnd(root.get(Modification.Fields.start), root.get(Modification.Fields.end), year);
         CriteriaQuery<Modification> byIdAndName = cq.where(cb.and(idEquals, yearBetweenStartAndEnd));
         TypedQuery<Modification> query = entityManager.createQuery(byIdAndName);
         return query.getResultList();
@@ -88,9 +104,11 @@ public class ModificationRepository extends GeneralEntityWithNameRepository<Modi
         CriteriaQuery<Modification> cq = cb.createQuery(tClass);
         Root<Modification> root = cq.from(tClass);
         Predicate idEquals = predicateCreator
-                .intIsEqual(root.get("chassis").get("generation"), generationId);
+                .intIsEqual(root.get(Modification.Fields.chassis)
+                        .get(Chassis.Fields.generation)
+                        .get(Generation.Fields.id), generationId);
         Predicate yearBetweenStartAndEnd = predicateCreator
-                .yearBetweenStartAndEnd(root.get("start"), root.get("end"), year);
+                .yearBetweenStartAndEnd(root.get(Modification.Fields.start), root.get(Modification.Fields.end), year);
         CriteriaQuery<Modification> byIdAndName = cq.where(cb.and(idEquals, yearBetweenStartAndEnd));
         TypedQuery<Modification> query = entityManager.createQuery(byIdAndName);
         return query.getResultList();
@@ -101,9 +119,12 @@ public class ModificationRepository extends GeneralEntityWithNameRepository<Modi
         CriteriaQuery<Modification> cq = cb.createQuery(tClass);
         Root<Modification> root = cq.from(tClass);
         Predicate modelIdEq = predicateCreator
-                .intIsEqual(root.get("chassis").get("generation").get("model"), modelId);
+                .intIsEqual(root.get(Modification.Fields.chassis)
+                        .get(Chassis.Fields.generation)
+                        .get(Generation.Fields.model)
+                        .get(Model.Fields.id), modelId);
         Predicate yearBetweenStartAndEnd = predicateCreator
-                .yearBetweenStartAndEnd(root.get("start"), root.get("end"), year);
+                .yearBetweenStartAndEnd(root.get(Modification.Fields.start), root.get(Modification.Fields.end), year);
         CriteriaQuery<Modification> generationsByModelId = cq.where(cb.and(modelIdEq, yearBetweenStartAndEnd));
         TypedQuery<Modification> query = entityManager.createQuery(generationsByModelId);
         return query.getResultList();

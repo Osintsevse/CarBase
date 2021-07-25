@@ -1,6 +1,7 @@
 package com.thirdwheel.carbase.dao.repositories;
 
 import com.thirdwheel.carbase.dao.models.Model;
+import com.thirdwheel.carbase.dao.models.Vendor;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.TypedQuery;
@@ -20,7 +21,8 @@ public class ModelRepository extends GeneralEntityWithNameRepository<Model> {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Model> cq = cb.createQuery(tClass);
         Root<Model> root = cq.from(tClass);
-        Predicate vendorIdEq = predicateCreator.intIsEqual(root.get("vendor"), vendorId);
+        Predicate vendorIdEq = predicateCreator.intIsEqual(root.get(Model.Fields.vendor)
+                .get(Vendor.Fields.id), vendorId);
         CriteriaQuery<Model> modelsByVendorId = cq.where(vendorIdEq);
         TypedQuery<Model> query = entityManager.createQuery(modelsByVendorId);
         return query.getResultList();
@@ -30,8 +32,9 @@ public class ModelRepository extends GeneralEntityWithNameRepository<Model> {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Model> cq = cb.createQuery(tClass);
         Root<Model> root = cq.from(tClass);
-        Predicate vendorIdEq = predicateCreator.intIsEqual(root.get("vendor"), vendorId);
-        Predicate nameIsLike = predicateCreator.stringStartsWith(root.get("name"), nameBeginning);
+        Predicate vendorIdEq = predicateCreator.intIsEqual(root.get(Model.Fields.vendor)
+                .get(Vendor.Fields.id), vendorId);
+        Predicate nameIsLike = predicateCreator.stringStartsWith(root.get(Model.Fields.name), nameBeginning);
         CriteriaQuery<Model> cqm = cq.where(cb.and(vendorIdEq, nameIsLike));
         TypedQuery<Model> query = entityManager.createQuery(cqm);
         return query.getResultList();
@@ -41,8 +44,9 @@ public class ModelRepository extends GeneralEntityWithNameRepository<Model> {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Model> cq = cb.createQuery(tClass);
         Root<Model> root = cq.from(tClass);
-        Predicate vendorIdEq = predicateCreator.intIsEqual(root.get("vendor"), vendorId);
-        Predicate nameIsEq = predicateCreator.stringIsEqual(root.get("name"), carsModelName);
+        Predicate vendorIdEq = predicateCreator.intIsEqual(root.get(Model.Fields.vendor)
+                .get(Vendor.Fields.id), vendorId);
+        Predicate nameIsEq = predicateCreator.stringIsEqual(root.get(Model.Fields.name), carsModelName);
         CriteriaQuery<Model> cqm = cq.where(cb.and(vendorIdEq, nameIsEq));
         TypedQuery<Model> query = entityManager.createQuery(cqm);
         return query.getResultList();
