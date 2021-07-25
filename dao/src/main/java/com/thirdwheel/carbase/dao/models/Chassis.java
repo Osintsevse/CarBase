@@ -4,6 +4,7 @@ import com.thirdwheel.carbase.dao.models.enums.BodyStyle;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import lombok.experimental.FieldNameConstants;
 
 import javax.persistence.*;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
 @Table(name = "chassises")
 @ToString(exclude = "modifications")
 @EqualsAndHashCode
+@FieldNameConstants
 public class Chassis implements IEntityWithName {
     @EqualsAndHashCode.Exclude
     @Id

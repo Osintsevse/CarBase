@@ -32,7 +32,8 @@ public enum SimilarityTag {
 
     public static SimilarityTag getByTagString(String tag) {
         Optional<SimilarityTag> any = Arrays.stream(SimilarityTag.values())
-                .filter(x -> x.toString().replace("_", "").equalsIgnoreCase(tag.trim()))
+                .filter(x -> x.toString().replace("_", "")
+                        .equalsIgnoreCase(tag.replace("_", "").trim()))
                 .findAny();
         return any.get();
     }

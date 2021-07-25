@@ -3,6 +3,7 @@ package com.thirdwheel.carbase.dao.models;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import lombok.experimental.FieldNameConstants;
 
 import javax.persistence.*;
 
@@ -11,6 +12,7 @@ import javax.persistence.*;
 @Table(name = "suspensions")
 @ToString
 @EqualsAndHashCode
+@FieldNameConstants
 public class Suspension implements IEntityWithName {
     @EqualsAndHashCode.Exclude
     @Id

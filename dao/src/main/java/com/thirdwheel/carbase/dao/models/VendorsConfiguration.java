@@ -3,6 +3,7 @@ package com.thirdwheel.carbase.dao.models;
 import com.thirdwheel.carbase.dao.models.enums.SearchFieldForVendor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.FieldNameConstants;
 
 import javax.persistence.*;
 import java.util.EnumSet;
@@ -11,6 +12,7 @@ import java.util.EnumSet;
 @Entity
 @Table(name = "vendors_configurations")
 @EqualsAndHashCode
+@FieldNameConstants
 public class VendorsConfiguration implements IEntity {
     @EqualsAndHashCode.Exclude
     @Id

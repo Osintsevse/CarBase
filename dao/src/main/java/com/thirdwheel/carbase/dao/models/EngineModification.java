@@ -4,6 +4,7 @@ import com.thirdwheel.carbase.dao.models.enums.ChargerType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import lombok.experimental.FieldNameConstants;
 
 import javax.persistence.*;
 
@@ -12,6 +13,7 @@ import javax.persistence.*;
 @Table(name = "engine_modifications")
 @ToString
 @EqualsAndHashCode
+@FieldNameConstants
 public class EngineModification implements IEntityWithName {
     @EqualsAndHashCode.Exclude
     @Id

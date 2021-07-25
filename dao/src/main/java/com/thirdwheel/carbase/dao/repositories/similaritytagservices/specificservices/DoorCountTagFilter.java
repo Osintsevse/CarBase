@@ -11,22 +11,18 @@ import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 
 @Service
-public class Acceleration0100TagFilter extends AbstractTagFilter {
-    public static final int DEVIATION_PERCENT = 5;
-
-    public Acceleration0100TagFilter() {
-        super(SimilarityTag.ACCELERATION0100);
+public class DoorCountTagFilter extends AbstractTagFilter {
+    public DoorCountTagFilter() {
+        super(SimilarityTag.DOOR_COUNT);
     }
 
     @Override
     public SimilarityPredicateAndGroupElement getPredicate(Modification modification, Root<Modification> root) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        Double valueForComparison = modification.getAcceleration0100();
+        Integer valueForComparison = modification.getDoorCount();
         if (valueForComparison != null) {
-            Double lower = valueForComparison * (100 - DEVIATION_PERCENT) / 100;
-            Double higher = valueForComparison * (100 + DEVIATION_PERCENT) / 100;
-            Path<Double> objectPath = root.get(Modification.Fields.acceleration0100);
-            return new SimilarityPredicateAndGroupElement(cb.between(objectPath, lower, higher), objectPath);
+            Path<Integer> objectPath = root.get(Modification.Fields.doorCount);
+            return new SimilarityPredicateAndGroupElement(cb.equal(objectPath, valueForComparison), null);
         } else {
             return null;
         }

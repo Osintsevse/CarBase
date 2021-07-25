@@ -5,24 +5,25 @@ import com.thirdwheel.carbase.dao.models.enums.WDType;
 import com.thirdwheel.carbase.dao.repositories.similaritytagservices.AbstractTagFilter;
 import com.thirdwheel.carbase.dao.repositories.similaritytagservices.SimilarityPredicateAndGroupElement;
 import com.thirdwheel.carbase.dao.repositories.similaritytagservices.SimilarityTag;
+import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 
-
+@Service
 public class WDTypeTagFilter extends AbstractTagFilter {
-    public WDTypeTagFilter(EntityManager entityManager) {
-        super(SimilarityTag.WD_TYPE, entityManager);
+    public WDTypeTagFilter() {
+        super(SimilarityTag.WD_TYPE);
     }
 
     @Override
     public SimilarityPredicateAndGroupElement getPredicate(Modification modification, Root<Modification> root) {
-        if ((modification.getWdType() != null) && (modification.getWdType() != WDType.Unknown)) {
+        WDType valueForComparison = modification.getWdType();
+        if ((valueForComparison != null) && (valueForComparison != WDType.Unknown)) {
             CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-            return new SimilarityPredicateAndGroupElement(
-                    cb.equal(root.get("wdType"), modification.getWdType()),
-                    null);
+            Path<WDType> objectPath = root.get(Modification.Fields.wdType);
+            return new SimilarityPredicateAndGroupElement(cb.equal(objectPath, valueForComparison), null);
         } else {
             return null;
         }

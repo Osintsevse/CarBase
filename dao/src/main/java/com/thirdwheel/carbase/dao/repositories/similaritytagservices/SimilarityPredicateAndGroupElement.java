@@ -10,5 +10,5 @@ import javax.persistence.criteria.Predicate;
 @RequiredArgsConstructor
 public class SimilarityPredicateAndGroupElement {
     public final Predicate predicate;
-    public final Expression<Object> groupElement;
+    public final Expression<?> groupElement;
 }

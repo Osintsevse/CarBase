@@ -7,6 +7,7 @@ import com.thirdwheel.carbase.dao.models.enums.WDType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import lombok.experimental.FieldNameConstants;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -17,6 +18,7 @@ import java.time.LocalDate;
 @Table(name = "modifications")
 @ToString
 @EqualsAndHashCode
+@FieldNameConstants
 public class Modification implements IEntityWithName, Comparable<Modification> {
     @EqualsAndHashCode.Exclude
     @Id

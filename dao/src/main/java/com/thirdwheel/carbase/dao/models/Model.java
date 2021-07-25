@@ -3,6 +3,7 @@ package com.thirdwheel.carbase.dao.models;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import lombok.experimental.FieldNameConstants;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 @Table(name = "models")
 @ToString(exclude = "generations")
 @EqualsAndHashCode
+@FieldNameConstants
 public class Model implements IEntityWithName {
     @EqualsAndHashCode.Exclude
     @Id
