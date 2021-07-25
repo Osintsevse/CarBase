@@ -48,7 +48,7 @@ public class ChassisRepository extends GeneralEntityRepository<Chassis> {
         return query.getResultList();
     }
 
-    public List<Chassis> getByVendorAndCarsModelAndYear(int vendorId, String carsModelName) {
+    public List<Chassis> getByVendorAndCarsModel(int vendorId, String carsModelName) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Chassis> cq = cb.createQuery(tClass);
         Root<Chassis> root = cq.from(tClass);

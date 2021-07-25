@@ -14,6 +14,4 @@ public abstract class AbstractTagFilter implements SimilarityTagFilter {
     public SimilarityTag getSupportedTag() {
         return supportedTag;
     }
-
-    ;
 }

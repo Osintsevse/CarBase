@@ -1,6 +1,6 @@
 package com.thirdwheel.carbase.view.model;
 
-import com.thirdwheel.carbase.service.model.CarsModel;
+import com.thirdwheel.carbase.service.model.CarModel;
 import lombok.Getter;
 
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public class CarsModelsAsStringListResponse {
     private final List<String> carsModels;
 
-    public CarsModelsAsStringListResponse(Map<String, CarsModel> byVendorAndText) {
-        carsModels = byVendorAndText.values().stream().map(CarsModel::getName).collect(Collectors.toList());
+    public CarsModelsAsStringListResponse(Map<String, CarModel> byVendorAndText) {
+        carsModels = byVendorAndText.values().stream().map(CarModel::getName).collect(Collectors.toList());
     }
 }

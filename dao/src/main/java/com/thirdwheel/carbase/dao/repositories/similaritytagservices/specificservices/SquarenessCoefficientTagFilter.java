@@ -41,11 +41,6 @@ public class SquarenessCoefficientTagFilter extends AbstractTagFilter {
             return new SimilarityPredicateAndGroupElement(
                     cb.between(squarenessCoefPath, lower, higher),
                     null);
-//            return new SimilarityPredicateAndGroupElement(
-//                    cb.and(
-//                            cb.greaterThanOrEqualTo(squarenessCoefPath,lower),
-//                            cb.lessThanOrEqualTo(squarenessCoefPath,higher)
-//                    ),null);
         } else {
             return null;
         }

@@ -133,37 +133,31 @@ public class ModificationRepository extends GeneralEntityRepository<Modification
     public List<Modification> getSimilar(Modification modification, List<SimilarityTag> tagList) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Tuple> tupleQuery = cb.createTupleQuery();
-        Root<Modification> tupleRoot = tupleQuery.from(tClass);
+        Subquery<Integer> subquery = tupleQuery.subquery(Integer.class);
+        Root<Modification> tupleRoot = subquery.from(tClass);
 
         List<SimilarityPredicateAndGroupElement> predicateAndGroupElements = tagList.stream()
                 .map(x -> similarityTagFiltersService.getTagFilterMap().get(x).getPredicate(modification, tupleRoot))
                 .filter(Objects::nonNull).collect(Collectors.toList());
+
         List<Predicate> predicates = predicateAndGroupElements.stream()
                 .map(SimilarityPredicateAndGroupElement::getPredicate)
                 .filter(Objects::nonNull).collect(Collectors.toList());
-        predicates.add(cb.notEqual(tupleRoot.get(Modification.Fields.chassis),modification.getChassis()));
+
+        predicates.add(cb.notEqual(tupleRoot.get(Modification.Fields.chassis), modification.getChassis()));
         List<Expression<?>> groupElements = predicateAndGroupElements.stream()
                 .map(SimilarityPredicateAndGroupElement::getGroupElement)
                 .filter(Objects::nonNull).collect(Collectors.toList());
+
         groupElements.add(tupleRoot.get(Modification.Fields.chassis).get(Chassis.Fields.id));
-        List<Selection<?>> multiselectElements = predicateAndGroupElements.stream()
-                .map(SimilarityPredicateAndGroupElement::getGroupElement)
-                .filter(Objects::nonNull).map(x -> (Selection<?>) x).collect(Collectors.toList());
-        multiselectElements.add(tupleRoot.get(Modification.Fields.chassis).get(Chassis.Fields.id));
-        multiselectElements.add(0, cb.min(tupleRoot.get(Modification.Fields.id)));
-
-        tupleQuery.multiselect(multiselectElements);
-        tupleQuery.groupBy(groupElements);
-        tupleQuery.distinct(true);
-        tupleQuery.where(cb.and(predicates.toArray(new Predicate[]{})));
-        List<Integer> modIds = entityManager.createQuery(tupleQuery)
-                .getResultList().stream()
-                .map(x -> x.get(0, Integer.class))
-                .collect(Collectors.toList());
-
+        subquery.select(cb.min(tupleRoot.get("id")));
+        subquery.groupBy(groupElements);
+        subquery.distinct(true);
+        subquery.where(cb.and(predicates.toArray(new Predicate[] {})));
         CriteriaQuery<Modification> cq = cb.createQuery(tClass);
         Root<Modification> root = cq.from(tClass);
-        cq.where(root.get(Modification.Fields.id).in(modIds));
+        cq.where(root.get(Modification.Fields.id).in(subquery));
+
 
         TypedQuery<Modification> query = entityManager.createQuery(cq);
         return query.getResultList();

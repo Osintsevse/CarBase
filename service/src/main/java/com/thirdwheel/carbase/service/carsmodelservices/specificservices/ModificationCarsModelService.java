@@ -3,8 +3,8 @@ package com.thirdwheel.carbase.service.carsmodelservices.specificservices;
 import com.thirdwheel.carbase.dao.models.Modification;
 import com.thirdwheel.carbase.service.ModificationService;
 import com.thirdwheel.carbase.service.carsmodelservices.AbstractCarsModelService;
-import com.thirdwheel.carbase.service.enums.CarsModelType;
-import com.thirdwheel.carbase.service.model.CarsModel;
+import com.thirdwheel.carbase.service.enums.CarDomain;
+import com.thirdwheel.carbase.service.model.CarModel;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -20,22 +20,22 @@ public class ModificationCarsModelService extends AbstractCarsModelService {
     }
 
     @Override
-    public Map<String, CarsModel> getByVendorAndNameBeginning(int vendorId, String nameBeginning) {
-        Map<String, CarsModel> modelOfCarByVendorAndText = super.getByVendorAndNameBeginning(vendorId, nameBeginning);
+    public Map<String, CarModel> getByVendorAndNameBeginning(int vendorId, String nameBeginning) {
+        Map<String, CarModel> modelOfCarByVendorAndText = super.getByVendorAndNameBeginning(vendorId, nameBeginning);
         List<Modification> modelByVendor = modificationService.getByVendorAndNameBeginning(vendorId, nameBeginning);
         modelByVendor.forEach(x -> {
-            modelOfCarByVendorAndText.putIfAbsent(x.getName(), new CarsModel(x.getId(), x.getName(), CarsModelType.MODIFICATION));
+            modelOfCarByVendorAndText.putIfAbsent(x.getName(), new CarModel(x.getId(), x.getName(), CarDomain.MODIFICATION));
         });
         return modelOfCarByVendorAndText;
     }
 
     @Override
-    public List<CarsModel> getByVendorAndCarsModelAndYear(int vendorId, String carsModelName, String year) {
-        List<CarsModel> byVendorAndCarsModelAndYear = super.getByVendorAndCarsModelAndYear(vendorId, carsModelName, year);
+    public List<CarModel> getByVendorAndCarsModelAndYear(int vendorId, String carsModelName, String year) {
+        List<CarModel> byVendorAndCarModelAndYear = super.getByVendorAndCarsModelAndYear(vendorId, carsModelName, year);
         List<Modification> modelByVendor = modificationService.getByVendorAndCarsModelAndYear(vendorId, carsModelName, year);
         modelByVendor.forEach(x -> {
-            byVendorAndCarsModelAndYear.add(new CarsModel(x.getId(), x.getName(), CarsModelType.MODIFICATION));
+            byVendorAndCarModelAndYear.add(new CarModel(x.getId(), x.getName(), CarDomain.MODIFICATION));
         });
-        return byVendorAndCarsModelAndYear;
+        return byVendorAndCarModelAndYear;
     }
 }
