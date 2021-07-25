@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import javax.persistence.EntityManager;
 
 @RequiredArgsConstructor
-public abstract class AbstractTagPredicate implements SimilarityTagPredicate {
+public abstract class AbstractTagFilter implements SimilarityTagFilter {
     protected final SimilarityTag supportedTag;
     protected final EntityManager entityManager;
 

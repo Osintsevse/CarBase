@@ -1,29 +1,29 @@
 package com.thirdwheel.carbase.dao.repositories;
 
 import com.thirdwheel.carbase.dao.models.Modification;
+import com.thirdwheel.carbase.dao.repositories.similaritytagservices.SimilarityPredicateAndGroupElement;
 import com.thirdwheel.carbase.dao.repositories.similaritytagservices.SimilarityTag;
-import com.thirdwheel.carbase.dao.repositories.similaritytagservices.SimilarityTagPredicate;
-import com.thirdwheel.carbase.dao.repositories.similaritytagservices.SimilarityTagPredicateFactory;
+import com.thirdwheel.carbase.dao.repositories.similaritytagservices.SimilarityTagFilter;
+import com.thirdwheel.carbase.dao.repositories.similaritytagservices.SimilarityTagFilterFactory;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
 public class ModificationRepository extends GeneralEntityWithNameRepository<Modification> {
-    private final SimilarityTagPredicateFactory similarityTagPredicateFactory;
-    private final Map<SimilarityTag, SimilarityTagPredicate> similarityTagPredicates = new HashMap<>();
+    private final SimilarityTagFilterFactory similarityTagFilterFactory;
+    private final Map<SimilarityTag, SimilarityTagFilter> similarityTagPredicates = new HashMap<>();
 
-    public ModificationRepository(SimilarityTagPredicateFactory similarityTagPredicateFactory) {
+    public ModificationRepository(SimilarityTagFilterFactory similarityTagFilterFactory) {
         super(Modification.class);
-        this.similarityTagPredicateFactory = similarityTagPredicateFactory;
+        this.similarityTagFilterFactory = similarityTagFilterFactory;
     }
 
     public List<Modification> getByModel(int modelId) {
@@ -114,21 +114,45 @@ public class ModificationRepository extends GeneralEntityWithNameRepository<Modi
 
     public List<Modification> getSimilar(Modification modification, List<SimilarityTag> tagList) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Tuple> tupleQuery = cb.createTupleQuery();
         CriteriaQuery<Modification> cq = cb.createQuery(tClass);
         Root<Modification> root = cq.from(tClass);
 
-        List<Predicate> predicates = tagList.stream()
-                .map(x -> similarityTagPredicateFromMap(x).getPredicate(modification, root))
-                .collect(Collectors.toList());
-        CriteriaQuery<Modification> byPredicates = cq.where(cb.and(predicates.toArray(new Predicate[]{})));
+        Root<Modification> tupleRoot = tupleQuery.from(tClass);
 
-        TypedQuery<Modification> query = entityManager.createQuery(byPredicates);
+        List<SimilarityPredicateAndGroupElement> predicateAndGroupElements = tagList.stream()
+                .map(x -> similarityTagPredicateFromMap(x).getPredicate(modification, tupleRoot))
+                .filter(Objects::nonNull).collect(Collectors.toList());
+        List<Predicate> predicates = predicateAndGroupElements.stream()
+                .map(SimilarityPredicateAndGroupElement::getPredicate)
+                .filter(Objects::nonNull).collect(Collectors.toList());
+        List<Expression<?>> groupElements = predicateAndGroupElements.stream()
+                .map(SimilarityPredicateAndGroupElement::getGroupElement)
+                .filter(Objects::nonNull).collect(Collectors.toList());
+        groupElements.add(tupleRoot.get("chassis").get("id"));
+        List<Selection<?>> multiselectElements = predicateAndGroupElements.stream()
+                .map(SimilarityPredicateAndGroupElement::getGroupElement)
+                .filter(Objects::nonNull).map(x -> (Selection<?>) x).collect(Collectors.toList());
+        multiselectElements.add(tupleRoot.get("chassis").get("id"));
+        multiselectElements.add(0, cb.min(tupleRoot.get("id")));
+
+        tupleQuery.multiselect(multiselectElements);
+        tupleQuery.groupBy(groupElements);
+        tupleQuery.distinct(true);
+        tupleQuery.where(cb.and(predicates.toArray(new Predicate[]{})));
+        List<Integer> modIds
+                = entityManager.createQuery(tupleQuery).getResultList().stream()
+                .map(x -> x.get(0, Integer.class)).collect(Collectors.toList());
+
+        cq.where(root.get("id").in(modIds));
+
+        TypedQuery<Modification> query = entityManager.createQuery(cq);
         return query.getResultList();
     }
 
-    private SimilarityTagPredicate similarityTagPredicateFromMap(SimilarityTag similarityTag) {
+    private SimilarityTagFilter similarityTagPredicateFromMap(SimilarityTag similarityTag) {
         if (!similarityTagPredicates.containsKey(similarityTag)) {
-            similarityTagPredicates.put(similarityTag, similarityTagPredicateFactory.getByTag(similarityTag));
+            similarityTagPredicates.put(similarityTag, similarityTagFilterFactory.getByTag(similarityTag));
         }
         return similarityTagPredicates.get(similarityTag);
     }
