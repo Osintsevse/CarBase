@@ -14,7 +14,7 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 
 @Service
-public class ChassisRepository extends GeneralEntityWithNameRepository<Chassis> {
+public class ChassisRepository extends GeneralEntityRepository<Chassis> {
     public ChassisRepository() {
         super(Chassis.class);
     }

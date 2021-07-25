@@ -13,7 +13,7 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 
 @Service
-public class GenerationRepository extends GeneralEntityWithNameRepository<Generation> {
+public class GenerationRepository extends GeneralEntityRepository<Generation> {
     public GenerationRepository() {
         super(Generation.class);
     }

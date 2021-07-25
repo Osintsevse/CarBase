@@ -1,8 +1,9 @@
 package com.thirdwheel.carbase.view.controller;
 
 import com.thirdwheel.carbase.dao.models.Vendor;
-import com.thirdwheel.carbase.dao.repositories.GeneralEntityWithNameRepository;
+import com.thirdwheel.carbase.dao.repositories.VendorRepository;
 import com.thirdwheel.carbase.service.GeneralService;
+import com.thirdwheel.carbase.service.VendorService;
 import com.thirdwheel.carbase.view.model.EntitiesWithNameListResponse;
 import com.thirdwheel.carbase.view.model.EntityWithNameForResponse;
 import lombok.AllArgsConstructor;
@@ -16,7 +17,7 @@ import java.util.List;
 @Controller
 @AllArgsConstructor
 public class VendorController {
-    private final GeneralService<Vendor, GeneralEntityWithNameRepository<Vendor>> vendorService;
+    private final VendorService vendorService;
 
     @GetMapping(path = "/vendors")
     public ResponseEntity<List<EntityWithNameForResponse>> getVendors

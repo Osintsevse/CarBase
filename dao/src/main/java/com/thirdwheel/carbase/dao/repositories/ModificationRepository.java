@@ -14,7 +14,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
-public class ModificationRepository extends GeneralEntityWithNameRepository<Modification> {
+public class ModificationRepository extends GeneralEntityRepository<Modification> {
     private final SimilarityTagFiltersService similarityTagFiltersService;
 
     public ModificationRepository(SimilarityTagFiltersService similarityTagFiltersService) {
