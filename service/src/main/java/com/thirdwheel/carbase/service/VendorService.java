@@ -1,18 +1,13 @@
 package com.thirdwheel.carbase.service;
 
-import com.thirdwheel.carbase.dao.models.IEntityWithName;
-import com.thirdwheel.carbase.dao.models.Model;
 import com.thirdwheel.carbase.dao.models.Vendor;
-import com.thirdwheel.carbase.dao.repositories.GeneralEntityRepository;
-import com.thirdwheel.carbase.dao.repositories.ModelRepository;
 import com.thirdwheel.carbase.dao.repositories.VendorRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class VendorService extends GeneralService<Vendor, VendorRepository>  {
+public class VendorService extends GeneralService<Vendor, VendorRepository> {
     public VendorService(VendorRepository repository) {
         super(repository);
     }

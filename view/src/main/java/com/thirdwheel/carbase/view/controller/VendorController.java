@@ -1,8 +1,6 @@
 package com.thirdwheel.carbase.view.controller;
 
 import com.thirdwheel.carbase.dao.models.Vendor;
-import com.thirdwheel.carbase.dao.repositories.VendorRepository;
-import com.thirdwheel.carbase.service.GeneralService;
 import com.thirdwheel.carbase.service.VendorService;
 import com.thirdwheel.carbase.view.model.EntitiesWithNameListResponse;
 import com.thirdwheel.carbase.view.model.EntityWithNameForResponse;

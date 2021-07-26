@@ -153,7 +153,7 @@ public class ModificationRepository extends GeneralEntityRepository<Modification
         subquery.select(cb.min(tupleRoot.get("id")));
         subquery.groupBy(groupElements);
         subquery.distinct(true);
-        subquery.where(cb.and(predicates.toArray(new Predicate[] {})));
+        subquery.where(cb.and(predicates.toArray(new Predicate[]{})));
         CriteriaQuery<Modification> cq = cb.createQuery(tClass);
         Root<Modification> root = cq.from(tClass);
         cq.where(root.get(Modification.Fields.id).in(subquery));

@@ -46,7 +46,7 @@ public class ModificationService extends GeneralService<Modification, Modificati
         return repository.getByModelAndYear(modelId, year);
     }
 
-    public List<Modification> getSimilar(Integer modificationId, String tags) {
-        return repository.getSimilar(this.getById(modificationId), SimilarityTag.getByTagsString(tags));
+    public List<Modification> getSimilar(Integer modificationId, String[] tags) {
+        return repository.getSimilar(this.getById(modificationId), SimilarityTag.getByTagsStringArray(tags));
     }
 }

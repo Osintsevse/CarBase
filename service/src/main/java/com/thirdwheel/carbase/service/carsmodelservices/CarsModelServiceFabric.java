@@ -20,32 +20,18 @@ public class CarsModelServiceFabric {
     private final ModelService modelService;
     private final ModificationService modificationService;
 
-    public ModelCarsModelService getModelCarsModelService(AbstractCarsModelService nextCarsModelService) {
-        return new ModelCarsModelService(nextCarsModelService, modelService);
-    }
-
-    public GenerationCarsModelService getGenerationCarsModelService(AbstractCarsModelService nextCarsModelService) {
-        return new GenerationCarsModelService(nextCarsModelService, generationService);
-    }
-
-    public ChassisCarsModelService getChassisCarsModelService(AbstractCarsModelService nextCarsModelService) {
-        return new ChassisCarsModelService(nextCarsModelService, chassisService);
-    }
-
-    public ModificationCarsModelService getModificationCarsModelService(AbstractCarsModelService nextCarsModelService) {
-        return new ModificationCarsModelService(nextCarsModelService, modificationService);
-    }
-
     public AbstractCarsModelService getCarsModelService(SearchFieldForVendor searchFieldForVendor, AbstractCarsModelService nextCarsModelService) {
-        if (searchFieldForVendor == SearchFieldForVendor.SEARCH_IN_MODELS) {
-            return getModelCarsModelService(nextCarsModelService);
-        } else if (searchFieldForVendor == SearchFieldForVendor.SEARCH_IN_GENERATIONS) {
-            return getGenerationCarsModelService(nextCarsModelService);
-        } else if (searchFieldForVendor == SearchFieldForVendor.SEARCH_IN_CHASSIS) {
-            return getChassisCarsModelService(nextCarsModelService);
-        } else if (searchFieldForVendor == SearchFieldForVendor.SEARCH_IN_MODIFICATIONS) {
-            return getModificationCarsModelService(nextCarsModelService);
+        switch (searchFieldForVendor) {
+            case SEARCH_IN_MODELS:
+                return new ModelCarsModelService(nextCarsModelService, modelService);
+            case SEARCH_IN_GENERATIONS:
+                return new GenerationCarsModelService(nextCarsModelService, generationService);
+            case SEARCH_IN_CHASSIS:
+                return new ChassisCarsModelService(nextCarsModelService, chassisService);
+            case SEARCH_IN_MODIFICATIONS:
+                return new ModificationCarsModelService(nextCarsModelService, modificationService);
+            default:
+                throw new RuntimeException("The value of searchFieldForVendor is out of Enum");
         }
-        return null;
     }
 }

@@ -38,8 +38,8 @@ public enum SimilarityTag {
         return any.get();
     }
 
-    public static List<SimilarityTag> getByTagsString(String tags) {
-        return Arrays.stream(tags.split(","))
+    public static List<SimilarityTag> getByTagsStringArray(String[] tags) {
+        return Arrays.stream(tags)
                 .map(SimilarityTag::getByTagString)
                 .collect(Collectors.toList());
     }

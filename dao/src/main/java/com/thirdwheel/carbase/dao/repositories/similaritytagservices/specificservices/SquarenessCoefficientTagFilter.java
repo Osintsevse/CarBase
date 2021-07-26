@@ -8,8 +8,6 @@ import com.thirdwheel.carbase.dao.repositories.similaritytagservices.SimilarityT
 import org.springframework.stereotype.Service;
 
 import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 
 @Service
