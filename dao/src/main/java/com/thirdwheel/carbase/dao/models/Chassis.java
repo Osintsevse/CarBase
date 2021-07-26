@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.FieldNameConstants;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import java.util.List;
@@ -49,6 +50,9 @@ public class Chassis implements IEntityWithName {
 
     @Column(name = "rear_track")
     private Long rearTrack;
+
+    @Formula("wheel_base::float / greatest(front_track,rear_track)")
+    private Double squarenessCoefficient;
 
     @Column(name = "height")
     private Long height;

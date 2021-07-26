@@ -50,10 +50,6 @@ public class ModificationDetailedResponse {
         this.frontTrack = modification.getChassis().getFrontTrack();
         this.rearTrack = modification.getChassis().getRearTrack();
         this.acceleration0100 = modification.getAcceleration0100();
-        if ((this.frontTrack != 0) || (this.rearTrack != 0)) {
-            this.squarenessCoefficient = (double) this.wheelBase / (double) (Math.max(this.frontTrack, this.rearTrack));
-        } else {
-            this.squarenessCoefficient = 0;
-        }
+        this.squarenessCoefficient = modification.getChassis().getSquarenessCoefficient();
     }
 }

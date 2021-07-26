@@ -30,16 +30,9 @@ public class SquarenessCoefficientTagFilter extends AbstractTagFilter {
             double squarenessCoefficient = (double) wheelBase / (double) (Math.max(frontTrack, rearTrack));
             Double lower = squarenessCoefficient * (100 - DEVIATION_PERCENT) / 100;
             Double higher = squarenessCoefficient * (100 + DEVIATION_PERCENT) / 100;
-            Path<Long> wheelBasePath = root.get(Modification.Fields.chassis).get(Chassis.Fields.wheelBase);
-            Path<Long> frontTrackPath = root.get(Modification.Fields.chassis).get(Chassis.Fields.frontTrack);
-            Path<Long> rearTrackPath = root.get(Modification.Fields.chassis).get(Chassis.Fields.rearTrack);
-            CriteriaBuilder.Case<Long> greaterPath = cb.selectCase();
-            greaterPath.when(cb.ge(frontTrackPath, rearTrackPath), frontTrackPath);
-            greaterPath.otherwise(rearTrackPath);
-            Expression<Double> squarenessCoefPath = cb.toDouble(cb.quot(
-                    cb.prod(wheelBasePath, cb.literal(1.0D)), greaterPath));
             return new SimilarityPredicateAndGroupElement(
-                    cb.between(squarenessCoefPath, lower, higher),
+                    cb.between(root.get(Modification.Fields.chassis)
+                            .get(Chassis.Fields.squarenessCoefficient), lower, higher),
                     null);
         } else {
             return null;
