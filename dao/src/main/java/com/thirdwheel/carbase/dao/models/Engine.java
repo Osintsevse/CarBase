@@ -1,11 +1,11 @@
 package com.thirdwheel.carbase.dao.models;
 
-import com.thirdwheel.carbase.dao.models.common.SomeNullOrEquals;
-import com.thirdwheel.carbase.dao.models.common.UnknownOrEquals;
+import com.thirdwheel.carbase.dao.models.common.SpecificEquals;
 import com.thirdwheel.carbase.dao.models.enums.EngineType;
 import com.thirdwheel.carbase.dao.models.enums.FuelType;
 import lombok.Data;
 import lombok.ToString;
+import lombok.experimental.FieldNameConstants;
 
 import javax.persistence.*;
 
@@ -13,7 +13,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "engines")
 @ToString
-public class Engine {
+@FieldNameConstants
+public class Engine implements IEntityWithName {
     @Id
     @SequenceGenerator(name = "engines_pk_sequence", sequenceName = "engines_pk_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "engines_pk_sequence")
@@ -60,14 +61,14 @@ public class Engine {
         } else {
             Engine engine = (Engine) obj;
             return (this.getName().equals(engine.getName())) &&
-                    (UnknownOrEquals.compare(this.getFuelType(), engine.getFuelType())) &&
-                    (UnknownOrEquals.compare(this.getEngineType(), engine.getEngineType())) &&
-                    (SomeNullOrEquals.compare(this.getVolume(), engine.getVolume())) &&
-                    (SomeNullOrEquals.compare(this.getCylinderCount(), engine.getCylinderCount())) &&
-                    (SomeNullOrEquals.compare(this.getValveCount(), engine.getValveCount())) &&
-                    (SomeNullOrEquals.compare(this.getValvePerCylinder(), engine.getValvePerCylinder())) &&
-                    (SomeNullOrEquals.compare(this.getBore(), engine.getBore())) &&
-                    (SomeNullOrEquals.compare(this.getStroke(), engine.getStroke()));
+                    (SpecificEquals.unknownOrEquals(this.getFuelType(), engine.getFuelType())) &&
+                    (SpecificEquals.unknownOrEquals(this.getEngineType(), engine.getEngineType())) &&
+                    (SpecificEquals.someNullOrEquals(this.getVolume(), engine.getVolume())) &&
+                    (SpecificEquals.someNullOrEquals(this.getCylinderCount(), engine.getCylinderCount())) &&
+                    (SpecificEquals.someNullOrEquals(this.getValveCount(), engine.getValveCount())) &&
+                    (SpecificEquals.someNullOrEquals(this.getValvePerCylinder(), engine.getValvePerCylinder())) &&
+                    (SpecificEquals.someNullOrEquals(this.getBore(), engine.getBore())) &&
+                    (SpecificEquals.someNullOrEquals(this.getStroke(), engine.getStroke()));
         }
     }
 

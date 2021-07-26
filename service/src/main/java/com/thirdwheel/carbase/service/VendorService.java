@@ -1,25 +1,23 @@
 package com.thirdwheel.carbase.service;
 
 import com.thirdwheel.carbase.dao.models.Vendor;
-import com.thirdwheel.carbase.dao.repositories.GeneralRepository;
-import lombok.RequiredArgsConstructor;
+import com.thirdwheel.carbase.dao.repositories.VendorRepository;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
-@RequiredArgsConstructor
-public class VendorService {
-    private final GeneralRepository<Vendor> repository;
-
-    @Transactional
-    public void save(String name) {
-        final Vendor vendor = new Vendor();
-        vendor.setName(name);
-        repository.save(vendor);
+public class VendorService extends GeneralService<Vendor, VendorRepository> {
+    public VendorService(VendorRepository repository) {
+        super(repository);
     }
 
-    public Vendor getBiId(int id) {
-        return repository.getById(id);
+    public List<Vendor> getByNameBeginning(String nameBeginning) {
+        if (nameBeginning == null) {
+            return repository.getAll();
+        } else {
+            return repository.getByNameBeginning(nameBeginning);
+        }
     }
+
 }
