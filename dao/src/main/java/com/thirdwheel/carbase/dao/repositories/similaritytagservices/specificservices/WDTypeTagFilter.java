@@ -20,7 +20,7 @@ public class WDTypeTagFilter extends AbstractTagFilter {
     @Override
     public SimilarityPredicateAndGroupElement getPredicate(Modification modification, Root<Modification> root) {
         WDType valueForComparison = modification.getWdType();
-        if ((valueForComparison != null) && (valueForComparison != WDType.Unknown)) {
+        if ((valueForComparison != null) && (valueForComparison != WDType.UNKNOWN)) {
             CriteriaBuilder cb = entityManager.getCriteriaBuilder();
             Path<WDType> objectPath = root.get(Modification.Fields.wdType);
             return new SimilarityPredicateAndGroupElement(cb.equal(objectPath, valueForComparison), null);

@@ -22,7 +22,7 @@ public class EngineTypeTagFilter extends AbstractTagFilter {
     @Override
     public SimilarityPredicateAndGroupElement getPredicate(Modification modification, Root<Modification> root) {
         EngineType valueForComparison = modification.getEngineModification().getEngine().getEngineType();
-        if ((valueForComparison != null) && (valueForComparison != EngineType.Unknown)) {
+        if ((valueForComparison != null) && (valueForComparison != EngineType.UNKNOWN)) {
             CriteriaBuilder cb = entityManager.getCriteriaBuilder();
             Path<EngineType> objectPath = root.get(Modification.Fields.engineModification)
                     .get(EngineModification.Fields.engine).get(Engine.Fields.engineType);

@@ -20,7 +20,7 @@ public class TransmissionTypeTagFilter extends AbstractTagFilter {
     @Override
     public SimilarityPredicateAndGroupElement getPredicate(Modification modification, Root<Modification> root) {
         TransmissionType valueForComparison = modification.getTransmissionType();
-        if ((valueForComparison != null) && (valueForComparison != TransmissionType.Unknown)) {
+        if ((valueForComparison != null) && (valueForComparison != TransmissionType.UNKNOWN)) {
             CriteriaBuilder cb = entityManager.getCriteriaBuilder();
             Path<TransmissionType> objectPath = root.get(Modification.Fields.transmissionType);
             return new SimilarityPredicateAndGroupElement(cb.equal(objectPath, valueForComparison), null);

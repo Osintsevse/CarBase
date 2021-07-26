@@ -1,12 +1,12 @@
 package com.thirdwheel.carbase.dao.models.enums;
 
 public enum BodyStyle {
-    Sedan,
-    Hatchback,
-    Coupe,
-    Minivan,
+    SEDAN,
+    HATCHBACK,
+    COUPE,
+    MINIVAN,
     SUV,
-    Wagon,
-    Convertible,
-    Unknown
+    WAGON,
+    CONVERTIBLE,
+    UNKNOWN
 }

@@ -21,7 +21,7 @@ public class BodyStyleTagFilter extends AbstractTagFilter {
     @Override
     public SimilarityPredicateAndGroupElement getPredicate(Modification modification, Root<Modification> root) {
         BodyStyle valueForComparison = modification.getChassis().getBodyStyle();
-        if ((valueForComparison != null) && (valueForComparison != BodyStyle.Unknown)) {
+        if ((valueForComparison != null) && (valueForComparison != BodyStyle.UNKNOWN)) {
             CriteriaBuilder cb = entityManager.getCriteriaBuilder();
             Path<BodyStyle> objectPath = root.get(Modification.Fields.chassis)
                     .get(Chassis.Fields.bodyStyle);
