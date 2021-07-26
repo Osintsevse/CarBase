@@ -35,16 +35,6 @@ public class PredicateCreator {
         return cb.and(startPredicate, endPredicate);
     }
 
-    public Predicate intIsEqual(Path<Integer> intField, int intValue) {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        return cb.equal(intField, intValue);
-    }
-
-    public Predicate stringIsEqual(Path<String> stringField, String stringValue) {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        return cb.equal(cb.upper(stringField), stringValue.toUpperCase());
-    }
-
     public Predicate stringStartsWith(Path<String> stringField, String stringBeginning) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         return cb.like(cb.upper(stringField), stringBeginning.toUpperCase() + "%");

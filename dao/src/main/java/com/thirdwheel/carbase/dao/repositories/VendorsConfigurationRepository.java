@@ -20,12 +20,10 @@ public class VendorsConfigurationRepository extends GeneralEntityRepository<Vend
     public VendorsConfiguration getByVendor(Integer vendorId) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<VendorsConfiguration> cq = cb.createQuery(tClass);
-        Root<VendorsConfiguration> modelRoot = cq.from(tClass);
-        Predicate vendorIdEq = predicateCreator
-                .intIsEqual(modelRoot.get(VendorsConfiguration.Fields.vendor)
-                        .get(Vendor.Fields.id), vendorId);
-        CriteriaQuery<VendorsConfiguration> modelsByVendorId = cq.where(vendorIdEq);
-        TypedQuery<VendorsConfiguration> query = entityManager.createQuery(modelsByVendorId);
+        Root<VendorsConfiguration> root = cq.from(tClass);
+        Predicate vendorIdEq = cb.equal(root.get(VendorsConfiguration.Fields.vendor)
+                .get(Vendor.Fields.id), vendorId);
+        TypedQuery<VendorsConfiguration> query = entityManager.createQuery(cq.where(vendorIdEq));
         List<VendorsConfiguration> resultList = query.getResultList();
         if (resultList.size() > 0) {
             return resultList.get(0);

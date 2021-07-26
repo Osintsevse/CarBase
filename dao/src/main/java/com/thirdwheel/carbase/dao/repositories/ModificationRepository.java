@@ -26,13 +26,21 @@ public class ModificationRepository extends GeneralEntityRepository<Modification
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Modification> cq = cb.createQuery(tClass);
         Root<Modification> root = cq.from(tClass);
-        Predicate modelIdEq = predicateCreator
-                .intIsEqual(root.get(Modification.Fields.chassis)
-                        .get(Chassis.Fields.generation)
-                        .get(Generation.Fields.model)
-                        .get(Model.Fields.id), modelId);
+        Predicate modelIdEq = getPredicateModificationByModel(modelId, cb, root);
         CriteriaQuery<Modification> byModelId = cq.where(modelIdEq);
         TypedQuery<Modification> query = entityManager.createQuery(byModelId);
+        return query.getResultList();
+    }
+
+    public List<Modification> getByModelAndYear(int modelId, String year) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Modification> cq = cb.createQuery(tClass);
+        Root<Modification> root = cq.from(tClass);
+        Predicate modelIdEq = getPredicateModificationByModel(modelId, cb, root);
+        Predicate yearBetweenStartAndEnd = predicateCreator
+                .yearBetweenStartAndEnd(root.get(Modification.Fields.start), root.get(Modification.Fields.end), year);
+        CriteriaQuery<Modification> generationsByModelId = cq.where(cb.and(modelIdEq, yearBetweenStartAndEnd));
+        TypedQuery<Modification> query = entityManager.createQuery(generationsByModelId);
         return query.getResultList();
     }
 
@@ -40,12 +48,7 @@ public class ModificationRepository extends GeneralEntityRepository<Modification
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Modification> cq = cb.createQuery(tClass);
         Root<Modification> root = cq.from(tClass);
-        Predicate idEquals = predicateCreator
-                .intIsEqual(root.get(Modification.Fields.chassis)
-                        .get(Chassis.Fields.generation)
-                        .get(Generation.Fields.model)
-                        .get(Model.Fields.vendor)
-                        .get(Vendor.Fields.id), vendorId);
+        Predicate idEquals = getPredicateModificationByVendor(vendorId, cb, root);
         CriteriaQuery<Modification> byIdAndName = cq.where(idEquals);
         TypedQuery<Modification> query = entityManager.createQuery(byIdAndName);
         return query.getResultList();
@@ -55,14 +58,9 @@ public class ModificationRepository extends GeneralEntityRepository<Modification
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Modification> cq = cb.createQuery(tClass);
         Root<Modification> root = cq.from(tClass);
-        Predicate idEquals = predicateCreator
-                .intIsEqual(root.get(Modification.Fields.chassis)
-                        .get(Chassis.Fields.generation)
-                        .get(Generation.Fields.model)
-                        .get(Model.Fields.vendor)
-                        .get(Vendor.Fields.id), vendorId);
-        Predicate nameIsLike = predicateCreator.stringStartsWith(root.get(Modification.Fields.name), nameBeginning);
-        CriteriaQuery<Modification> byIdAndName = cq.where(cb.and(idEquals, nameIsLike));
+        Predicate idEquals = getPredicateModificationByVendor(vendorId, cb, root);
+        Predicate namePredicate = predicateCreator.stringStartsWith(root.get(Modification.Fields.name), nameBeginning);
+        CriteriaQuery<Modification> byIdAndName = cq.where(cb.and(idEquals, namePredicate));
         TypedQuery<Modification> query = entityManager.createQuery(byIdAndName);
         return query.getResultList();
     }
@@ -71,16 +69,11 @@ public class ModificationRepository extends GeneralEntityRepository<Modification
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Modification> cq = cb.createQuery(tClass);
         Root<Modification> root = cq.from(tClass);
-        Predicate idEquals = predicateCreator
-                .intIsEqual(root.get(Modification.Fields.chassis)
-                        .get(Chassis.Fields.generation)
-                        .get(Generation.Fields.model)
-                        .get(Model.Fields.vendor)
-                        .get(Vendor.Fields.id), vendorId);
-        Predicate nameIsLike = predicateCreator.stringIsEqual(root.get(Modification.Fields.name), carsModelName);
+        Predicate idEquals = getPredicateModificationByVendor(vendorId, cb, root);
+        Predicate namePredicate = cb.equal(root.get(Modification.Fields.name), carsModelName);
         Predicate yearBetweenStartAndEnd = predicateCreator
                 .yearBetweenStartAndEnd(root.get(Modification.Fields.start), root.get(Modification.Fields.end), year);
-        CriteriaQuery<Modification> byIdAndName = cq.where(cb.and(idEquals, nameIsLike, yearBetweenStartAndEnd));
+        CriteriaQuery<Modification> byIdAndName = cq.where(cb.and(idEquals, namePredicate, yearBetweenStartAndEnd));
         TypedQuery<Modification> query = entityManager.createQuery(byIdAndName);
         return query.getResultList();
     }
@@ -89,9 +82,8 @@ public class ModificationRepository extends GeneralEntityRepository<Modification
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Modification> cq = cb.createQuery(tClass);
         Root<Modification> root = cq.from(tClass);
-        Predicate idEquals = predicateCreator
-                .intIsEqual(root.get(Modification.Fields.chassis)
-                        .get(Chassis.Fields.id), chassisId);
+        Predicate idEquals = cb.equal(root.get(Modification.Fields.chassis)
+                .get(Chassis.Fields.id), chassisId);
         Predicate yearBetweenStartAndEnd = predicateCreator
                 .yearBetweenStartAndEnd(root.get(Modification.Fields.start), root.get(Modification.Fields.end), year);
         CriteriaQuery<Modification> byIdAndName = cq.where(cb.and(idEquals, yearBetweenStartAndEnd));
@@ -103,30 +95,13 @@ public class ModificationRepository extends GeneralEntityRepository<Modification
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Modification> cq = cb.createQuery(tClass);
         Root<Modification> root = cq.from(tClass);
-        Predicate idEquals = predicateCreator
-                .intIsEqual(root.get(Modification.Fields.chassis)
-                        .get(Chassis.Fields.generation)
-                        .get(Generation.Fields.id), generationId);
+        Predicate idEquals = cb.equal(root.get(Modification.Fields.chassis)
+                .get(Chassis.Fields.generation)
+                .get(Generation.Fields.id), generationId);
         Predicate yearBetweenStartAndEnd = predicateCreator
                 .yearBetweenStartAndEnd(root.get(Modification.Fields.start), root.get(Modification.Fields.end), year);
         CriteriaQuery<Modification> byIdAndName = cq.where(cb.and(idEquals, yearBetweenStartAndEnd));
         TypedQuery<Modification> query = entityManager.createQuery(byIdAndName);
-        return query.getResultList();
-    }
-
-    public List<Modification> getByModelAndYear(int modelId, String year) {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Modification> cq = cb.createQuery(tClass);
-        Root<Modification> root = cq.from(tClass);
-        Predicate modelIdEq = predicateCreator
-                .intIsEqual(root.get(Modification.Fields.chassis)
-                        .get(Chassis.Fields.generation)
-                        .get(Generation.Fields.model)
-                        .get(Model.Fields.id), modelId);
-        Predicate yearBetweenStartAndEnd = predicateCreator
-                .yearBetweenStartAndEnd(root.get(Modification.Fields.start), root.get(Modification.Fields.end), year);
-        CriteriaQuery<Modification> generationsByModelId = cq.where(cb.and(modelIdEq, yearBetweenStartAndEnd));
-        TypedQuery<Modification> query = entityManager.createQuery(generationsByModelId);
         return query.getResultList();
     }
 
@@ -158,9 +133,22 @@ public class ModificationRepository extends GeneralEntityRepository<Modification
         Root<Modification> root = cq.from(tClass);
         cq.where(root.get(Modification.Fields.id).in(subquery));
 
-
         TypedQuery<Modification> query = entityManager.createQuery(cq);
         return query.getResultList();
     }
 
+    private Predicate getPredicateModificationByModel(int modelId, CriteriaBuilder cb, Root<Modification> root) {
+        return cb.equal(root.get(Modification.Fields.chassis)
+                .get(Chassis.Fields.generation)
+                .get(Generation.Fields.model)
+                .get(Model.Fields.id), modelId);
+    }
+
+    private Predicate getPredicateModificationByVendor(int vendorId, CriteriaBuilder cb, Root<Modification> root) {
+        return cb.equal(root.get(Modification.Fields.chassis)
+                .get(Chassis.Fields.generation)
+                .get(Generation.Fields.model)
+                .get(Model.Fields.vendor)
+                .get(Vendor.Fields.id), vendorId);
+    }
 }

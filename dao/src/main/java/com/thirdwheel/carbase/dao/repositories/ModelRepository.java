@@ -21,8 +21,7 @@ public class ModelRepository extends GeneralEntityRepository<Model> {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Model> cq = cb.createQuery(tClass);
         Root<Model> root = cq.from(tClass);
-        Predicate vendorIdEq = predicateCreator.intIsEqual(root.get(Model.Fields.vendor)
-                .get(Vendor.Fields.id), vendorId);
+        Predicate vendorIdEq = getPredicateModelByVendor(vendorId, cb, root);
         CriteriaQuery<Model> modelsByVendorId = cq.where(vendorIdEq);
         TypedQuery<Model> query = entityManager.createQuery(modelsByVendorId);
         return query.getResultList();
@@ -32,10 +31,9 @@ public class ModelRepository extends GeneralEntityRepository<Model> {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Model> cq = cb.createQuery(tClass);
         Root<Model> root = cq.from(tClass);
-        Predicate vendorIdEq = predicateCreator.intIsEqual(root.get(Model.Fields.vendor)
-                .get(Vendor.Fields.id), vendorId);
-        Predicate nameIsLike = predicateCreator.stringStartsWith(root.get(Model.Fields.name), nameBeginning);
-        CriteriaQuery<Model> cqm = cq.where(cb.and(vendorIdEq, nameIsLike));
+        Predicate vendorIdEq = getPredicateModelByVendor(vendorId, cb, root);
+        Predicate namePredicate = predicateCreator.stringStartsWith(root.get(Model.Fields.name), nameBeginning);
+        CriteriaQuery<Model> cqm = cq.where(cb.and(vendorIdEq, namePredicate));
         TypedQuery<Model> query = entityManager.createQuery(cqm);
         return query.getResultList();
     }
@@ -44,11 +42,15 @@ public class ModelRepository extends GeneralEntityRepository<Model> {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Model> cq = cb.createQuery(tClass);
         Root<Model> root = cq.from(tClass);
-        Predicate vendorIdEq = predicateCreator.intIsEqual(root.get(Model.Fields.vendor)
-                .get(Vendor.Fields.id), vendorId);
-        Predicate nameIsEq = predicateCreator.stringIsEqual(root.get(Model.Fields.name), carsModelName);
-        CriteriaQuery<Model> cqm = cq.where(cb.and(vendorIdEq, nameIsEq));
+        Predicate vendorIdEq = getPredicateModelByVendor(vendorId, cb, root);
+        Predicate namePredicate = cb.equal(root.get(Model.Fields.name), carsModelName);
+        CriteriaQuery<Model> cqm = cq.where(cb.and(vendorIdEq, namePredicate));
         TypedQuery<Model> query = entityManager.createQuery(cqm);
         return query.getResultList();
+    }
+
+    private Predicate getPredicateModelByVendor(int vendorId, CriteriaBuilder cb, Root<Model> root) {
+        return cb.equal(root.get(Model.Fields.vendor)
+                .get(Vendor.Fields.id), vendorId);
     }
 }

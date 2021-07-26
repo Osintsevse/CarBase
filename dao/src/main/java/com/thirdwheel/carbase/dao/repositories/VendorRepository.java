@@ -20,8 +20,8 @@ public class VendorRepository extends GeneralEntityRepository<Vendor> {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Vendor> cq = cb.createQuery(Vendor.class);
         Root<Vendor> rootEntry = cq.from(Vendor.class);
-        Predicate nameIsLike = predicateCreator.stringStartsWith(rootEntry.get(Vendor.Fields.name), nameBeginning);
-        CriteriaQuery<Vendor> cqByNameBeginning = cq.where(nameIsLike);
+        Predicate namePredicate = predicateCreator.stringStartsWith(rootEntry.get(Vendor.Fields.name), nameBeginning);
+        CriteriaQuery<Vendor> cqByNameBeginning = cq.where(namePredicate);
         TypedQuery<Vendor> query = entityManager.createQuery(cqByNameBeginning);
         return query.getResultList();
     }

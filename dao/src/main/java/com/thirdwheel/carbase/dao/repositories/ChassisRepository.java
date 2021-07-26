@@ -23,11 +23,7 @@ public class ChassisRepository extends GeneralEntityRepository<Chassis> {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Chassis> cq = cb.createQuery(tClass);
         Root<Chassis> root = cq.from(tClass);
-        Predicate vendorIdEquals = predicateCreator
-                .intIsEqual(root.get(Chassis.Fields.generation)
-                        .get(Generation.Fields.model)
-                        .get(Model.Fields.vendor)
-                        .get(Vendor.Fields.id), vendorId);
+        Predicate vendorIdEquals = getPredicateChassisByVedor(vendorId, cb, root);
         CriteriaQuery<Chassis> cqm = cq.where(vendorIdEquals);
         TypedQuery<Chassis> query = entityManager.createQuery(cqm);
         return query.getResultList();
@@ -37,13 +33,9 @@ public class ChassisRepository extends GeneralEntityRepository<Chassis> {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Chassis> cq = cb.createQuery(tClass);
         Root<Chassis> root = cq.from(tClass);
-        Predicate nameIsLike = predicateCreator.stringStartsWith(root.get(Chassis.Fields.name), nameBeginning);
-        Predicate vendorIdEquals = predicateCreator
-                .intIsEqual(root.get(Chassis.Fields.generation)
-                        .get(Generation.Fields.model)
-                        .get(Model.Fields.vendor)
-                        .get(Vendor.Fields.id), vendorId);
-        CriteriaQuery<Chassis> cqm = cq.where(cb.and(vendorIdEquals, nameIsLike));
+        Predicate vendorIdEquals = getPredicateChassisByVedor(vendorId, cb, root);
+        Predicate namePredicate = predicateCreator.stringStartsWith(root.get(Chassis.Fields.name), nameBeginning);
+        CriteriaQuery<Chassis> cqm = cq.where(cb.and(vendorIdEquals, namePredicate));
         TypedQuery<Chassis> query = entityManager.createQuery(cqm);
         return query.getResultList();
     }
@@ -52,14 +44,18 @@ public class ChassisRepository extends GeneralEntityRepository<Chassis> {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Chassis> cq = cb.createQuery(tClass);
         Root<Chassis> root = cq.from(tClass);
-        Predicate nameIsEq = predicateCreator.stringIsEqual(root.get(Chassis.Fields.name), carsModelName);
-        Predicate vendorIdEquals = predicateCreator
-                .intIsEqual(root.get(Chassis.Fields.generation)
-                        .get(Generation.Fields.model)
-                        .get(Model.Fields.vendor)
-                        .get(Vendor.Fields.id), vendorId);
-        CriteriaQuery<Chassis> cqm = cq.where(cb.and(vendorIdEquals, nameIsEq));
+        Predicate vendorIdEquals = getPredicateChassisByVedor(vendorId, cb, root);
+        Predicate namePredicate = cb.equal(root.get(Chassis.Fields.name), carsModelName);
+        CriteriaQuery<Chassis> cqm = cq.where(cb.and(vendorIdEquals, namePredicate));
         TypedQuery<Chassis> query = entityManager.createQuery(cqm);
         return query.getResultList();
     }
+
+    private Predicate getPredicateChassisByVedor(int vendorId, CriteriaBuilder cb, Root<Chassis> root) {
+        return cb.equal(root.get(Chassis.Fields.generation)
+                .get(Generation.Fields.model)
+                .get(Model.Fields.vendor)
+                .get(Vendor.Fields.id), vendorId);
+    }
+
 }
