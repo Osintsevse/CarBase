@@ -13,7 +13,7 @@ import javax.persistence.criteria.Root;
 
 @Service
 public class WheelBaseTagFilter extends AbstractTagFilter {
-    public static final int DEVIATION_PERCENT = 10;
+    public static final int DEVIATION_PERCENT = 3;
 
     public WheelBaseTagFilter() {
         super(SimilarityTag.WHEEL_BASE);

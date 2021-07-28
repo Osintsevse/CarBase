@@ -36,6 +36,7 @@ public class ModificationRepository extends GeneralEntityRepository<Modification
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Modification> cq = cb.createQuery(tClass);
         Root<Modification> root = cq.from(tClass);
+
         Predicate modelIdEq = getPredicateModificationByModel(modelId, cb, root);
         Predicate yearBetweenStartAndEnd = predicateCreator
                 .yearBetweenStartAndEnd(root.get(Modification.Fields.start), root.get(Modification.Fields.end), year);
@@ -111,6 +112,7 @@ public class ModificationRepository extends GeneralEntityRepository<Modification
         Subquery<Integer> subquery = tupleQuery.subquery(Integer.class);
         Root<Modification> tupleRoot = subquery.from(tClass);
 
+
         List<SimilarityPredicateAndGroupElement> predicateAndGroupElements = tagList.stream()
                 .map(x -> similarityTagFiltersService.getTagFilterMap().get(x).getPredicate(modification, tupleRoot))
                 .filter(Objects::nonNull).collect(Collectors.toList());
@@ -132,6 +134,11 @@ public class ModificationRepository extends GeneralEntityRepository<Modification
         CriteriaQuery<Modification> cq = cb.createQuery(tClass);
         Root<Modification> root = cq.from(tClass);
         cq.where(root.get(Modification.Fields.id).in(subquery));
+
+        root.fetch(Modification.Fields.chassis).fetch(Chassis.Fields.generation).fetch(Generation.Fields.model).fetch(Model.Fields.vendor).fetch(Vendor.Fields.vendorsConfiguration);
+        root.fetch(Modification.Fields.chassis).fetch(Chassis.Fields.rearSuspension);
+        root.fetch(Modification.Fields.chassis).fetch(Chassis.Fields.frontSuspension);
+        root.fetch(Modification.Fields.engineModification).fetch(EngineModification.Fields.engine).fetch(Engine.Fields.vendor).fetch(Vendor.Fields.vendorsConfiguration);
 
         TypedQuery<Modification> query = entityManager.createQuery(cq);
         return query.getResultList();

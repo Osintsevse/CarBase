@@ -20,7 +20,9 @@ public class VendorController {
     @GetMapping(path = "/vendors")
     public ResponseEntity<List<EntityWithNameForResponse>> getVendors
             (@RequestParam(value = "nameBeginning", required = false) String nameBeginning) {
+
         List<Vendor> vendors = vendorService.getByNameBeginning(nameBeginning);
+
         return ResponseEntity.ok(new EntitiesWithNameListResponse(vendors).getEntities());
     }
 

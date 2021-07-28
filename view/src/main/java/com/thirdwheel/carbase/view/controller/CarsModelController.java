@@ -27,10 +27,13 @@ public class CarsModelController {
     public ResponseEntity<List<String>> getByVendorAndNameBeginning(
             @PathVariable(value = "vendorId") @Pattern(regexp = "[0-9]+") String vendorId,
             @RequestParam(value = "nameBeginning", required = false) String nameBeginning) {
+
         Map<String, CarModel> byVendorAndText =
                 carsModelService.getByVendorAndNameBeginning(Integer.parseInt(vendorId), nameBeginning);
+
         log.debug("Found " + byVendorAndText.size() + " cars for VendorId \""
                 + vendorId + "\" and name beginning \"" + nameBeginning + "\"");
+
         return ResponseEntity.ok(new CarsModelsAsStringListResponse(byVendorAndText).getCarsModels());
     }
 }

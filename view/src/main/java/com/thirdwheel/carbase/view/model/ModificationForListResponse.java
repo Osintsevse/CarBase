@@ -1,6 +1,7 @@
 package com.thirdwheel.carbase.view.model;
 
 import com.thirdwheel.carbase.dao.models.Modification;
+import com.thirdwheel.carbase.dao.models.enums.TransmissionType;
 import lombok.Getter;
 
 import java.time.LocalDate;
@@ -16,6 +17,7 @@ public class ModificationForListResponse {
     private final String wholeName;
     private final LocalDate manufacturingStartDate;
     private final LocalDate manufacturingEndDate;
+    private final TransmissionType transmissionType;
 
     public ModificationForListResponse(Modification modification) {
         this.id = modification.getId();
@@ -28,5 +30,6 @@ public class ModificationForListResponse {
                 + ", " + this.modificationName;
         this.manufacturingStartDate = modification.getStart();
         this.manufacturingEndDate = modification.getEnd();
+        this.transmissionType = modification.getTransmissionType();
     }
 }

@@ -30,10 +30,13 @@
                         startValue="1"/>
     </changeSet>
     <changeSet id="5" author="Stas">
-        <sql>ALTER TABLE modifications ALTER COLUMN id DROP IDENTITY;</sql>
-        <sql>ALTER TABLE modifications ALTER COLUMN id SET DEFAULT nextval('modifications_pk_sequence');</sql>
+        <sql>ALTER TABLE modifications
+            ALTER COLUMN id DROP IDENTITY;</sql>
+        <sql>ALTER TABLE modifications
+            ALTER COLUMN id SET DEFAULT nextval('modifications_pk_sequence');</sql>
         <rollback>
-            <sql>ALTER TABLE modifications ALTER COLUMN id DROP DEFAULT nextval('modifications_pk_sequence');</sql>
+            <sql>ALTER TABLE modifications
+                ALTER COLUMN id DROP DEFAULT nextval('modifications_pk_sequence');</sql>
             <sql>ALTER TABLE modifications ALTER COLUMN id SET IDENTITY;</sql>
         </rollback>
     </changeSet>
@@ -48,10 +51,13 @@
                         startValue="1"/>
     </changeSet>
     <changeSet id="7" author="Stas">
-        <sql>ALTER TABLE chassises ALTER COLUMN id DROP IDENTITY;</sql>
-        <sql>ALTER TABLE chassises ALTER COLUMN id SET DEFAULT nextval('chassises_pk_sequence');</sql>
+        <sql>ALTER TABLE chassises
+            ALTER COLUMN id DROP IDENTITY;</sql>
+        <sql>ALTER TABLE chassises
+            ALTER COLUMN id SET DEFAULT nextval('chassises_pk_sequence');</sql>
         <rollback>
-            <sql>ALTER TABLE chassises ALTER COLUMN id DROP DEFAULT nextval('chassises_pk_sequence');</sql>
+            <sql>ALTER TABLE chassises
+                ALTER COLUMN id DROP DEFAULT nextval('chassises_pk_sequence');</sql>
             <sql>ALTER TABLE chassises ALTER COLUMN id SET IDENTITY;</sql>
         </rollback>
     </changeSet>
@@ -66,10 +72,13 @@
                         startValue="1"/>
     </changeSet>
     <changeSet id="9" author="Stas">
-        <sql>ALTER TABLE engines ALTER COLUMN id DROP IDENTITY;</sql>
-        <sql>ALTER TABLE engines ALTER COLUMN id SET DEFAULT nextval('engines_pk_sequence');</sql>
+        <sql>ALTER TABLE engines
+            ALTER COLUMN id DROP IDENTITY;</sql>
+        <sql>ALTER TABLE engines
+            ALTER COLUMN id SET DEFAULT nextval('engines_pk_sequence');</sql>
         <rollback>
-            <sql>ALTER TABLE engines ALTER COLUMN id DROP DEFAULT nextval('engines_pk_sequence');</sql>
+            <sql>ALTER TABLE engines
+                ALTER COLUMN id DROP DEFAULT nextval('engines_pk_sequence');</sql>
             <sql>ALTER TABLE engines ALTER COLUMN id SET IDENTITY;</sql>
         </rollback>
     </changeSet>
@@ -84,12 +93,14 @@
                         startValue="1"/>
     </changeSet>
     <changeSet id="11" author="Stas">
-        <sql>ALTER TABLE engine_modifications ALTER COLUMN id DROP IDENTITY;</sql>
-        <sql>ALTER TABLE engine_modifications ALTER COLUMN id SET DEFAULT nextval('engine_modifications_pk_sequence');
+        <sql>ALTER TABLE engine_modifications
+            ALTER COLUMN id DROP IDENTITY;</sql>
+        <sql>ALTER TABLE engine_modifications
+            ALTER COLUMN id SET DEFAULT nextval('engine_modifications_pk_sequence');
         </sql>
         <rollback>
-            <sql>ALTER TABLE engine_modifications ALTER COLUMN id DROP DEFAULT
-                nextval('engine_modifications_pk_sequence');
+            <sql>ALTER TABLE engine_modifications
+                ALTER COLUMN id DROP DEFAULT nextval('engine_modifications_pk_sequence');
             </sql>
             <sql>ALTER TABLE engine_modifications ALTER COLUMN id SET IDENTITY;</sql>
         </rollback>
@@ -105,10 +116,13 @@
                         startValue="1"/>
     </changeSet>
     <changeSet id="13" author="Stas">
-        <sql>ALTER TABLE generations ALTER COLUMN id DROP IDENTITY;</sql>
-        <sql>ALTER TABLE generations ALTER COLUMN id SET DEFAULT nextval('generations_pk_sequence');</sql>
+        <sql>ALTER TABLE generations
+            ALTER COLUMN id DROP IDENTITY;</sql>
+        <sql>ALTER TABLE generations
+            ALTER COLUMN id SET DEFAULT nextval('generations_pk_sequence');</sql>
         <rollback>
-            <sql>ALTER TABLE generations ALTER COLUMN id DROP DEFAULT nextval('generations_pk_sequence');</sql>
+            <sql>ALTER TABLE generations
+                ALTER COLUMN id DROP DEFAULT nextval('generations_pk_sequence');</sql>
             <sql>ALTER TABLE generations ALTER COLUMN id SET IDENTITY;</sql>
         </rollback>
     </changeSet>
@@ -123,10 +137,13 @@
                         startValue="1"/>
     </changeSet>
     <changeSet id="15" author="Stas">
-        <sql>ALTER TABLE models ALTER COLUMN id DROP IDENTITY;</sql>
-        <sql>ALTER TABLE models ALTER COLUMN id SET DEFAULT nextval('models_pk_sequence');</sql>
+        <sql>ALTER TABLE models
+            ALTER COLUMN id DROP IDENTITY;</sql>
+        <sql>ALTER TABLE models
+            ALTER COLUMN id SET DEFAULT nextval('models_pk_sequence');</sql>
         <rollback>
-            <sql>ALTER TABLE models ALTER COLUMN id DROP DEFAULT nextval('models_pk_sequence');</sql>
+            <sql>ALTER TABLE models
+                ALTER COLUMN id DROP DEFAULT nextval('models_pk_sequence');</sql>
             <sql>ALTER TABLE models ALTER COLUMN id SET IDENTITY;</sql>
         </rollback>
     </changeSet>
@@ -141,10 +158,13 @@
                         startValue="1"/>
     </changeSet>
     <changeSet id="17" author="Stas">
-        <sql>ALTER TABLE vendors ALTER COLUMN id DROP IDENTITY;</sql>
-        <sql>ALTER TABLE vendors ALTER COLUMN id SET DEFAULT nextval('vendors_pk_sequence');</sql>
+        <sql>ALTER TABLE vendors
+            ALTER COLUMN id DROP IDENTITY;</sql>
+        <sql>ALTER TABLE vendors
+            ALTER COLUMN id SET DEFAULT nextval('vendors_pk_sequence');</sql>
         <rollback>
-            <sql>ALTER TABLE vendors ALTER COLUMN id DROP DEFAULT nextval('vendors_pk_sequence');</sql>
+            <sql>ALTER TABLE vendors
+                ALTER COLUMN id DROP DEFAULT nextval('vendors_pk_sequence');</sql>
             <sql>ALTER TABLE vendors ALTER COLUMN id SET IDENTITY;</sql>
         </rollback>
     </changeSet>
@@ -159,10 +179,13 @@
                         startValue="1"/>
     </changeSet>
     <changeSet id="19" author="Stas">
-        <sql>ALTER TABLE suspensions ALTER COLUMN id DROP IDENTITY;</sql>
-        <sql>ALTER TABLE suspensions ALTER COLUMN id SET DEFAULT nextval('suspensions_pk_sequence');</sql>
+        <sql>ALTER TABLE suspensions
+            ALTER COLUMN id DROP IDENTITY;</sql>
+        <sql>ALTER TABLE suspensions
+            ALTER COLUMN id SET DEFAULT nextval('suspensions_pk_sequence');</sql>
         <rollback>
-            <sql>ALTER TABLE suspensions ALTER COLUMN id DROP DEFAULT nextval('suspensions_pk_sequence');</sql>
+            <sql>ALTER TABLE suspensions
+                ALTER COLUMN id DROP DEFAULT nextval('suspensions_pk_sequence');</sql>
             <sql>ALTER TABLE suspensions ALTER COLUMN id SET IDENTITY;</sql>
         </rollback>
     </changeSet>

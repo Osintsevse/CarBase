@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.TreeSet;
 
 @Service
@@ -16,8 +17,8 @@ public class CarService {
     private final CarsModelService carsModelService;
     private final ModificationService modificationService;
 
-    public TreeSet<Modification> getByVendorAndCarsModelAndYear(int vendorId, String carsModelName, String year) {
-        TreeSet<Modification> modifications = new TreeSet<>(Modification::compareTo);
+    public Set<Modification> getByVendorAndCarsModelAndYear(int vendorId, String carsModelName, String year) {
+        Set<Modification> modifications = new TreeSet<>(Modification::compareTo);
         List<CarModel> byVendorAndCarModelAndYear = carsModelService.getByVendorAndCarsModelAndYear(vendorId, carsModelName, year);
         byVendorAndCarModelAndYear.forEach(x -> {
             if (x.getCarDomain() == CarDomain.MODIFICATION) {

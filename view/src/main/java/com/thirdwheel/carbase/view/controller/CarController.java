@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.validation.constraints.Pattern;
 import java.util.Arrays;
 import java.util.List;
-import java.util.TreeSet;
+import java.util.Set;
 
 @Validated
 @Controller
@@ -33,7 +33,7 @@ public class CarController {
             @PathVariable(value = "vendorId") @Pattern(regexp = "[0-9]+") String vendorId,
             @RequestParam(value = "carsModelName") String carsModelName,
             @RequestParam(value = "year") @Pattern(regexp = "[0-9]{4}") String year) {
-        TreeSet<Modification> byVendorAndCarsModelAndYear =
+        Set<Modification> byVendorAndCarsModelAndYear =
                 carService.getByVendorAndCarsModelAndYear(Integer.parseInt(vendorId), carsModelName, year);
         log.debug("Found " + byVendorAndCarsModelAndYear.size() + " cars for VendorId \""
                 + vendorId + "\", car's model name \"" + carsModelName + "\" and year \"" + year + "\"");

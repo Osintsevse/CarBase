@@ -20,10 +20,13 @@ public class CarsModelService {
         Vendor byId = vendorService.getById(vendorId);
         EnumSet<SearchFieldForVendor> fieldsForVendors =
                 SearchFieldForVendor.fromInt(byId.getVendorsConfiguration().getSearchFieldsBitMask());
+
         AbstractCarsModelService carService = null;
+
         for (SearchFieldForVendor fieldsForVendor : fieldsForVendors) {
             carService = carsModelServiceFabric.getCarsModelService(fieldsForVendor, carService);
         }
+
         if (carService == null) {
             return new TreeMap<>();
         } else {
@@ -35,10 +38,13 @@ public class CarsModelService {
         Vendor byId = vendorService.getById(vendorId);
         EnumSet<SearchFieldForVendor> fieldsForVendors =
                 SearchFieldForVendor.fromInt(byId.getVendorsConfiguration().getSearchFieldsBitMask());
+
         AbstractCarsModelService carService = null;
+
         for (SearchFieldForVendor fieldsForVendor : fieldsForVendors) {
             carService = carsModelServiceFabric.getCarsModelService(fieldsForVendor, carService);
         }
+
         if (carService == null) {
             return new ArrayList<>();
         } else {

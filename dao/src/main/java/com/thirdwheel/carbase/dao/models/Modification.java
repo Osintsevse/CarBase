@@ -94,6 +94,11 @@ public class Modification implements IEntityWithName, Comparable<Modification> {
 
     @Override
     public int compareTo(Modification o) {
-        return this.getName().compareTo(o.getName());
+        int cmp = this.getName().compareTo(o.getName());
+        if (cmp != 0) {
+            return cmp;
+        } else {
+            return this.equals(o)?0:1;
+        }
     }
 }
