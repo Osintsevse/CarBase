@@ -7,6 +7,7 @@ import com.thirdwheel.carbase.service.model.CarSearchResponseElement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -19,7 +20,7 @@ public class CarService {
 
     @Deprecated
     public Set<Modification> getByVendorAndCarsModelAndYear(int vendorId, String carsModelName, String year) {
-        Set<Modification> modifications = new TreeSet<>(Modification::compareTo);
+        Set<Modification> modifications = new HashSet<>();
         List<CarSearchResponseElement> byVendorAndCarModelAndYear =
                 carSearchRequestService.getByVendorAndCarsModelAndYear(vendorId, carsModelName, year);
 
