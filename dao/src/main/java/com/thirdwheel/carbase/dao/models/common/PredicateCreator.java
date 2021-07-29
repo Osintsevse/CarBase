@@ -35,8 +35,12 @@ public class PredicateCreator {
         return cb.and(startPredicate, endPredicate);
     }
 
-    public Predicate stringStartsWith(Path<String> stringField, String stringBeginning) {
+    public Predicate stringStartsWithOrHasSubstring(Path<String> stringField, String stringBeginningOrSubstring) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        return cb.like(cb.upper(stringField), stringBeginning.toUpperCase() + "%");
+        if (stringBeginningOrSubstring.length() > 1) {
+            return cb.like(cb.upper(stringField), "%" + stringBeginningOrSubstring.toUpperCase() + "%");
+        } else {
+            return cb.like(cb.upper(stringField), stringBeginningOrSubstring.toUpperCase() + "%");
+        }
     }
 }

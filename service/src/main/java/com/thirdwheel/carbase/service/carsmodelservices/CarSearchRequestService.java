@@ -4,20 +4,23 @@ import com.thirdwheel.carbase.dao.models.Vendor;
 import com.thirdwheel.carbase.dao.models.enums.SearchFieldForVendor;
 import com.thirdwheel.carbase.dao.repositories.VendorRepository;
 import com.thirdwheel.carbase.service.GeneralService;
-import com.thirdwheel.carbase.service.model.CarModel;
+import com.thirdwheel.carbase.service.model.CarSearchResponseElement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class CarsModelService {
+public class CarSearchRequestService {
     private final GeneralService<Vendor, VendorRepository> vendorService;
     private final CarsModelServiceFabric carsModelServiceFabric;
 
-    public Map<String, CarModel> getByVendorAndNameBeginning(int vendorId, String nameBeginning) {
+    public List<CarSearchResponseElement> getByVendorAndNameBeginning(int vendorId, String nameBeginning) {
         Vendor byId = vendorService.getById(vendorId);
+
         EnumSet<SearchFieldForVendor> fieldsForVendors =
                 SearchFieldForVendor.fromInt(byId.getVendorsConfiguration().getSearchFieldsBitMask());
 
@@ -28,13 +31,13 @@ public class CarsModelService {
         }
 
         if (carService == null) {
-            return new TreeMap<>();
+            return new ArrayList<>();
         } else {
-            return carService.getByVendorAndNameBeginning(vendorId, nameBeginning);
+            return carService.getByVendorAndNameSubstring(vendorId, nameBeginning);
         }
     }
 
-    public List<CarModel> getByVendorAndCarsModelAndYear(int vendorId, String carsModelName, String year) {
+    public List<CarSearchResponseElement> getByVendorAndCarsModelAndYear(int vendorId, String carsModelName, String year) {
         Vendor byId = vendorService.getById(vendorId);
         EnumSet<SearchFieldForVendor> fieldsForVendors =
                 SearchFieldForVendor.fromInt(byId.getVendorsConfiguration().getSearchFieldsBitMask());

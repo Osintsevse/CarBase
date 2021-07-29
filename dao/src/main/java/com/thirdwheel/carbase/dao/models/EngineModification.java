@@ -14,7 +14,7 @@ import javax.persistence.*;
 @ToString
 @EqualsAndHashCode
 @FieldNameConstants
-public class EngineModification implements IEntityWithName {
+public class EngineModification implements EntityWithIdAndName {
     @EqualsAndHashCode.Exclude
     @Id
     @SequenceGenerator(name = "engine_modifications_pk_sequence",

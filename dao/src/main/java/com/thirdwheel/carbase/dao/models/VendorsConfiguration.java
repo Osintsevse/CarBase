@@ -9,11 +9,11 @@ import javax.persistence.*;
 import java.util.EnumSet;
 
 @Data
-@Entity
+@javax.persistence.Entity
 @Table(name = "vendors_configurations")
 @EqualsAndHashCode
 @FieldNameConstants
-public class VendorsConfiguration implements IEntity {
+public class VendorsConfiguration implements EntityWithId {
     @EqualsAndHashCode.Exclude
     @Id
     @SequenceGenerator(name = "vendors_configurations_pk_sequence", sequenceName = "vendors_configurations_pk_sequence", allocationSize = 1)

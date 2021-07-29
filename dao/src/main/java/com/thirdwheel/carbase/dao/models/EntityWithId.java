@@ -1,5 +1,5 @@
 package com.thirdwheel.carbase.dao.models;
 
-public interface IEntity {
+public interface EntityWithId {
     int getId();
 }

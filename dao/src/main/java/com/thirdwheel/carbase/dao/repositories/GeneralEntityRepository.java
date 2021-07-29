@@ -1,6 +1,6 @@
 package com.thirdwheel.carbase.dao.repositories;
 
-import com.thirdwheel.carbase.dao.models.IEntity;
+import com.thirdwheel.carbase.dao.models.EntityWithId;
 import com.thirdwheel.carbase.dao.models.common.PredicateCreator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class GeneralEntityRepository<T extends IEntity> {
+public class GeneralEntityRepository<T extends EntityWithId> {
     final protected Class<T> tClass;
     @Autowired
     protected PredicateCreator predicateCreator;

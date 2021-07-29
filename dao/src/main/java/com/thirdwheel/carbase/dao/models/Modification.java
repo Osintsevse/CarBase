@@ -19,7 +19,7 @@ import java.time.LocalDate;
 @ToString
 @EqualsAndHashCode
 @FieldNameConstants
-public class Modification implements IEntityWithName, Comparable<Modification> {
+public class Modification implements EntityWithIdAndName, Comparable<Modification> {
     @EqualsAndHashCode.Exclude
     @Id
     @SequenceGenerator(name = "modifications_pk_sequence", sequenceName = "modifications_pk_sequence", allocationSize = 1)
@@ -98,7 +98,7 @@ public class Modification implements IEntityWithName, Comparable<Modification> {
         if (cmp != 0) {
             return cmp;
         } else {
-            return this.equals(o)?0:1;
+            return this.equals(o) ? 0 : 1;
         }
     }
 }

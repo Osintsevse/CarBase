@@ -1,13 +1,13 @@
 package com.thirdwheel.carbase.service;
 
-import com.thirdwheel.carbase.dao.models.IEntityWithName;
+import com.thirdwheel.carbase.dao.models.EntityWithIdAndName;
 import com.thirdwheel.carbase.dao.repositories.GeneralEntityRepository;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
 @RequiredArgsConstructor
-public class GeneralService<T extends IEntityWithName, R extends GeneralEntityRepository<T>> {
+public class GeneralService<T extends EntityWithIdAndName, R extends GeneralEntityRepository<T>> {
     protected final R repository;
 
     public T getById(int id) {

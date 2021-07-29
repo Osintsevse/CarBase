@@ -1,9 +1,9 @@
 package com.thirdwheel.carbase.service;
 
 import com.thirdwheel.carbase.dao.models.Modification;
-import com.thirdwheel.carbase.service.carsmodelservices.CarsModelService;
-import com.thirdwheel.carbase.service.enums.CarDomain;
-import com.thirdwheel.carbase.service.model.CarModel;
+import com.thirdwheel.carbase.service.carsmodelservices.CarSearchRequestService;
+import com.thirdwheel.carbase.service.enums.CarSearchDomain;
+import com.thirdwheel.carbase.service.model.CarSearchResponseElement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,21 +14,21 @@ import java.util.TreeSet;
 @Service
 @RequiredArgsConstructor
 public class CarService {
-    private final CarsModelService carsModelService;
+    private final CarSearchRequestService carSearchRequestService;
     private final ModificationService modificationService;
 
     public Set<Modification> getByVendorAndCarsModelAndYear(int vendorId, String carsModelName, String year) {
         Set<Modification> modifications = new TreeSet<>(Modification::compareTo);
-        List<CarModel> byVendorAndCarModelAndYear = carsModelService.getByVendorAndCarsModelAndYear(vendorId, carsModelName, year);
+        List<CarSearchResponseElement> byVendorAndCarModelAndYear = carSearchRequestService.getByVendorAndCarsModelAndYear(vendorId, carsModelName, year);
         byVendorAndCarModelAndYear.forEach(x -> {
-            if (x.getCarDomain() == CarDomain.MODIFICATION) {
-                modifications.add(modificationService.getById(x.getId()));
-            } else if (x.getCarDomain() == CarDomain.CHASSIS) {
-                modifications.addAll(modificationService.getByChassisAndYear(x.getId(), year));
-            } else if (x.getCarDomain() == CarDomain.GENERATION) {
-                modifications.addAll(modificationService.getByGenerationAndYear(x.getId(), year));
-            } else if (x.getCarDomain() == CarDomain.MODEL) {
-                modifications.addAll(modificationService.getByModelAndYear(x.getId(), year));
+            if (x.getCarSearchDomain() == CarSearchDomain.MODIFICATION) {
+                modifications.add(modificationService.getById(x.getEntityWithName().getId()));
+            } else if (x.getCarSearchDomain() == CarSearchDomain.CHASSIS) {
+                modifications.addAll(modificationService.getByChassisAndYear(x.getEntityWithName().getId(), year));
+            } else if (x.getCarSearchDomain() == CarSearchDomain.GENERATION) {
+                modifications.addAll(modificationService.getByGenerationAndYear(x.getEntityWithName().getId(), year));
+            } else if (x.getCarSearchDomain() == CarSearchDomain.MODEL) {
+                modifications.addAll(modificationService.getByModelAndYear(x.getEntityWithName().getId(), year));
             }
         });
         return modifications;

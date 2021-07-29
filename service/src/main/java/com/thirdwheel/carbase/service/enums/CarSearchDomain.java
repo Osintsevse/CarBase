@@ -1,6 +1,6 @@
 package com.thirdwheel.carbase.service.enums;
 
-public enum CarDomain {
+public enum CarSearchDomain {
     MODEL,
     GENERATION,
     CHASSIS,

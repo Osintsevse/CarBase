@@ -19,10 +19,42 @@ public class VendorRepository extends GeneralEntityRepository<Vendor> {
     public List<Vendor> getByNameBeginning(String nameBeginning) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Vendor> cq = cb.createQuery(Vendor.class);
-        Root<Vendor> rootEntry = cq.from(Vendor.class);
-        Predicate namePredicate = predicateCreator.stringStartsWith(rootEntry.get(Vendor.Fields.name), nameBeginning);
+
+        Root<Vendor> root = cq.from(Vendor.class);
+        root.fetch(Vendor.Fields.vendorsConfiguration);
+
+        Predicate namePredicate = predicateCreator.stringStartsWithOrHasSubstring(root.get(Vendor.Fields.name), nameBeginning);
         CriteriaQuery<Vendor> cqByNameBeginning = cq.where(namePredicate);
+
         TypedQuery<Vendor> query = entityManager.createQuery(cqByNameBeginning);
         return query.getResultList();
+    }
+
+    @Override
+    public List<Vendor> getAll() {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Vendor> cq = cb.createQuery(tClass);
+
+        Root<Vendor> root = cq.from(tClass);
+        root.fetch(Vendor.Fields.vendorsConfiguration);
+
+        CriteriaQuery<Vendor> all = cq.select(root);
+
+        TypedQuery<Vendor> query = entityManager.createQuery(all);
+        return query.getResultList();
+    }
+
+    @Override
+    public Vendor getById(int id) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Vendor> cq = cb.createQuery(tClass);
+
+        Root<Vendor> root = cq.from(tClass);
+        root.fetch(Vendor.Fields.vendorsConfiguration);
+
+        CriteriaQuery<Vendor> vendorByIdCQ = cq.where(cb.equal(root.get(Vendor.Fields.id), id));
+
+        TypedQuery<Vendor> query = entityManager.createQuery(vendorByIdCQ);
+        return query.getSingleResult();
     }
 }

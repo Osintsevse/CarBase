@@ -12,12 +12,16 @@ public class ModelService extends GeneralService<Model, ModelRepository> {
         super(repository);
     }
 
-    public List<Model> getByVendor(Integer vendorId, String nameBeginning) {
-        if (nameBeginning == null) {
-            return repository.getByVendor(vendorId);
-        } else {
-            return repository.getByVendorAndNameBeginning(vendorId, nameBeginning);
-        }
+    public List<Model> getByVendor(Integer vendorId) {
+        return repository.getByVendor(vendorId);
+    }
+
+    public List<Model> getByVendorAndNameSubstring(Integer vendorId, String nameSubstring) {
+        return repository.getByVendorAndNameSubstring(vendorId, nameSubstring);
+    }
+
+    public List<Model> getByVendorAndNameSubstringDistinctByName(Integer vendorId, String nameSubstring) {
+        return repository.getByVendorAndNameSubstringDistinctByName(vendorId, nameSubstring);
     }
 
     public List<Model> getByVendorAndCarsModelAndYear(int vendorId, String carsModelName) {

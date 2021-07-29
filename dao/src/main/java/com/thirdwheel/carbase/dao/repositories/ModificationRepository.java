@@ -55,14 +55,38 @@ public class ModificationRepository extends GeneralEntityRepository<Modification
         return query.getResultList();
     }
 
-    public List<Modification> getByVendorAndNameBeginning(int vendorId, String nameBeginning) {
+    public List<Modification> getByVendorAndNameSubstring(int vendorId, String nameSubstring) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Modification> cq = cb.createQuery(tClass);
         Root<Modification> root = cq.from(tClass);
         Predicate idEquals = getPredicateModificationByVendor(vendorId, cb, root);
-        Predicate namePredicate = predicateCreator.stringStartsWith(root.get(Modification.Fields.name), nameBeginning);
+        Predicate namePredicate = predicateCreator.stringStartsWithOrHasSubstring(root.get(Modification.Fields.name), nameSubstring);
         CriteriaQuery<Modification> byIdAndName = cq.where(cb.and(idEquals, namePredicate));
         TypedQuery<Modification> query = entityManager.createQuery(byIdAndName);
+        return query.getResultList();
+    }
+
+    public List<Modification> getByVendorAndNameSubstringDistinctByName(int vendorId, String nameSubstring) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+
+        CriteriaQuery<Tuple> tupleQuery = cb.createTupleQuery();
+        Subquery<Integer> subquery = tupleQuery.subquery(Integer.class);
+        Root<Modification> tupleRoot = subquery.from(tClass);
+
+        Predicate vendorIdPredicate = getPredicateModificationByVendor(vendorId, cb, tupleRoot);
+        Predicate namePredicate = predicateCreator.stringStartsWithOrHasSubstring(tupleRoot.get(Modification.Fields.name), nameSubstring);
+
+        subquery.select(cb.min(tupleRoot.get(Modification.Fields.id)));
+        subquery.groupBy(tupleRoot.get(Modification.Fields.name));
+        subquery.distinct(true);
+        subquery.where(cb.and(vendorIdPredicate, namePredicate));
+
+        CriteriaQuery<Modification> cq = cb.createQuery(tClass);
+        Root<Modification> root = cq.from(tClass);
+        cq.where(root.get(Modification.Fields.id).in(subquery));
+        cq.orderBy(cb.asc(root.get(Modification.Fields.name)));
+
+        TypedQuery<Modification> query = entityManager.createQuery(cq);
         return query.getResultList();
     }
 
@@ -127,7 +151,7 @@ public class ModificationRepository extends GeneralEntityRepository<Modification
                 .filter(Objects::nonNull).collect(Collectors.toList());
 
         groupElements.add(tupleRoot.get(Modification.Fields.chassis).get(Chassis.Fields.id));
-        subquery.select(cb.min(tupleRoot.get("id")));
+        subquery.select(cb.min(tupleRoot.get(Modification.Fields.id)));
         subquery.groupBy(groupElements);
         subquery.distinct(true);
         subquery.where(cb.and(predicates.toArray(new Predicate[]{})));

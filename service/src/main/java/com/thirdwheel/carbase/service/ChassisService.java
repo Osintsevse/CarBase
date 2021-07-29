@@ -12,12 +12,16 @@ public class ChassisService extends GeneralService<Chassis, ChassisRepository> {
         super(repository);
     }
 
-    public List<Chassis> getByVendor(Integer vendorId, String nameBeginning) {
-        if (nameBeginning == null) {
-            return repository.getByVendor(vendorId);
-        } else {
-            return repository.getByVendorAndName(vendorId, nameBeginning);
-        }
+    public List<Chassis> getByVendor(Integer vendorId) {
+        return repository.getByVendor(vendorId);
+    }
+
+    public List<Chassis> getByVendorAndNameSubstring(Integer vendorId, String nameSubstring) {
+        return repository.getByVendorAndNameSubstring(vendorId, nameSubstring);
+    }
+
+    public List<Chassis> getByVendorAndNameSubstringDistinctByName(Integer vendorId, String nameSubstring) {
+        return repository.getByVendorAndNameSubstringDistinctByName(vendorId, nameSubstring);
     }
 
     public List<Chassis> getByVendorAndCarsModel(int vendorId, String carsModelName) {
