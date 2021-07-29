@@ -14,21 +14,24 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class GeneralEntityRepository<T extends EntityWithId> {
+public class GeneralEntityWithIdRepository<T extends EntityWithId> implements EntityWithIdRepository<T> {
     final protected Class<T> tClass;
     @Autowired
     protected PredicateCreator predicateCreator;
     @PersistenceContext
     protected EntityManager entityManager;
 
+    @Override
     public void save(T entity) {
         entityManager.persist(entity);
     }
 
+    @Override
     public T getById(int id) {
         return entityManager.find(tClass, id);
     }
 
+    @Override
     public List<T> getAll() {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<T> cq = cb.createQuery(tClass);

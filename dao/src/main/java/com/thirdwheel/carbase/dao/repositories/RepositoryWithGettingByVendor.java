@@ -10,5 +10,5 @@ public interface RepositoryWithGettingByVendor<T extends EntityWithIdAndName> {
     List<T> getByVendorAndNameSubstring(Integer vendorId, String nameSubstring);
 
     @Deprecated
-    List<T> getByVendorAndCarsModelAndYear(Integer vendorId, String carsModelName, String year);
+    List<T> getByVendorAndNameAndYear(Integer vendorId, String carsModelName, String year);
 }

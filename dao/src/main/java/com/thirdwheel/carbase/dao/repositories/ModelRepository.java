@@ -1,6 +1,5 @@
 package com.thirdwheel.carbase.dao.repositories;
 
-import com.thirdwheel.carbase.dao.models.Generation;
 import com.thirdwheel.carbase.dao.models.Model;
 import com.thirdwheel.carbase.dao.models.Vendor;
 import org.springframework.stereotype.Service;
@@ -11,7 +10,7 @@ import javax.persistence.criteria.*;
 import java.util.List;
 
 @Service
-public class ModelRepository extends GeneralEntityRepository<Model>
+public class ModelRepository extends GeneralEntityWithIdRepository<Model>
         implements RepositoryWithGettingByVendor<Model> {
     public ModelRepository() {
         super(Model.class);
@@ -74,7 +73,7 @@ public class ModelRepository extends GeneralEntityRepository<Model>
 
     @Override
     @Deprecated
-    public List<Model> getByVendorAndCarsModelAndYear(Integer vendorId, String carsModelName, String year) {
+    public List<Model> getByVendorAndNameAndYear(Integer vendorId, String carsModelName, String year) {
         return getByVendorAndCarsModel(vendorId, carsModelName);
     }
 

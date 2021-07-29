@@ -1,6 +1,5 @@
 package com.thirdwheel.carbase.dao.repositories;
 
-import com.thirdwheel.carbase.dao.models.Modification;
 import com.thirdwheel.carbase.dao.models.Vendor;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +11,7 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 
 @Service
-public class VendorRepository extends GeneralEntityRepository<Vendor> {
+public class VendorRepository extends GeneralEntityWithIdRepository<Vendor> {
     public VendorRepository() {
         super(Vendor.class);
     }

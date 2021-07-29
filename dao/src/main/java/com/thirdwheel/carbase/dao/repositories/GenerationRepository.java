@@ -11,7 +11,7 @@ import javax.persistence.criteria.*;
 import java.util.List;
 
 @Service
-public class GenerationRepository extends GeneralEntityRepository<Generation>
+public class GenerationRepository extends GeneralEntityWithIdRepository<Generation>
         implements RepositoryWithGettingByVendor<Generation> {
     public GenerationRepository() {
         super(Generation.class);
@@ -73,7 +73,7 @@ public class GenerationRepository extends GeneralEntityRepository<Generation>
 
     @Deprecated
     @Override
-    public List<Generation> getByVendorAndCarsModelAndYear(Integer vendorId, String carsModelName, String year) {
+    public List<Generation> getByVendorAndNameAndYear(Integer vendorId, String carsModelName, String year) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Generation> cq = cb.createQuery(tClass);
         Root<Generation> root = cq.from(tClass);

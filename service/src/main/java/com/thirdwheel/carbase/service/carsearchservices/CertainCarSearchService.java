@@ -39,7 +39,7 @@ public class CertainCarSearchService
         List<CarSearchResponseElement> carSearchResponseElements =
                 super.getByVendorAndCarsModelAndYear(vendorId, carsModelName, year);
 
-        List<? extends EntityWithIdAndName> ts = repository.getByVendorAndCarsModelAndYear(vendorId, carsModelName, year);
+        List<? extends EntityWithIdAndName> ts = repository.getByVendorAndNameAndYear(vendorId, carsModelName, year);
 
         ts.forEach(x -> {
             carSearchResponseElements.add(new CarSearchResponseElement(x, carSearchDomain));

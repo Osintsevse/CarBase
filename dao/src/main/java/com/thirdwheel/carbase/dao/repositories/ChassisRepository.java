@@ -12,7 +12,7 @@ import javax.persistence.criteria.*;
 import java.util.List;
 
 @Service
-public class ChassisRepository extends GeneralEntityRepository<Chassis>
+public class ChassisRepository extends GeneralEntityWithIdRepository<Chassis>
         implements RepositoryWithGettingByVendor<Chassis> {
     public ChassisRepository() {
         super(Chassis.class);
@@ -70,7 +70,7 @@ public class ChassisRepository extends GeneralEntityRepository<Chassis>
 
     @Deprecated
     @Override
-    public List<Chassis> getByVendorAndCarsModelAndYear(Integer vendorId, String carsModelName, String year) {
+    public List<Chassis> getByVendorAndNameAndYear(Integer vendorId, String carsModelName, String year) {
         return getByVendorAndCarsModel(vendorId, carsModelName);
     }
 
