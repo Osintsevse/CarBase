@@ -18,18 +18,6 @@ public class ModificationService extends GeneralService<Modification, Modificati
         return repository.getByVendor(vendorId);
     }
 
-    public List<Modification> getByVendorAndNameSubstring(Integer vendorId, String nameSubstring) {
-        return repository.getByVendorAndNameSubstring(vendorId, nameSubstring);
-    }
-
-    public List<Modification> getByVendorAndNameSubstringDistinctByName(Integer vendorId, String nameSubstring) {
-        return repository.getByVendorAndNameSubstringDistinctByName(vendorId, nameSubstring);
-    }
-
-    public List<Modification> getByVendorAndCarsModelAndYear(int vendorId, String carsModelName, String year) {
-        return repository.getByVendorAndCarsModelAndYear(vendorId, carsModelName, year);
-    }
-
     public List<Modification> getByChassisAndYear(int chassisId, String year) {
         return repository.getByChassisAndYear(chassisId, year);
     }

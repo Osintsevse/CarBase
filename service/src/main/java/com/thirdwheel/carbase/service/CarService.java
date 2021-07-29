@@ -17,6 +17,7 @@ public class CarService {
     private final CarSearchRequestService carSearchRequestService;
     private final ModificationService modificationService;
 
+    @Deprecated
     public Set<Modification> getByVendorAndCarsModelAndYear(int vendorId, String carsModelName, String year) {
         Set<Modification> modifications = new TreeSet<>(Modification::compareTo);
         List<CarSearchResponseElement> byVendorAndCarModelAndYear =
