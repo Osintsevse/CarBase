@@ -1,5 +1,6 @@
 package com.thirdwheel.carbase.dao.repositories;
 
+import com.thirdwheel.carbase.dao.models.Generation;
 import com.thirdwheel.carbase.dao.models.Model;
 import com.thirdwheel.carbase.dao.models.Vendor;
 import org.springframework.stereotype.Service;
@@ -20,9 +21,13 @@ public class ModelRepository extends GeneralEntityRepository<Model>
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Model> cq = cb.createQuery(tClass);
         Root<Model> root = cq.from(tClass);
+
         Predicate vendorIdEq = getPredicateModelByVendor(vendorId, cb, root);
-        CriteriaQuery<Model> modelsByVendorId = cq.where(vendorIdEq);
-        TypedQuery<Model> query = entityManager.createQuery(modelsByVendorId);
+
+        cq.where(vendorIdEq);
+        cq.orderBy(cb.asc(root.get(Model.Fields.name)));
+
+        TypedQuery<Model> query = entityManager.createQuery(cq);
         return query.getResultList();
     }
 
@@ -31,10 +36,14 @@ public class ModelRepository extends GeneralEntityRepository<Model>
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Model> cq = cb.createQuery(tClass);
         Root<Model> root = cq.from(tClass);
+
         Predicate vendorIdEq = getPredicateModelByVendor(vendorId, cb, root);
         Predicate namePredicate = predicateCreator.stringStartsWithOrHasSubstring(root.get(Model.Fields.name), nameSubstring);
-        CriteriaQuery<Model> cqm = cq.where(cb.and(vendorIdEq, namePredicate));
-        TypedQuery<Model> query = entityManager.createQuery(cqm);
+
+        cq.where(cb.and(vendorIdEq, namePredicate));
+        cq.orderBy(cb.asc(root.get(Model.Fields.name)));
+
+        TypedQuery<Model> query = entityManager.createQuery(cq);
         return query.getResultList();
     }
 
@@ -74,10 +83,14 @@ public class ModelRepository extends GeneralEntityRepository<Model>
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Model> cq = cb.createQuery(tClass);
         Root<Model> root = cq.from(tClass);
+
         Predicate vendorIdEq = getPredicateModelByVendor(vendorId, cb, root);
         Predicate namePredicate = cb.equal(root.get(Model.Fields.name), carsModelName);
-        CriteriaQuery<Model> cqm = cq.where(cb.and(vendorIdEq, namePredicate));
-        TypedQuery<Model> query = entityManager.createQuery(cqm);
+
+        cq.where(cb.and(vendorIdEq, namePredicate));
+        cq.orderBy(cb.asc(root.get(Model.Fields.name)));
+
+        TypedQuery<Model> query = entityManager.createQuery(cq);
         return query.getResultList();
     }
 

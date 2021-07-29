@@ -21,9 +21,12 @@ public class GenerationRepository extends GeneralEntityRepository<Generation>
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Generation> cq = cb.createQuery(tClass);
         Root<Generation> root = cq.from(tClass);
+
         Predicate vendorIdEquals = getPredicateGenerationByVendor(vendorId, cb, root);
-        CriteriaQuery<Generation> cqm = cq.where(vendorIdEquals);
-        TypedQuery<Generation> query = entityManager.createQuery(cqm);
+        cq.where(vendorIdEquals);
+        cq.orderBy(cb.asc(root.get(Generation.Fields.name)));
+
+        TypedQuery<Generation> query = entityManager.createQuery(cq);
         return query.getResultList();
     }
 
@@ -32,10 +35,14 @@ public class GenerationRepository extends GeneralEntityRepository<Generation>
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Generation> cq = cb.createQuery(tClass);
         Root<Generation> root = cq.from(tClass);
+
         Predicate vendorIdEquals = getPredicateGenerationByVendor(vendorId, cb, root);
         Predicate namePredicate = predicateCreator.stringStartsWithOrHasSubstring(root.get(Generation.Fields.name), nameSubstring);
-        CriteriaQuery<Generation> cqm = cq.where(cb.and(vendorIdEquals, namePredicate));
-        TypedQuery<Generation> query = entityManager.createQuery(cqm);
+
+        cq.where(cb.and(vendorIdEquals, namePredicate));
+        cq.orderBy(cb.asc(root.get(Generation.Fields.name)));
+
+        TypedQuery<Generation> query = entityManager.createQuery(cq);
         return query.getResultList();
     }
 
@@ -70,12 +77,16 @@ public class GenerationRepository extends GeneralEntityRepository<Generation>
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Generation> cq = cb.createQuery(tClass);
         Root<Generation> root = cq.from(tClass);
+
         Predicate vendorIdEquals = getPredicateGenerationByVendor(vendorId, cb, root);
         Predicate namePredicate = cb.equal(root.get(Generation.Fields.name), carsModelName);
         Predicate yearBetweenStartAndEnd = predicateCreator
                 .yearBetweenStartAndEnd(root.get(Generation.Fields.start), root.get(Generation.Fields.end), year);
-        CriteriaQuery<Generation> cqm = cq.where(cb.and(vendorIdEquals, namePredicate, yearBetweenStartAndEnd));
-        TypedQuery<Generation> query = entityManager.createQuery(cqm);
+
+        cq.where(cb.and(vendorIdEquals, namePredicate, yearBetweenStartAndEnd));
+        cq.orderBy(cb.asc(root.get(Generation.Fields.name)));
+
+        TypedQuery<Generation> query = entityManager.createQuery(cq);
         return query.getResultList();
     }
 

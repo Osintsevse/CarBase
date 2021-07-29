@@ -24,6 +24,7 @@ public class ChassisRepository extends GeneralEntityRepository<Chassis>
         Root<Chassis> root = cq.from(tClass);
         Predicate vendorIdEquals = getPredicateChassisByVendor(vendorId, cb, root);
         CriteriaQuery<Chassis> cqm = cq.where(vendorIdEquals);
+        cq.orderBy(cb.asc(root.get(Chassis.Fields.name)));
         TypedQuery<Chassis> query = entityManager.createQuery(cqm);
         return query.getResultList();
     }
@@ -36,6 +37,7 @@ public class ChassisRepository extends GeneralEntityRepository<Chassis>
         Predicate vendorIdEquals = getPredicateChassisByVendor(vendorId, cb, root);
         Predicate namePredicate = predicateCreator.stringStartsWithOrHasSubstring(root.get(Chassis.Fields.name), nameSubstring);
         CriteriaQuery<Chassis> cqm = cq.where(cb.and(vendorIdEquals, namePredicate));
+        cq.orderBy(cb.asc(root.get(Chassis.Fields.name)));
         TypedQuery<Chassis> query = entityManager.createQuery(cqm);
         return query.getResultList();
     }
@@ -77,10 +79,14 @@ public class ChassisRepository extends GeneralEntityRepository<Chassis>
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Chassis> cq = cb.createQuery(tClass);
         Root<Chassis> root = cq.from(tClass);
+
         Predicate vendorIdEquals = getPredicateChassisByVendor(vendorId, cb, root);
         Predicate namePredicate = cb.equal(root.get(Chassis.Fields.name), carsModelName);
-        CriteriaQuery<Chassis> cqm = cq.where(cb.and(vendorIdEquals, namePredicate));
-        TypedQuery<Chassis> query = entityManager.createQuery(cqm);
+
+        cq.where(cb.and(vendorIdEquals, namePredicate));
+        cq.orderBy(cb.asc(root.get(Chassis.Fields.name)));
+
+        TypedQuery<Chassis> query = entityManager.createQuery(cq);
         return query.getResultList();
     }
 

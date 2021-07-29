@@ -14,14 +14,6 @@ public class GeneralService<T extends EntityWithIdAndName, R extends GeneralEnti
         return repository.getById(id);
     }
 
-//    public List<T> getByNameBeginning(String nameBeginning) {
-//        if (nameBeginning == null) {
-//            return repository.getAll();
-//        } else {
-//            return repository.getByNameBeginning(nameBeginning);
-//        }
-//    }
-
     public List<T> getAll() {
         return repository.getAll();
     }

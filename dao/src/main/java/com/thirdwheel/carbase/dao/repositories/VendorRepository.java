@@ -1,5 +1,6 @@
 package com.thirdwheel.carbase.dao.repositories;
 
+import com.thirdwheel.carbase.dao.models.Modification;
 import com.thirdwheel.carbase.dao.models.Vendor;
 import org.springframework.stereotype.Service;
 
@@ -19,14 +20,16 @@ public class VendorRepository extends GeneralEntityRepository<Vendor> {
     public List<Vendor> getByNameBeginning(String nameBeginning) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Vendor> cq = cb.createQuery(Vendor.class);
-
         Root<Vendor> root = cq.from(Vendor.class);
-        root.fetch(Vendor.Fields.vendorsConfiguration);
 
         Predicate namePredicate = predicateCreator.stringStartsWithOrHasSubstring(root.get(Vendor.Fields.name), nameBeginning);
-        CriteriaQuery<Vendor> cqByNameBeginning = cq.where(namePredicate);
 
-        TypedQuery<Vendor> query = entityManager.createQuery(cqByNameBeginning);
+        cq.where(namePredicate);
+        cq.orderBy(cb.asc(root.get(Vendor.Fields.name)));
+
+        root.fetch(Vendor.Fields.vendorsConfiguration);
+
+        TypedQuery<Vendor> query = entityManager.createQuery(cq);
         return query.getResultList();
     }
 
@@ -36,11 +39,13 @@ public class VendorRepository extends GeneralEntityRepository<Vendor> {
         CriteriaQuery<Vendor> cq = cb.createQuery(tClass);
 
         Root<Vendor> root = cq.from(tClass);
+
+        cq.select(root);
+        cq.orderBy(cb.asc(root.get(Vendor.Fields.name)));
+
         root.fetch(Vendor.Fields.vendorsConfiguration);
 
-        CriteriaQuery<Vendor> all = cq.select(root);
-
-        TypedQuery<Vendor> query = entityManager.createQuery(all);
+        TypedQuery<Vendor> query = entityManager.createQuery(cq);
         return query.getResultList();
     }
 
@@ -50,11 +55,13 @@ public class VendorRepository extends GeneralEntityRepository<Vendor> {
         CriteriaQuery<Vendor> cq = cb.createQuery(tClass);
 
         Root<Vendor> root = cq.from(tClass);
+
+        cq.where(cb.equal(root.get(Vendor.Fields.id), id));
+        cq.orderBy(cb.asc(root.get(Vendor.Fields.name)));
+
         root.fetch(Vendor.Fields.vendorsConfiguration);
 
-        CriteriaQuery<Vendor> vendorByIdCQ = cq.where(cb.equal(root.get(Vendor.Fields.id), id));
-
-        TypedQuery<Vendor> query = entityManager.createQuery(vendorByIdCQ);
+        TypedQuery<Vendor> query = entityManager.createQuery(cq);
         return query.getSingleResult();
     }
 }
