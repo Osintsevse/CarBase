@@ -22,7 +22,7 @@ public class ModificationFromSearchService {
     private final GenerationRepository generationRepository;
     private final ModelRepository modelRepository;
 
-    public List<Modification> getByModificationNameAndYear(Integer modificationId, @Nullable String year) {
+    public List<Modification> getByModificationNameAndYear(Integer modificationId, @Nullable Integer year) {
         Modification modificationById = modificationRepository.getById(modificationId);
         int vendorId = modificationById.getChassis().getGeneration().getModel().getVendor().getId();
         String modificationName = modificationById.getName();
@@ -37,7 +37,7 @@ public class ModificationFromSearchService {
         }
     }
 
-    public List<Modification> getByChassisNameAndYear(Integer chassisId, @Nullable String year) {
+    public List<Modification> getByChassisNameAndYear(Integer chassisId, @Nullable Integer year) {
         Chassis chassisById = chassisRepository.getById(chassisId);
         int vendorId = chassisById.getGeneration().getModel().getVendor().getId();
         String chassisName = chassisById.getName();
@@ -49,7 +49,7 @@ public class ModificationFromSearchService {
         }
     }
 
-    public List<Modification> getByGenerationNameAndYear(Integer chassisId, @Nullable String year) {
+    public List<Modification> getByGenerationNameAndYear(Integer chassisId, @Nullable Integer year) {
         Generation generationById = generationRepository.getById(chassisId);
         int vendorId = generationById.getModel().getVendor().getId();
         String generationName = generationById.getName();
@@ -61,7 +61,7 @@ public class ModificationFromSearchService {
         }
     }
 
-    public List<Modification> getByModelNameAndYear(Integer modelId, @Nullable String year) {
+    public List<Modification> getByModelNameAndYear(Integer modelId, @Nullable Integer year) {
         Model modelById = modelRepository.getById(modelId);
         int vendorId = modelById.getVendor().getId();
         String modelName = modelById.getName();

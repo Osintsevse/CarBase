@@ -18,14 +18,10 @@ public class PredicateCreator {
 
     public Predicate yearBetweenStartAndEnd(Path<LocalDate> manufacturingStartDate,
                                             Path<LocalDate> manufacturingEndDate,
-                                            String year) {
+                                            Integer year) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        Pattern pattern = Pattern.compile("[0-9]{4}");
-        if (!pattern.matcher(year).matches()) {
-            throw new ConstraintViolationException("Year must match \"" + pattern.pattern() + "\"", null);
-        }
-        LocalDate beginningOfYear = LocalDate.parse(year + "-01-01");
-        LocalDate endOfYear = LocalDate.parse(year + "-12-31");
+        LocalDate beginningOfYear = LocalDate.parse(year.toString() + "-01-01");
+        LocalDate endOfYear = LocalDate.parse(year.toString() + "-12-31");
         Predicate startPredicate = cb.or(
                 cb.lessThanOrEqualTo(manufacturingStartDate, endOfYear),
                 cb.isNull(manufacturingStartDate));

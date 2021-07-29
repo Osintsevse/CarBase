@@ -87,7 +87,7 @@ public class ModificationRepository extends GeneralEntityWithIdRepository<Modifi
         return query.getResultList();
     }
 
-    public List<Modification> getByVendorAndNameAndYear(Integer vendorId, String name, String year) {
+    public List<Modification> getByVendorAndNameAndYear(Integer vendorId, String name, Integer year) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Modification> cq = cb.createQuery(tClass);
         Root<Modification> root = cq.from(tClass);
@@ -119,7 +119,7 @@ public class ModificationRepository extends GeneralEntityWithIdRepository<Modifi
         return query.getResultList();
     }
 
-    public List<Modification> getByVendorIdAndChassisNameAndYear(Integer vendorId, String chassisName, String year) {
+    public List<Modification> getByVendorIdAndChassisNameAndYear(Integer vendorId, String chassisName, Integer year) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Modification> cq = cb.createQuery(tClass);
         Root<Modification> root = cq.from(tClass);
@@ -153,7 +153,7 @@ public class ModificationRepository extends GeneralEntityWithIdRepository<Modifi
         return query.getResultList();
     }
 
-    public List<Modification> getByVendorIdAndGenerationNameAndYear(Integer vendorId, String generationName, String year) {
+    public List<Modification> getByVendorIdAndGenerationNameAndYear(Integer vendorId, String generationName, Integer year) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Modification> cq = cb.createQuery(tClass);
         Root<Modification> root = cq.from(tClass);
@@ -189,7 +189,7 @@ public class ModificationRepository extends GeneralEntityWithIdRepository<Modifi
         return query.getResultList();
     }
 
-    public List<Modification> getByVendorIdAndModelNameAndYear(Integer vendorId, String modelName, String year) {
+    public List<Modification> getByVendorIdAndModelNameAndYear(Integer vendorId, String modelName, Integer year) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Modification> cq = cb.createQuery(tClass);
         Root<Modification> root = cq.from(tClass);

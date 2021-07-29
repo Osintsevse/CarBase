@@ -29,7 +29,7 @@ public class ModificationFromSearchController {
             @RequestParam(value = "year", required = false) @Pattern(regexp = "[0-9]{4}") String year) {
 
         List<Modification> modifications = modificationFromSearchService
-                .getByModelNameAndYear(Integer.parseInt(modelId), year);
+                .getByModelNameAndYear(Integer.parseInt(modelId), Integer.parseInt(year));
 
         List<ModificationForListResponse> modificationsResponse =
                 new ModificationsListResponse(modifications).getModificationsResponse();
@@ -44,7 +44,7 @@ public class ModificationFromSearchController {
             @RequestParam(value = "year", required = false) @Pattern(regexp = "[0-9]{4}") String year) {
 
         List<Modification> modifications = modificationFromSearchService
-                .getByGenerationNameAndYear(Integer.parseInt(generationId), year);
+                .getByGenerationNameAndYear(Integer.parseInt(generationId), Integer.parseInt(year));
 
         List<ModificationForListResponse> modificationsResponse =
                 new ModificationsListResponse(modifications).getModificationsResponse();
@@ -58,7 +58,7 @@ public class ModificationFromSearchController {
             @RequestParam(value = "year", required = false) @Pattern(regexp = "[0-9]{4}") String year) {
 
         List<Modification> modifications = modificationFromSearchService
-                .getByChassisNameAndYear(Integer.parseInt(chassisId), year);
+                .getByChassisNameAndYear(Integer.parseInt(chassisId), Integer.parseInt(year));
 
         List<ModificationForListResponse> modificationsResponse =
                 new ModificationsListResponse(modifications).getModificationsResponse();
@@ -72,7 +72,7 @@ public class ModificationFromSearchController {
             @RequestParam(value = "year", required = false) @Pattern(regexp = "[0-9]{4}") String year) {
 
         List<Modification> modifications = modificationFromSearchService
-                .getByModificationNameAndYear(Integer.parseInt(modificationId), year);
+                .getByModificationNameAndYear(Integer.parseInt(modificationId), Integer.parseInt(year));
 
         List<ModificationForListResponse> modificationsResponse =
                 new ModificationsListResponse(modifications).getModificationsResponse();
