@@ -1,101 +1,237 @@
 package com.thirdwheel.carbase.dao.repositories;
 
-import com.thirdwheel.carbase.dao.models.Modification;
-import com.thirdwheel.carbase.dao.repositories.modificationrepositories.*;
+import com.thirdwheel.carbase.dao.models.*;
+import com.thirdwheel.carbase.dao.repositories.similaritytagservices.SimilarityPredicateAndGroupElement;
 import com.thirdwheel.carbase.dao.repositories.similaritytagservices.SimilarityTag;
-import lombok.RequiredArgsConstructor;
+import com.thirdwheel.carbase.dao.repositories.similaritytagservices.SimilarityTagFiltersService;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.Tuple;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.*;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
-public class ModificationRepository implements RepositoryWithGettingByVendor<Modification>,
-        EntityWithIdRepository<Modification> {
-    private final ModificationByVendorRepository modificationByVendorRepository;
-    private final ModificationByModelRepository modificationByModelRepository;
-    private final ModificationByGenerationRepository modificationByGenerationRepository;
-    private final ModificationByChassisRepository modificationByChassisRepository;
-    private final ModificationSimilarityRepository modificationSimilarityRepository;
+public class ModificationRepository extends GeneralEntityWithIdRepository<Modification>
+        implements RepositoryWithGettingByVendor<Modification> {
+    private final SimilarityTagFiltersService similarityTagFiltersService;
 
-    @Override
-    public void save(Modification entity) {
-        modificationByVendorRepository.save(entity);
+    public ModificationRepository(SimilarityTagFiltersService similarityTagFiltersService) {
+        super(Modification.class);
+        this.similarityTagFiltersService = similarityTagFiltersService;
     }
 
-    @Override
-    public Modification getById(int id) {
-        return modificationByVendorRepository.getById(id);
-    }
+    public List<Modification> getSimilar(Modification modification, List<SimilarityTag> tagList) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Tuple> tupleQuery = cb.createTupleQuery();
+        Subquery<Integer> subquery = tupleQuery.subquery(Integer.class);
+        Root<Modification> tupleRoot = subquery.from(tClass);
 
-    @Override
-    public List<Modification> getAll() {
-        return modificationByVendorRepository.getAll();
-    }
 
-    public List<Modification> getByModel(int modelId) {
-        return modificationByModelRepository.getByModel(modelId);
-    }
+        List<SimilarityPredicateAndGroupElement> predicateAndGroupElements = tagList.stream()
+                .map(x -> similarityTagFiltersService.getTagFilterMap().get(x).getPredicate(modification, tupleRoot))
+                .filter(Objects::nonNull).collect(Collectors.toList());
 
-    public List<Modification> getByModelAndYear(int modelId, String year) {
-        return modificationByModelRepository.getByModelAndYear(modelId, year);
-    }
+        List<Predicate> predicates = predicateAndGroupElements.stream()
+                .map(SimilarityPredicateAndGroupElement::getPredicate)
+                .filter(Objects::nonNull).collect(Collectors.toList());
+        predicates.add(cb.notEqual(tupleRoot.get(Modification.Fields.id), modification.getId()));
 
-    public List<Modification> getByVendor(int vendorId) {
-        return modificationByVendorRepository.getByVendor(vendorId);
-    }
+        List<Expression<?>> groupElements = predicateAndGroupElements.stream()
+                .map(SimilarityPredicateAndGroupElement::getGroupElement)
+                .filter(Objects::nonNull).collect(Collectors.toList());
+        groupElements.add(tupleRoot.get(Modification.Fields.chassis).get(Chassis.Fields.id));
 
-    @Override
-    public List<Modification> getByVendorAndNameSubstring(Integer vendorId, String nameSubstring) {
-        return modificationByVendorRepository.getByVendorAndNameSubstring(vendorId, nameSubstring);
+        subquery.select(cb.min(tupleRoot.get(Modification.Fields.id)));
+        subquery.groupBy(groupElements);
+        subquery.distinct(true);
+        subquery.where(cb.and(predicates.toArray(new Predicate[]{})));
+        CriteriaQuery<Modification> cq = cb.createQuery(tClass);
+        Root<Modification> root = cq.from(tClass);
+        cq.where(root.get(Modification.Fields.id).in(subquery));
+        cq.orderBy(cb.asc(root.get(Modification.Fields.name)));
+
+        root.fetch(Modification.Fields.chassis).fetch(Chassis.Fields.generation).fetch(Generation.Fields.model).fetch(Model.Fields.vendor).fetch(Vendor.Fields.vendorsConfiguration);
+        root.fetch(Modification.Fields.chassis).fetch(Chassis.Fields.rearSuspension);
+        root.fetch(Modification.Fields.chassis).fetch(Chassis.Fields.frontSuspension);
+        root.fetch(Modification.Fields.engineModification).fetch(EngineModification.Fields.engine).fetch(Engine.Fields.vendor).fetch(Vendor.Fields.vendorsConfiguration);
+
+        TypedQuery<Modification> query = entityManager.createQuery(cq);
+        return query.getResultList();
     }
 
     @Override
     public List<Modification> getByVendorAndNameSubstringDistinctByName(Integer vendorId, String nameSubstring) {
-        return modificationByVendorRepository.getByVendorAndNameSubstringDistinctByName(vendorId, nameSubstring);
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+
+        CriteriaQuery<Tuple> tupleQuery = cb.createTupleQuery();
+        Subquery<Integer> subquery = tupleQuery.subquery(Integer.class);
+        Root<Modification> tupleRoot = subquery.from(tClass);
+
+        Predicate vendorIdPredicate = getPredicateModificationByVendor(vendorId, cb, tupleRoot);
+        Predicate namePredicate = predicateCreator.stringStartsWithOrHasSubstring(tupleRoot.get(Modification.Fields.name), nameSubstring);
+
+        subquery.select(cb.min(tupleRoot.get(Modification.Fields.id)));
+        subquery.groupBy(tupleRoot.get(Modification.Fields.name));
+        subquery.distinct(true);
+        subquery.where(cb.and(vendorIdPredicate, namePredicate));
+
+        CriteriaQuery<Modification> cq = cb.createQuery(tClass);
+        Root<Modification> root = cq.from(tClass);
+        cq.where(root.get(Modification.Fields.id).in(subquery));
+        cq.orderBy(cb.asc(root.get(Modification.Fields.name)));
+
+        TypedQuery<Modification> query = entityManager.createQuery(cq);
+        return query.getResultList();
     }
 
     public List<Modification> getByVendorAndNameAndYear(Integer vendorId, String name, String year) {
-        return modificationByVendorRepository.getByVendorAndNameAndYear(vendorId, name, year);
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Modification> cq = cb.createQuery(tClass);
+        Root<Modification> root = cq.from(tClass);
+
+        Predicate idEquals = getPredicateModificationByVendor(vendorId, cb, root);
+        Predicate namePredicate = cb.equal(root.get(Modification.Fields.name), name);
+        Predicate yearBetweenStartAndEnd = predicateCreator
+                .yearBetweenStartAndEnd(root.get(Modification.Fields.start), root.get(Modification.Fields.end), year);
+
+        cq.where(cb.and(idEquals, namePredicate, yearBetweenStartAndEnd));
+        cq.orderBy(cb.asc(root.get(Modification.Fields.name)));
+
+        TypedQuery<Modification> query = entityManager.createQuery(cq);
+        return query.getResultList();
     }
 
     public List<Modification> getByVendorAndName(Integer vendorId, String name) {
-        return modificationByVendorRepository.getByVendorAndName(vendorId, name);
-    }
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Modification> cq = cb.createQuery(tClass);
+        Root<Modification> root = cq.from(tClass);
 
-    public List<Modification> getByChassisAndYear(int chassisId, String year) {
-        return modificationByChassisRepository.getByChassisAndYear(chassisId, year);
-    }
+        Predicate vendorPredicate = getPredicateModificationByVendor(vendorId, cb, root);
+        Predicate namePredicate = cb.equal(root.get(Modification.Fields.name), name);
 
-    public List<Modification> getByGenerationAndYear(int generationId, String year) {
-        return modificationByGenerationRepository.getByGenerationAndYear(generationId, year);
-    }
+        cq.where(cb.and(vendorPredicate, namePredicate));
+        cq.orderBy(cb.asc(root.get(Modification.Fields.name)));
 
-    public List<Modification> getSimilar(Modification modification, List<SimilarityTag> tagList) {
-        return modificationSimilarityRepository.getSimilar(modification, tagList);
+        TypedQuery<Modification> query = entityManager.createQuery(cq);
+        return query.getResultList();
     }
 
     public List<Modification> getByVendorIdAndChassisNameAndYear(Integer vendorId, String chassisName, String year) {
-        return modificationByVendorRepository.getByVendorIdAndChassisNameAndYear(vendorId, chassisName, year);
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Modification> cq = cb.createQuery(tClass);
+        Root<Modification> root = cq.from(tClass);
+
+        Predicate vendorPredicate = getPredicateModificationByVendor(vendorId, cb, root);
+        Predicate yearBetweenStartAndEnd = predicateCreator
+                .yearBetweenStartAndEnd(root.get(Modification.Fields.start), root.get(Modification.Fields.end), year);
+        Predicate chassisPredicate = cb.equal(root.get(Modification.Fields.chassis)
+                .get(Chassis.Fields.name), chassisName);
+
+        cq.where(cb.and(chassisPredicate, yearBetweenStartAndEnd, vendorPredicate));
+        cq.orderBy(cb.asc(root.get(Modification.Fields.name)));
+
+        TypedQuery<Modification> query = entityManager.createQuery(cq);
+        return query.getResultList();
     }
 
     public List<Modification> getByVendorIdAndChassisName(Integer vendorId, String chassisName) {
-        return modificationByVendorRepository.getByVendorIdAndChassisName(vendorId, chassisName);
-    }
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Modification> cq = cb.createQuery(tClass);
+        Root<Modification> root = cq.from(tClass);
 
-    public List<Modification> getByVendorIdAndModelNameAndYear(Integer vendorId, String modelName, String year) {
-        return modificationByVendorRepository.getByVendorIdAndModelNameAndYear(vendorId, modelName, year);
-    }
+        Predicate vendorPredicate = getPredicateModificationByVendor(vendorId, cb, root);
+        Predicate chassisPredicate = cb.equal(root.get(Modification.Fields.chassis)
+                .get(Chassis.Fields.name), chassisName);
 
-    public List<Modification> getByVendorIdAndModelName(Integer vendorId, String modelName) {
-        return modificationByVendorRepository.getByVendorIdAndModelName(vendorId, modelName);
+        cq.where(cb.and(chassisPredicate, vendorPredicate));
+        cq.orderBy(cb.asc(root.get(Modification.Fields.name)));
+
+        TypedQuery<Modification> query = entityManager.createQuery(cq);
+        return query.getResultList();
     }
 
     public List<Modification> getByVendorIdAndGenerationNameAndYear(Integer vendorId, String generationName, String year) {
-        return modificationByVendorRepository.getByVendorIdAndGenerationNameAndYear(vendorId, generationName, year);
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Modification> cq = cb.createQuery(tClass);
+        Root<Modification> root = cq.from(tClass);
+
+        Predicate vendorPredicate = getPredicateModificationByVendor(vendorId, cb, root);
+        Predicate yearBetweenStartAndEnd = predicateCreator
+                .yearBetweenStartAndEnd(root.get(Modification.Fields.start), root.get(Modification.Fields.end), year);
+        Predicate chassisPredicate = cb.equal(root.get(Modification.Fields.chassis)
+                .get(Chassis.Fields.generation)
+                .get(Generation.Fields.name), generationName);
+
+        cq.where(cb.and(chassisPredicate, yearBetweenStartAndEnd, vendorPredicate));
+        cq.orderBy(cb.asc(root.get(Modification.Fields.name)));
+
+        TypedQuery<Modification> query = entityManager.createQuery(cq);
+        return query.getResultList();
     }
 
     public List<Modification> getByVendorIdAndGenerationName(Integer vendorId, String generationName) {
-        return modificationByVendorRepository.getByVendorIdAndGenerationName(vendorId, generationName);
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Modification> cq = cb.createQuery(tClass);
+        Root<Modification> root = cq.from(tClass);
+
+        Predicate vendorPredicate = getPredicateModificationByVendor(vendorId, cb, root);
+        Predicate chassisPredicate = cb.equal(root.get(Modification.Fields.chassis)
+                .get(Chassis.Fields.generation)
+                .get(Generation.Fields.name), generationName);
+
+        cq.where(cb.and(chassisPredicate, vendorPredicate));
+        cq.orderBy(cb.asc(root.get(Modification.Fields.name)));
+
+        TypedQuery<Modification> query = entityManager.createQuery(cq);
+        return query.getResultList();
+    }
+
+    public List<Modification> getByVendorIdAndModelNameAndYear(Integer vendorId, String modelName, String year) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Modification> cq = cb.createQuery(tClass);
+        Root<Modification> root = cq.from(tClass);
+
+        Predicate vendorPredicate = getPredicateModificationByVendor(vendorId, cb, root);
+        Predicate yearBetweenStartAndEnd = predicateCreator
+                .yearBetweenStartAndEnd(root.get(Modification.Fields.start), root.get(Modification.Fields.end), year);
+        Predicate chassisPredicate = cb.equal(root.get(Modification.Fields.chassis)
+                .get(Chassis.Fields.generation)
+                .get(Generation.Fields.model)
+                .get(Model.Fields.name), modelName);
+
+        cq.where(cb.and(chassisPredicate, yearBetweenStartAndEnd, vendorPredicate));
+        cq.orderBy(cb.asc(root.get(Modification.Fields.name)));
+
+        TypedQuery<Modification> query = entityManager.createQuery(cq);
+        return query.getResultList();
+    }
+
+    public List<Modification> getByVendorIdAndModelName(Integer vendorId, String modelName) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Modification> cq = cb.createQuery(tClass);
+        Root<Modification> root = cq.from(tClass);
+
+        Predicate vendorPredicate = getPredicateModificationByVendor(vendorId, cb, root);
+        Predicate chassisPredicate = cb.equal(root.get(Modification.Fields.chassis)
+                .get(Chassis.Fields.generation)
+                .get(Generation.Fields.model)
+                .get(Model.Fields.name), modelName);
+
+        cq.where(cb.and(chassisPredicate, vendorPredicate));
+        cq.orderBy(cb.asc(root.get(Modification.Fields.name)));
+
+        TypedQuery<Modification> query = entityManager.createQuery(cq);
+        return query.getResultList();
+    }
+
+    private Predicate getPredicateModificationByVendor(int vendorId, CriteriaBuilder cb, Root<Modification> root) {
+        return cb.equal(root.get(Modification.Fields.chassis)
+                .get(Chassis.Fields.generation)
+                .get(Generation.Fields.model)
+                .get(Model.Fields.vendor)
+                .get(Vendor.Fields.id), vendorId);
     }
 }

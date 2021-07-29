@@ -6,6 +6,4 @@ import java.util.List;
 
 public interface RepositoryWithGettingByVendor<T extends EntityWithIdAndName> {
     List<T> getByVendorAndNameSubstringDistinctByName(Integer vendorId, String nameSubstring);
-
-    List<T> getByVendorAndNameSubstring(Integer vendorId, String nameSubstring);
 }

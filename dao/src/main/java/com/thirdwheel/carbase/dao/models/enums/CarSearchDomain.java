@@ -8,9 +8,9 @@ public enum CarSearchDomain {
     CHASSIS(4),
     MODIFICATION(8);
 
-    private int v;
+    private final int v;
 
-    private CarSearchDomain(int v) {
+    CarSearchDomain(int v) {
         this.v = v;
     }
 
@@ -24,12 +24,12 @@ public enum CarSearchDomain {
         return codesList;
     }
 
-    public static int toInt(EnumSet<CarSearchDomain> codesList) {
-        if (codesList == null) {
-            throw new IllegalArgumentException("Null EnumSet<VrSuspensionReasonCode>");
+    public static int toInt(EnumSet<CarSearchDomain> carSearchDomains) {
+        if (carSearchDomains == null) {
+            throw new IllegalArgumentException("Null carSearchDomains");
         }
         int returnValue = 0;
-        for (CarSearchDomain code : codesList) {
+        for (CarSearchDomain code : carSearchDomains) {
             returnValue |= code.intValue();
         }
         return returnValue;

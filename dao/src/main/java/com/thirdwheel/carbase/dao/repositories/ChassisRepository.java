@@ -19,19 +19,6 @@ public class ChassisRepository extends GeneralEntityWithIdRepository<Chassis>
     }
 
     @Override
-    public List<Chassis> getByVendorAndNameSubstring(Integer vendorId, String nameSubstring) {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Chassis> cq = cb.createQuery(tClass);
-        Root<Chassis> root = cq.from(tClass);
-        Predicate vendorIdEquals = getPredicateChassisByVendor(vendorId, cb, root);
-        Predicate namePredicate = predicateCreator.stringStartsWithOrHasSubstring(root.get(Chassis.Fields.name), nameSubstring);
-        CriteriaQuery<Chassis> cqm = cq.where(cb.and(vendorIdEquals, namePredicate));
-        cq.orderBy(cb.asc(root.get(Chassis.Fields.name)));
-        TypedQuery<Chassis> query = entityManager.createQuery(cqm);
-        return query.getResultList();
-    }
-
-    @Override
     public List<Chassis> getByVendorAndNameSubstringDistinctByName(Integer vendorId, String nameSubstring) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 

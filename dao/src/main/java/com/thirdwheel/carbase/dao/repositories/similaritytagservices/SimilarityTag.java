@@ -35,6 +35,9 @@ public enum SimilarityTag {
                 .filter(x -> x.toString().replace("_", "")
                         .equalsIgnoreCase(tag.replace("_", "").trim()))
                 .findAny();
+        if (any.isEmpty()) {
+            throw new IllegalArgumentException("Tag does not exist: " + tag);
+        }
         return any.get();
     }
 

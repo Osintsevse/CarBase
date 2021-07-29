@@ -12,8 +12,8 @@
     <artifactId>view</artifactId>
 
     <properties>
-        <spring-boot-starter-web.version>2.4.3</spring-boot-starter-web.version>
-        <spring-orm.version>5.3.5</spring-orm.version>
+        <spring-boot-starter-web.version>2.5.3</spring-boot-starter-web.version>
+        <spring-orm.version>5.3.9</spring-orm.version>
         <start-class>com.thirdwheel.carbase.view.Launcher</start-class>
     </properties>
 
@@ -41,7 +41,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version>5.2.4.Final</version>
+            <version>7.0.1.Final</version>
         </dependency>
     </dependencies>
 

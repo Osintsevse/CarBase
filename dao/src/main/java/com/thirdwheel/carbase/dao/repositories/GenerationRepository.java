@@ -18,22 +18,6 @@ public class GenerationRepository extends GeneralEntityWithIdRepository<Generati
     }
 
     @Override
-    public List<Generation> getByVendorAndNameSubstring(Integer vendorId, String nameSubstring) {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Generation> cq = cb.createQuery(tClass);
-        Root<Generation> root = cq.from(tClass);
-
-        Predicate vendorIdEquals = getPredicateGenerationByVendor(vendorId, cb, root);
-        Predicate namePredicate = predicateCreator.stringStartsWithOrHasSubstring(root.get(Generation.Fields.name), nameSubstring);
-
-        cq.where(cb.and(vendorIdEquals, namePredicate));
-        cq.orderBy(cb.asc(root.get(Generation.Fields.name)));
-
-        TypedQuery<Generation> query = entityManager.createQuery(cq);
-        return query.getResultList();
-    }
-
-    @Override
     public List<Generation> getByVendorAndNameSubstringDistinctByName(Integer vendorId, String nameBeginning) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 

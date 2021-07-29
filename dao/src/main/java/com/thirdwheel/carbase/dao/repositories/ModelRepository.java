@@ -17,22 +17,6 @@ public class ModelRepository extends GeneralEntityWithIdRepository<Model>
     }
 
     @Override
-    public List<Model> getByVendorAndNameSubstring(Integer vendorId, String nameSubstring) {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Model> cq = cb.createQuery(tClass);
-        Root<Model> root = cq.from(tClass);
-
-        Predicate vendorIdEq = getPredicateModelByVendor(vendorId, cb, root);
-        Predicate namePredicate = predicateCreator.stringStartsWithOrHasSubstring(root.get(Model.Fields.name), nameSubstring);
-
-        cq.where(cb.and(vendorIdEq, namePredicate));
-        cq.orderBy(cb.asc(root.get(Model.Fields.name)));
-
-        TypedQuery<Model> query = entityManager.createQuery(cq);
-        return query.getResultList();
-    }
-
-    @Override
     public List<Model> getByVendorAndNameSubstringDistinctByName(Integer vendorId, String nameSubstring) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 

@@ -1,5 +1,6 @@
 package com.thirdwheel.carbase.view.configuration;
 
+import lombok.RequiredArgsConstructor;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -15,8 +16,9 @@ import java.util.Properties;
 @Configuration
 @ConfigurationProperties(prefix = "jpa")
 @EnableTransactionManagement
+@RequiredArgsConstructor
 public class JpaConfig {
-    private Properties properties = new Properties();
+    private final Properties properties = new Properties();
 
     public Properties getProperties() {
         return properties;
