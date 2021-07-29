@@ -55,7 +55,6 @@ public class ModificationRepository implements RepositoryWithGettingByVendor<Mod
         return modificationByVendorRepository.getByVendorAndNameSubstringDistinctByName(vendorId, nameSubstring);
     }
 
-    @Override
     public List<Modification> getByVendorAndNameAndYear(Integer vendorId, String name, String year) {
         return modificationByVendorRepository.getByVendorAndNameAndYear(vendorId, name, year);
     }

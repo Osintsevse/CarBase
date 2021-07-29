@@ -1,11 +1,8 @@
 package com.thirdwheel.carbase.view.controller;
 
 import com.thirdwheel.carbase.dao.models.Modification;
-import com.thirdwheel.carbase.service.CarService;
 import com.thirdwheel.carbase.service.ModificationService;
 import com.thirdwheel.carbase.view.model.ModificationDetailedResponse;
-import com.thirdwheel.carbase.view.model.ModificationForListResponse;
-import com.thirdwheel.carbase.view.model.ModificationsListResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -13,11 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.constraints.Pattern;
-import java.util.List;
-import java.util.Set;
 
 @Validated
 @Controller
@@ -25,24 +19,6 @@ import java.util.Set;
 @Slf4j
 public class ModificationController {
     private final ModificationService modificationService;
-    private final CarService carService;
-
-    @Deprecated
-    @GetMapping(path = "/vendors/{vendorId}/modifications")
-    public ResponseEntity<List<ModificationForListResponse>> getByVendorAndCarsModelNameAndYear(
-            @PathVariable(value = "vendorId") @Pattern(regexp = "[0-9]+") String vendorId,
-            @RequestParam(value = "carsModelName") String carsModelName,
-            @RequestParam(value = "year") @Pattern(regexp = "[0-9]{4}") String year) {
-
-        Set<Modification> byVendorAndCarsModelAndYear =
-                carService.getByVendorAndCarsModelAndYear(Integer.parseInt(vendorId), carsModelName, year);
-
-        log.debug("Found " + byVendorAndCarsModelAndYear.size() + " cars for VendorId \""
-                + vendorId + "\", car's model name \"" + carsModelName + "\" and year \"" + year + "\"");
-
-        return ResponseEntity.ok(new ModificationsListResponse(byVendorAndCarsModelAndYear).getModificationsResponse());
-    }
-
 
     @GetMapping(path = "/modifications/{modificationId}")
     public ResponseEntity<ModificationDetailedResponse> getById(

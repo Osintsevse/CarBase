@@ -1,7 +1,6 @@
 package com.thirdwheel.carbase.view.controller;
 
 import com.thirdwheel.carbase.dao.models.Modification;
-import com.thirdwheel.carbase.service.CarService;
 import com.thirdwheel.carbase.service.ModificationService;
 import com.thirdwheel.carbase.view.model.ModificationForListResponse;
 import com.thirdwheel.carbase.view.model.ModificationsListResponse;
@@ -24,7 +23,6 @@ import java.util.List;
 @Slf4j
 public class ModificationSimilarityController {
     private final ModificationService modificationService;
-    private final CarService carService;
 
     @GetMapping(path = "/modifications/{modificationId}/similar")
     public ResponseEntity<List<ModificationForListResponse>> getSimilarByModification(

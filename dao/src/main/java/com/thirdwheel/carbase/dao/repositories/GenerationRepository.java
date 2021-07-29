@@ -17,19 +17,6 @@ public class GenerationRepository extends GeneralEntityWithIdRepository<Generati
         super(Generation.class);
     }
 
-    public List<Generation> getByVendor(Integer vendorId) {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Generation> cq = cb.createQuery(tClass);
-        Root<Generation> root = cq.from(tClass);
-
-        Predicate vendorIdEquals = getPredicateGenerationByVendor(vendorId, cb, root);
-        cq.where(vendorIdEquals);
-        cq.orderBy(cb.asc(root.get(Generation.Fields.name)));
-
-        TypedQuery<Generation> query = entityManager.createQuery(cq);
-        return query.getResultList();
-    }
-
     @Override
     public List<Generation> getByVendorAndNameSubstring(Integer vendorId, String nameSubstring) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
@@ -65,25 +52,6 @@ public class GenerationRepository extends GeneralEntityWithIdRepository<Generati
         CriteriaQuery<Generation> cq = cb.createQuery(tClass);
         Root<Generation> root = cq.from(tClass);
         cq.where(root.get(Generation.Fields.id).in(subquery));
-        cq.orderBy(cb.asc(root.get(Generation.Fields.name)));
-
-        TypedQuery<Generation> query = entityManager.createQuery(cq);
-        return query.getResultList();
-    }
-
-    @Deprecated
-    @Override
-    public List<Generation> getByVendorAndNameAndYear(Integer vendorId, String carsModelName, String year) {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Generation> cq = cb.createQuery(tClass);
-        Root<Generation> root = cq.from(tClass);
-
-        Predicate vendorIdEquals = getPredicateGenerationByVendor(vendorId, cb, root);
-        Predicate namePredicate = cb.equal(root.get(Generation.Fields.name), carsModelName);
-        Predicate yearBetweenStartAndEnd = predicateCreator
-                .yearBetweenStartAndEnd(root.get(Generation.Fields.start), root.get(Generation.Fields.end), year);
-
-        cq.where(cb.and(vendorIdEquals, namePredicate, yearBetweenStartAndEnd));
         cq.orderBy(cb.asc(root.get(Generation.Fields.name)));
 
         TypedQuery<Generation> query = entityManager.createQuery(cq);

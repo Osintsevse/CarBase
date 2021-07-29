@@ -74,7 +74,6 @@ public class ModificationByVendorRepository extends GeneralEntityWithIdRepositor
         return query.getResultList();
     }
 
-    @Override
     public List<Modification> getByVendorAndNameAndYear(Integer vendorId, String name, String year) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Modification> cq = cb.createQuery(tClass);

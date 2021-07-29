@@ -16,20 +16,6 @@ public class ModelRepository extends GeneralEntityWithIdRepository<Model>
         super(Model.class);
     }
 
-    public List<Model> getByVendor(Integer vendorId) {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Model> cq = cb.createQuery(tClass);
-        Root<Model> root = cq.from(tClass);
-
-        Predicate vendorIdEq = getPredicateModelByVendor(vendorId, cb, root);
-
-        cq.where(vendorIdEq);
-        cq.orderBy(cb.asc(root.get(Model.Fields.name)));
-
-        TypedQuery<Model> query = entityManager.createQuery(cq);
-        return query.getResultList();
-    }
-
     @Override
     public List<Model> getByVendorAndNameSubstring(Integer vendorId, String nameSubstring) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
@@ -65,28 +51,6 @@ public class ModelRepository extends GeneralEntityWithIdRepository<Model>
         CriteriaQuery<Model> cq = cb.createQuery(tClass);
         Root<Model> root = cq.from(tClass);
         cq.where(root.get(Model.Fields.id).in(subquery));
-        cq.orderBy(cb.asc(root.get(Model.Fields.name)));
-
-        TypedQuery<Model> query = entityManager.createQuery(cq);
-        return query.getResultList();
-    }
-
-    @Override
-    @Deprecated
-    public List<Model> getByVendorAndNameAndYear(Integer vendorId, String carsModelName, String year) {
-        return getByVendorAndCarsModel(vendorId, carsModelName);
-    }
-
-    @Deprecated
-    public List<Model> getByVendorAndCarsModel(Integer vendorId, String carsModelName) {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Model> cq = cb.createQuery(tClass);
-        Root<Model> root = cq.from(tClass);
-
-        Predicate vendorIdEq = getPredicateModelByVendor(vendorId, cb, root);
-        Predicate namePredicate = cb.equal(root.get(Model.Fields.name), carsModelName);
-
-        cq.where(cb.and(vendorIdEq, namePredicate));
         cq.orderBy(cb.asc(root.get(Model.Fields.name)));
 
         TypedQuery<Model> query = entityManager.createQuery(cq);

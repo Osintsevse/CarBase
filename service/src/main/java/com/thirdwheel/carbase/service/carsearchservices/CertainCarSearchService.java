@@ -32,20 +32,4 @@ public class CertainCarSearchService
         return carSearchResponseElements;
     }
 
-    @Override
-    public List<CarSearchResponseElement> getByVendorAndCarsModelAndYear(int vendorId,
-                                                                         String carsModelName,
-                                                                         String year) {
-        List<CarSearchResponseElement> carSearchResponseElements =
-                super.getByVendorAndCarsModelAndYear(vendorId, carsModelName, year);
-
-        List<? extends EntityWithIdAndName> ts = repository.getByVendorAndNameAndYear(vendorId, carsModelName, year);
-
-        ts.forEach(x -> {
-            carSearchResponseElements.add(new CarSearchResponseElement(x, carSearchDomain));
-        });
-
-        return carSearchResponseElements;
-    }
-
 }

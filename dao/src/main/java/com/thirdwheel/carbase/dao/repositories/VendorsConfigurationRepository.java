@@ -30,12 +30,4 @@ public class VendorsConfigurationRepository extends GeneralEntityWithIdRepositor
         TypedQuery<VendorsConfiguration> query = entityManager.createQuery(cq);
         return query.getSingleResult();
     }
-
-    public VendorsConfiguration getByVendor(Vendor vendor) {
-        int vendorId = vendor.getId();
-        if (vendorId != 0) {
-            return this.getByVendor(vendorId);
-        }
-        return null;
-    }
 }

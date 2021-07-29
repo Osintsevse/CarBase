@@ -18,17 +18,6 @@ public class ChassisRepository extends GeneralEntityWithIdRepository<Chassis>
         super(Chassis.class);
     }
 
-    public List<Chassis> getByVendor(int vendorId) {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Chassis> cq = cb.createQuery(tClass);
-        Root<Chassis> root = cq.from(tClass);
-        Predicate vendorIdEquals = getPredicateChassisByVendor(vendorId, cb, root);
-        CriteriaQuery<Chassis> cqm = cq.where(vendorIdEquals);
-        cq.orderBy(cb.asc(root.get(Chassis.Fields.name)));
-        TypedQuery<Chassis> query = entityManager.createQuery(cqm);
-        return query.getResultList();
-    }
-
     @Override
     public List<Chassis> getByVendorAndNameSubstring(Integer vendorId, String nameSubstring) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
@@ -62,28 +51,6 @@ public class ChassisRepository extends GeneralEntityWithIdRepository<Chassis>
         CriteriaQuery<Chassis> cq = cb.createQuery(tClass);
         Root<Chassis> root = cq.from(tClass);
         cq.where(root.get(Chassis.Fields.id).in(subquery));
-        cq.orderBy(cb.asc(root.get(Chassis.Fields.name)));
-
-        TypedQuery<Chassis> query = entityManager.createQuery(cq);
-        return query.getResultList();
-    }
-
-    @Deprecated
-    @Override
-    public List<Chassis> getByVendorAndNameAndYear(Integer vendorId, String carsModelName, String year) {
-        return getByVendorAndCarsModel(vendorId, carsModelName);
-    }
-
-    @Deprecated
-    public List<Chassis> getByVendorAndCarsModel(int vendorId, String carsModelName) {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Chassis> cq = cb.createQuery(tClass);
-        Root<Chassis> root = cq.from(tClass);
-
-        Predicate vendorIdEquals = getPredicateChassisByVendor(vendorId, cb, root);
-        Predicate namePredicate = cb.equal(root.get(Chassis.Fields.name), carsModelName);
-
-        cq.where(cb.and(vendorIdEquals, namePredicate));
         cq.orderBy(cb.asc(root.get(Chassis.Fields.name)));
 
         TypedQuery<Chassis> query = entityManager.createQuery(cq);

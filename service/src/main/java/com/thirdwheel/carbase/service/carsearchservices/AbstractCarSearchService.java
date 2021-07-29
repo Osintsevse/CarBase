@@ -19,12 +19,4 @@ public abstract class AbstractCarSearchService {
             return new ArrayList<>();
         }
     }
-
-    public List<CarSearchResponseElement> getByVendorAndCarsModelAndYear(int vendorId, String carsModelName, String year) {
-        if (nextCarsModelService != null) {
-            return nextCarsModelService.getByVendorAndCarsModelAndYear(vendorId, carsModelName, year);
-        } else {
-            return new ArrayList<>();
-        }
-    }
 }

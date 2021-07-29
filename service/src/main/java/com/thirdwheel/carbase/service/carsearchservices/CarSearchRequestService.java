@@ -36,23 +36,4 @@ public class CarSearchRequestService {
             return carService.getByVendorAndNameSubstring(vendorId, nameBeginning);
         }
     }
-
-    @Deprecated
-    public List<CarSearchResponseElement> getByVendorAndCarsModelAndYear(int vendorId, String carsModelName, String year) {
-        Vendor byId = vendorService.getById(vendorId);
-        EnumSet<CarSearchDomain> fieldsForVendors =
-                CarSearchDomain.fromInt(byId.getVendorsConfiguration().getSearchFieldsBitMask());
-
-        AbstractCarSearchService carService = null;
-
-        for (CarSearchDomain fieldsForVendor : fieldsForVendors) {
-            carService = carSearchServiceFactory.getCarsModelService(fieldsForVendor, carService);
-        }
-
-        if (carService == null) {
-            return new ArrayList<>();
-        } else {
-            return carService.getByVendorAndCarsModelAndYear(vendorId, carsModelName, year);
-        }
-    }
 }
