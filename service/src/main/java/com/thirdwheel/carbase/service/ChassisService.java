@@ -8,6 +8,7 @@ import java.util.List;
 
 @Service
 public class ChassisService extends GeneralService<Chassis, ChassisRepository> {
+
     public ChassisService(ChassisRepository repository) {
         super(repository);
     }

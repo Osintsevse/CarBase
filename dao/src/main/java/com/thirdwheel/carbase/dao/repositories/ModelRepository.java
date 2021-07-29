@@ -10,7 +10,8 @@ import javax.persistence.criteria.*;
 import java.util.List;
 
 @Service
-public class ModelRepository extends GeneralEntityRepository<Model> {
+public class ModelRepository extends GeneralEntityRepository<Model>
+        implements RepositoryWithGettingByVendor<Model> {
     public ModelRepository() {
         super(Model.class);
     }
@@ -25,6 +26,7 @@ public class ModelRepository extends GeneralEntityRepository<Model> {
         return query.getResultList();
     }
 
+    @Override
     public List<Model> getByVendorAndNameSubstring(Integer vendorId, String nameSubstring) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Model> cq = cb.createQuery(tClass);
@@ -36,6 +38,7 @@ public class ModelRepository extends GeneralEntityRepository<Model> {
         return query.getResultList();
     }
 
+    @Override
     public List<Model> getByVendorAndNameSubstringDistinctByName(Integer vendorId, String nameSubstring) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 
@@ -60,8 +63,14 @@ public class ModelRepository extends GeneralEntityRepository<Model> {
         return query.getResultList();
     }
 
+    @Override
+    @Deprecated
+    public List<Model> getByVendorAndCarsModelAndYear(Integer vendorId, String carsModelName, String year) {
+        return getByVendorAndCarsModel(vendorId, carsModelName);
+    }
 
-    public List<Model> getByVendorAndCarsModelAndYear(int vendorId, String carsModelName) {
+    @Deprecated
+    public List<Model> getByVendorAndCarsModel(Integer vendorId, String carsModelName) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Model> cq = cb.createQuery(tClass);
         Root<Model> root = cq.from(tClass);

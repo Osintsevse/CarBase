@@ -1,6 +1,6 @@
 package com.thirdwheel.carbase.dao.models;
 
-import com.thirdwheel.carbase.dao.models.enums.SearchFieldForVendor;
+import com.thirdwheel.carbase.dao.models.enums.CarSearchDomain;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.FieldNameConstants;
@@ -30,7 +30,7 @@ public class VendorsConfiguration implements EntityWithId {
 
     @Override
     public String toString() {
-        EnumSet<SearchFieldForVendor> searchFieldsForVendor = SearchFieldForVendor.fromInt(searchFieldsBitMask);
+        EnumSet<CarSearchDomain> searchFieldsForVendor = CarSearchDomain.fromInt(searchFieldsBitMask);
         StringBuilder stringBuilderFoFields = new StringBuilder();
         searchFieldsForVendor.forEach(x -> {
             stringBuilderFoFields.append(x);

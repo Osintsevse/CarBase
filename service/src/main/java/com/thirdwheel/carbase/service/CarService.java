@@ -1,8 +1,8 @@
 package com.thirdwheel.carbase.service;
 
 import com.thirdwheel.carbase.dao.models.Modification;
-import com.thirdwheel.carbase.service.carsmodelservices.CarSearchRequestService;
-import com.thirdwheel.carbase.service.enums.CarSearchDomain;
+import com.thirdwheel.carbase.dao.models.enums.CarSearchDomain;
+import com.thirdwheel.carbase.service.carsearchservices.CarSearchRequestService;
 import com.thirdwheel.carbase.service.model.CarSearchResponseElement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,9 @@ public class CarService {
 
     public Set<Modification> getByVendorAndCarsModelAndYear(int vendorId, String carsModelName, String year) {
         Set<Modification> modifications = new TreeSet<>(Modification::compareTo);
-        List<CarSearchResponseElement> byVendorAndCarModelAndYear = carSearchRequestService.getByVendorAndCarsModelAndYear(vendorId, carsModelName, year);
+        List<CarSearchResponseElement> byVendorAndCarModelAndYear =
+                carSearchRequestService.getByVendorAndCarsModelAndYear(vendorId, carsModelName, year);
+
         byVendorAndCarModelAndYear.forEach(x -> {
             if (x.getCarSearchDomain() == CarSearchDomain.MODIFICATION) {
                 modifications.add(modificationService.getById(x.getEntityWithName().getId()));
@@ -31,6 +33,7 @@ public class CarService {
                 modifications.addAll(modificationService.getByModelAndYear(x.getEntityWithName().getId(), year));
             }
         });
+
         return modifications;
     }
 }

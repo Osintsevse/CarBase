@@ -1,7 +1,7 @@
 package com.thirdwheel.carbase.service.model;
 
 import com.thirdwheel.carbase.dao.models.EntityWithIdAndName;
-import com.thirdwheel.carbase.service.enums.CarSearchDomain;
+import com.thirdwheel.carbase.dao.models.enums.CarSearchDomain;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

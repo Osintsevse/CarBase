@@ -14,7 +14,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
-public class ModificationRepository extends GeneralEntityRepository<Modification> {
+public class ModificationRepository extends GeneralEntityRepository<Modification>
+        implements RepositoryWithGettingByVendor<Modification> {
     private final SimilarityTagFiltersService similarityTagFiltersService;
 
     public ModificationRepository(SimilarityTagFiltersService similarityTagFiltersService) {
@@ -55,7 +56,8 @@ public class ModificationRepository extends GeneralEntityRepository<Modification
         return query.getResultList();
     }
 
-    public List<Modification> getByVendorAndNameSubstring(int vendorId, String nameSubstring) {
+    @Override
+    public List<Modification> getByVendorAndNameSubstring(Integer vendorId, String nameSubstring) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Modification> cq = cb.createQuery(tClass);
         Root<Modification> root = cq.from(tClass);
@@ -66,7 +68,8 @@ public class ModificationRepository extends GeneralEntityRepository<Modification
         return query.getResultList();
     }
 
-    public List<Modification> getByVendorAndNameSubstringDistinctByName(int vendorId, String nameSubstring) {
+    @Override
+    public List<Modification> getByVendorAndNameSubstringDistinctByName(Integer vendorId, String nameSubstring) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 
         CriteriaQuery<Tuple> tupleQuery = cb.createTupleQuery();
@@ -90,7 +93,9 @@ public class ModificationRepository extends GeneralEntityRepository<Modification
         return query.getResultList();
     }
 
-    public List<Modification> getByVendorAndCarsModelAndYear(int vendorId, String carsModelName, String year) {
+    @Override
+    @Deprecated
+    public List<Modification> getByVendorAndCarsModelAndYear(Integer vendorId, String carsModelName, String year) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Modification> cq = cb.createQuery(tClass);
         Root<Modification> root = cq.from(tClass);

@@ -1,6 +1,6 @@
 package com.thirdwheel.carbase.view.model;
 
-import com.thirdwheel.carbase.service.enums.CarSearchDomain;
+import com.thirdwheel.carbase.dao.models.enums.CarSearchDomain;
 import com.thirdwheel.carbase.service.model.CarSearchResponseElement;
 import com.thirdwheel.carbase.view.model.subelements.EntityWithNameForResponse;
 import lombok.Builder;

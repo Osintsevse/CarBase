@@ -1,6 +1,6 @@
 package com.thirdwheel.carbase.view.controller;
 
-import com.thirdwheel.carbase.service.carsmodelservices.CarSearchRequestService;
+import com.thirdwheel.carbase.service.carsearchservices.CarSearchRequestService;
 import com.thirdwheel.carbase.service.model.CarSearchResponseElement;
 import com.thirdwheel.carbase.view.model.CarSearchRequestResponse;
 import lombok.AllArgsConstructor;

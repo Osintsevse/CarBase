@@ -12,7 +12,8 @@ import javax.persistence.criteria.*;
 import java.util.List;
 
 @Service
-public class ChassisRepository extends GeneralEntityRepository<Chassis> {
+public class ChassisRepository extends GeneralEntityRepository<Chassis>
+        implements RepositoryWithGettingByVendor<Chassis> {
     public ChassisRepository() {
         super(Chassis.class);
     }
@@ -27,7 +28,8 @@ public class ChassisRepository extends GeneralEntityRepository<Chassis> {
         return query.getResultList();
     }
 
-    public List<Chassis> getByVendorAndNameSubstring(int vendorId, String nameSubstring) {
+    @Override
+    public List<Chassis> getByVendorAndNameSubstring(Integer vendorId, String nameSubstring) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Chassis> cq = cb.createQuery(tClass);
         Root<Chassis> root = cq.from(tClass);
@@ -38,7 +40,8 @@ public class ChassisRepository extends GeneralEntityRepository<Chassis> {
         return query.getResultList();
     }
 
-    public List<Chassis> getByVendorAndNameSubstringDistinctByName(int vendorId, String nameSubstring) {
+    @Override
+    public List<Chassis> getByVendorAndNameSubstringDistinctByName(Integer vendorId, String nameSubstring) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 
         CriteriaQuery<Tuple> tupleQuery = cb.createTupleQuery();
@@ -63,6 +66,13 @@ public class ChassisRepository extends GeneralEntityRepository<Chassis> {
         return query.getResultList();
     }
 
+    @Deprecated
+    @Override
+    public List<Chassis> getByVendorAndCarsModelAndYear(Integer vendorId, String carsModelName, String year) {
+        return getByVendorAndCarsModel(vendorId, carsModelName);
+    }
+
+    @Deprecated
     public List<Chassis> getByVendorAndCarsModel(int vendorId, String carsModelName) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Chassis> cq = cb.createQuery(tClass);

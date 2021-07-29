@@ -25,7 +25,7 @@ public class ModelService extends GeneralService<Model, ModelRepository> {
     }
 
     public List<Model> getByVendorAndCarsModelAndYear(int vendorId, String carsModelName) {
-        return repository.getByVendorAndCarsModelAndYear(vendorId, carsModelName);
+        return repository.getByVendorAndCarsModel(vendorId, carsModelName);
     }
 
 }
