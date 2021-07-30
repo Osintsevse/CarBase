@@ -15,6 +15,7 @@
         <spring-boot-starter-web.version>2.5.3</spring-boot-starter-web.version>
         <spring-orm.version>5.3.9</spring-orm.version>
         <start-class>com.thirdwheel.carbase.view.Launcher</start-class>
+        <swagger.version>3.0.0</swagger.version>
     </properties>
 
     <dependencies>
@@ -42,6 +43,11 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
             <version>7.0.1.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-boot-starter</artifactId>
+            <version>${swagger.version}</version>
         </dependency>
     </dependencies>
 

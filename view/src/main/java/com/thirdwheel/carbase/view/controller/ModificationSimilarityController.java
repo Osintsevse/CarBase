@@ -2,8 +2,8 @@ package com.thirdwheel.carbase.view.controller;
 
 import com.thirdwheel.carbase.dao.models.Modification;
 import com.thirdwheel.carbase.service.ModificationService;
-import com.thirdwheel.carbase.view.model.ModificationForListResponse;
 import com.thirdwheel.carbase.view.model.ModificationsListResponse;
+import com.thirdwheel.carbase.view.model.subelements.ModificationForListResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
