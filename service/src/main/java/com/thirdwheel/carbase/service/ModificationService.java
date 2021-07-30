@@ -1,5 +1,6 @@
 package com.thirdwheel.carbase.service;
 
+import com.thirdwheel.carbase.dao.excetions.CarbaseEntityNotFoundException;
 import com.thirdwheel.carbase.dao.models.Modification;
 import com.thirdwheel.carbase.dao.repositories.ModificationRepository;
 import com.thirdwheel.carbase.dao.repositories.similaritytagservices.SimilarityTag;
@@ -14,6 +15,11 @@ public class ModificationService extends GeneralService<Modification, Modificati
     }
 
     public List<Modification> getSimilar(Integer modificationId, String[] tags) {
-        return repository.getSimilar(this.getById(modificationId), SimilarityTag.getByTagsStringArray(tags));
+        Modification modificationById = this.getById(modificationId);
+        if (modificationById == null) {
+            throw new CarbaseEntityNotFoundException("Modification not found for id: " + modificationId);
+        }
+
+        return repository.getSimilar(modificationById, SimilarityTag.getByTagsStringArray(tags));
     }
 }

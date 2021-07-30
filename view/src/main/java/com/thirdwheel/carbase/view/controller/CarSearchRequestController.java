@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Min;
 import java.util.List;
 
 @Validated
@@ -24,11 +24,11 @@ public class CarSearchRequestController {
 
     @GetMapping(path = "/vendors/{vendorId}/carsearchrequest")
     public ResponseEntity<CarSearchRequestResponse> getByVendorAndNameBeginning(
-            @PathVariable(value = "vendorId") @Pattern(regexp = "[0-9]+") String vendorId,
+            @PathVariable(value = "vendorId") @Min(0) Integer vendorId,
             @RequestParam(value = "nameSubstring", required = false) String nameSubstring) {
 
         List<CarSearchResponseElement> carsByVendorAndNameSubstring =
-                carSearchRequestService.getByVendorAndNameBeginning(Integer.parseInt(vendorId), nameSubstring);
+                carSearchRequestService.getByVendorAndNameBeginning(vendorId, nameSubstring);
 
         log.debug("Found " + carsByVendorAndNameSubstring.size() + " cars for VendorId \""
                 + vendorId + "\" and name beginning \"" + nameSubstring + "\"");

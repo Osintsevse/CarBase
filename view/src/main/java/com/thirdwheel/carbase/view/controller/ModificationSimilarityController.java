@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Min;
 import java.util.Arrays;
 import java.util.List;
 
@@ -26,10 +26,10 @@ public class ModificationSimilarityController {
 
     @GetMapping(path = "/modifications/{modificationId}/similar")
     public ResponseEntity<List<ModificationForListResponse>> getSimilarByModification(
-            @PathVariable(value = "modificationId") @Pattern(regexp = "[0-9]+") String modificationId,
+            @PathVariable(value = "modificationId") @Min(0) Integer modificationId,
             @RequestParam(value = "tag") String[] tags) {
 
-        List<Modification> similar = modificationService.getSimilar(Integer.parseInt(modificationId), tags);
+        List<Modification> similar = modificationService.getSimilar(modificationId, tags);
 
         log.debug("Found " + similar.size() + " cars for ModificationId \""
                 + modificationId + "\" and tags \"" + Arrays.stream(tags)
