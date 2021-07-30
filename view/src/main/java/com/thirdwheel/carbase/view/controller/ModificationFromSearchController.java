@@ -27,7 +27,7 @@ public class ModificationFromSearchController {
     @GetMapping(path = "/models/{modelId}/modificationsByModelName")
     public ResponseEntity<List<ModificationForListResponse>> getModificationsByModelNameAndYear(
             @PathVariable(value = "modelId") @Min(0) Integer modelId,
-            @RequestParam(value = "year", required = false) @Min(0) @Max(9999) Integer year) {
+            @RequestParam(value = "year", required = false) @Min(1000) @Max(9999) Integer year) {
 
         List<Modification> modifications = modificationFromSearchService
                 .getByModelNameAndYear(modelId, year);
@@ -42,7 +42,7 @@ public class ModificationFromSearchController {
     @GetMapping(path = "/generations/{generationId}/modificationsByGenerationName")
     public ResponseEntity<List<ModificationForListResponse>> getModificationsByGenerationNameAndYear(
             @PathVariable(value = "generationId") @Min(0) Integer generationId,
-            @RequestParam(value = "year", required = false) @Min(0) @Max(9999) Integer year) {
+            @RequestParam(value = "year", required = false) @Min(1000) @Max(9999) Integer year) {
 
         List<Modification> modifications = modificationFromSearchService
                 .getByGenerationNameAndYear(generationId, year);
@@ -56,7 +56,7 @@ public class ModificationFromSearchController {
     @GetMapping(path = "/chassises/{chassisId}/modificationsByChassisName")
     public ResponseEntity<List<ModificationForListResponse>> getModificationsByChassisNameAndYear(
             @PathVariable(value = "chassisId") @Min(0) Integer chassisId,
-            @RequestParam(value = "year", required = false) @Min(0) @Max(9999) Integer year) {
+            @RequestParam(value = "year", required = false) @Min(1000) @Max(9999) Integer year) {
 
         List<Modification> modifications = modificationFromSearchService
                 .getByChassisNameAndYear(chassisId, year);
@@ -70,7 +70,7 @@ public class ModificationFromSearchController {
     @GetMapping(path = "/modifications/{modificationId}/modificationsByModificationName")
     public ResponseEntity<List<ModificationForListResponse>> getModificationsByModificationNameAndYear(
             @PathVariable(value = "modificationId") @Min(0) Integer modificationId,
-            @RequestParam(value = "year", required = false) @Min(0) @Max(9999) Integer year) {
+            @RequestParam(value = "year", required = false) @Min(1000) @Max(9999) Integer year) {
 
         List<Modification> modifications = modificationFromSearchService
                 .getByModificationNameAndYear(modificationId, year);
