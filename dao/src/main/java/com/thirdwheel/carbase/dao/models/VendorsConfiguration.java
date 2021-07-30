@@ -1,6 +1,6 @@
 package com.thirdwheel.carbase.dao.models;
 
-import com.thirdwheel.carbase.dao.models.enums.SearchFieldForVendor;
+import com.thirdwheel.carbase.dao.models.enums.CarSearchDomain;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.FieldNameConstants;
@@ -9,11 +9,11 @@ import javax.persistence.*;
 import java.util.EnumSet;
 
 @Data
-@Entity
+@javax.persistence.Entity
 @Table(name = "vendors_configurations")
 @EqualsAndHashCode
 @FieldNameConstants
-public class VendorsConfiguration implements IEntity {
+public class VendorsConfiguration implements EntityWithId {
     @EqualsAndHashCode.Exclude
     @Id
     @SequenceGenerator(name = "vendors_configurations_pk_sequence", sequenceName = "vendors_configurations_pk_sequence", allocationSize = 1)
@@ -30,7 +30,7 @@ public class VendorsConfiguration implements IEntity {
 
     @Override
     public String toString() {
-        EnumSet<SearchFieldForVendor> searchFieldsForVendor = SearchFieldForVendor.fromInt(searchFieldsBitMask);
+        EnumSet<CarSearchDomain> searchFieldsForVendor = CarSearchDomain.fromInt(searchFieldsBitMask);
         StringBuilder stringBuilderFoFields = new StringBuilder();
         searchFieldsForVendor.forEach(x -> {
             stringBuilderFoFields.append(x);

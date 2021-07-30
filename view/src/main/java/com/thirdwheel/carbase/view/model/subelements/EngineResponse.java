@@ -1,4 +1,4 @@
-package com.thirdwheel.carbase.view.model;
+package com.thirdwheel.carbase.view.model.subelements;
 
 import com.thirdwheel.carbase.dao.models.EngineModification;
 import com.thirdwheel.carbase.dao.models.enums.ChargerType;

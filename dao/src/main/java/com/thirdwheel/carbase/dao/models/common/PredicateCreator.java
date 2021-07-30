@@ -7,9 +7,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
-import javax.validation.ConstraintViolationException;
 import java.time.LocalDate;
-import java.util.regex.Pattern;
 
 @Service
 public class PredicateCreator {
@@ -18,12 +16,8 @@ public class PredicateCreator {
 
     public Predicate yearBetweenStartAndEnd(Path<LocalDate> manufacturingStartDate,
                                             Path<LocalDate> manufacturingEndDate,
-                                            String year) {
+                                            Integer year) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        Pattern pattern = Pattern.compile("[0-9]{4}");
-        if (!pattern.matcher(year).matches()) {
-            throw new ConstraintViolationException("Year must match \"" + pattern.pattern() + "\"", null);
-        }
         LocalDate beginningOfYear = LocalDate.parse(year + "-01-01");
         LocalDate endOfYear = LocalDate.parse(year + "-12-31");
         Predicate startPredicate = cb.or(
@@ -35,8 +29,12 @@ public class PredicateCreator {
         return cb.and(startPredicate, endPredicate);
     }
 
-    public Predicate stringStartsWith(Path<String> stringField, String stringBeginning) {
+    public Predicate stringStartsWithOrHasSubstring(Path<String> stringField, String stringBeginningOrSubstring) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        return cb.like(cb.upper(stringField), stringBeginning.toUpperCase() + "%");
+        if (stringBeginningOrSubstring.length() > 1) {
+            return cb.like(cb.upper(stringField), "%" + stringBeginningOrSubstring.toUpperCase() + "%");
+        } else {
+            return cb.like(cb.upper(stringField), stringBeginningOrSubstring.toUpperCase() + "%");
+        }
     }
 }

@@ -14,7 +14,7 @@ import java.util.List;
 @ToString(exclude = "models")
 @EqualsAndHashCode
 @FieldNameConstants
-public class Vendor implements IEntityWithName {
+public class Vendor implements EntityWithIdAndName {
     @EqualsAndHashCode.Exclude
     @Id
     @SequenceGenerator(name = "vendors_pk_sequence", sequenceName = "vendors_pk_sequence", allocationSize = 1)

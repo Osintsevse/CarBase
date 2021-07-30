@@ -19,7 +19,7 @@ import java.time.LocalDate;
 @ToString
 @EqualsAndHashCode
 @FieldNameConstants
-public class Modification implements IEntityWithName, Comparable<Modification> {
+public class Modification implements EntityWithIdAndName {
     @EqualsAndHashCode.Exclude
     @Id
     @SequenceGenerator(name = "modifications_pk_sequence", sequenceName = "modifications_pk_sequence", allocationSize = 1)
@@ -92,8 +92,4 @@ public class Modification implements IEntityWithName, Comparable<Modification> {
     @JoinColumn(name = "engine_modification_id")
     private EngineModification engineModification;
 
-    @Override
-    public int compareTo(Modification o) {
-        return this.getName().compareTo(o.getName());
-    }
 }

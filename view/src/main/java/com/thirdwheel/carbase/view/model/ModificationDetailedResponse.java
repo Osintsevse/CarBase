@@ -3,6 +3,7 @@ package com.thirdwheel.carbase.view.model;
 import com.thirdwheel.carbase.dao.models.Modification;
 import com.thirdwheel.carbase.dao.models.enums.TransmissionType;
 import com.thirdwheel.carbase.dao.models.enums.WDType;
+import com.thirdwheel.carbase.view.model.subelements.EngineResponse;
 import lombok.Getter;
 
 import java.time.LocalDate;

@@ -9,10 +9,9 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.List;
 
 @Service
-public class VendorsConfigurationRepository extends GeneralEntityRepository<VendorsConfiguration> {
+public class VendorsConfigurationRepository extends GeneralEntityWithIdRepository<VendorsConfiguration> {
     public VendorsConfigurationRepository() {
         super(VendorsConfiguration.class);
     }
@@ -21,20 +20,14 @@ public class VendorsConfigurationRepository extends GeneralEntityRepository<Vend
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<VendorsConfiguration> cq = cb.createQuery(tClass);
         Root<VendorsConfiguration> root = cq.from(tClass);
+
         Predicate vendorIdEq = cb.equal(root.get(VendorsConfiguration.Fields.vendor)
                 .get(Vendor.Fields.id), vendorId);
-        TypedQuery<VendorsConfiguration> query = entityManager.createQuery(cq.where(vendorIdEq));
-        List<VendorsConfiguration> resultList = query.getResultList();
-        if (resultList.size() > 0) {
-            return resultList.get(0);
-        } else return null;
-    }
 
-    public VendorsConfiguration getByVendor(Vendor vendor) {
-        int vendorId = vendor.getId();
-        if (vendorId != 0) {
-            return this.getByVendor(vendorId);
-        }
-        return null;
+        cq.where(vendorIdEq);
+        cq.orderBy(cb.asc(root.get(Vendor.Fields.name)));
+
+        TypedQuery<VendorsConfiguration> query = entityManager.createQuery(cq);
+        return query.getSingleResult();
     }
 }

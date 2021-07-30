@@ -14,7 +14,7 @@ import java.util.List;
 @ToString(exclude = "generations")
 @EqualsAndHashCode
 @FieldNameConstants
-public class Model implements IEntityWithName {
+public class Model implements EntityWithIdAndName {
     @EqualsAndHashCode.Exclude
     @Id
     @SequenceGenerator(name = "models_pk_sequence", sequenceName = "models_pk_sequence", allocationSize = 1)

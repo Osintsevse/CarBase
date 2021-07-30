@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Table(name = "engines")
 @ToString
 @FieldNameConstants
-public class Engine implements IEntityWithName {
+public class Engine implements EntityWithIdAndName {
     @Id
     @SequenceGenerator(name = "engines_pk_sequence", sequenceName = "engines_pk_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "engines_pk_sequence")

@@ -16,7 +16,7 @@ import java.util.List;
 @ToString(exclude = "modifications")
 @EqualsAndHashCode
 @FieldNameConstants
-public class Chassis implements IEntityWithName {
+public class Chassis implements EntityWithIdAndName {
     @EqualsAndHashCode.Exclude
     @Id
     @SequenceGenerator(name = "chassises_pk_sequence", sequenceName = "chassises_pk_sequence", allocationSize = 1)

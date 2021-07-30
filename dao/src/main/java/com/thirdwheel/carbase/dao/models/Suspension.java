@@ -13,7 +13,7 @@ import javax.persistence.*;
 @ToString
 @EqualsAndHashCode
 @FieldNameConstants
-public class Suspension implements IEntityWithName {
+public class Suspension implements EntityWithIdAndName {
     @EqualsAndHashCode.Exclude
     @Id
     @SequenceGenerator(name = "suspensions_pk_sequence", sequenceName = "suspensions_pk_sequence", allocationSize = 1)
