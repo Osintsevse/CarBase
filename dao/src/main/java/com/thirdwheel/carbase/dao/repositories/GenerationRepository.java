@@ -25,13 +25,13 @@ public class GenerationRepository extends GeneralEntityWithIdRepository<Generati
         Subquery<Integer> subquery = tupleQuery.subquery(Integer.class);
         Root<Generation> tupleRoot = subquery.from(tClass);
 
-        Predicate vendorIdPredicate = getPredicateGenerationByVendor(vendorId, cb, tupleRoot);
+        Predicate vendorPredicate = getPredicateGenerationByVendor(vendorId, cb, tupleRoot);
         Predicate namePredicate = predicateCreator.stringStartsWithOrHasSubstring(tupleRoot.get(Generation.Fields.name), nameBeginning);
 
         subquery.select(cb.min(tupleRoot.get(Generation.Fields.id)));
         subquery.groupBy(tupleRoot.get(Generation.Fields.name));
         subquery.distinct(true);
-        subquery.where(cb.and(vendorIdPredicate, namePredicate));
+        subquery.where(cb.and(vendorPredicate, namePredicate));
 
         CriteriaQuery<Generation> cq = cb.createQuery(tClass);
         Root<Generation> root = cq.from(tClass);

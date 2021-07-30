@@ -25,9 +25,10 @@ public class CertainCarSearchService
         List<CarSearchResponseElement> carSearchResponseElements =
                 super.getByVendorAndNameSubstring(vendorId, nameSubstring);
 
-        List<? extends EntityWithIdAndName> ts = repository.getByVendorAndNameSubstringDistinctByName(vendorId, nameSubstring);
+        List<? extends EntityWithIdAndName> entitiesFromDomain =
+                repository.getByVendorAndNameSubstringDistinctByName(vendorId, nameSubstring);
 
-        ts.forEach(x -> carSearchResponseElements.add(new CarSearchResponseElement(x, carSearchDomain)));
+        entitiesFromDomain.forEach(x -> carSearchResponseElements.add(new CarSearchResponseElement(x, carSearchDomain)));
 
         return carSearchResponseElements;
     }

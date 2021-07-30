@@ -26,14 +26,14 @@ public class ChassisRepository extends GeneralEntityWithIdRepository<Chassis>
         Subquery<Integer> subquery = tupleQuery.subquery(Integer.class);
         Root<Chassis> tupleRoot = subquery.from(tClass);
 
-        Predicate vendorIdEquals = getPredicateChassisByVendor(vendorId, cb, tupleRoot);
+        Predicate vendorPredicate = getPredicateChassisByVendor(vendorId, cb, tupleRoot);
         Predicate namePredicate = predicateCreator
                 .stringStartsWithOrHasSubstring(tupleRoot.get(Chassis.Fields.name), nameSubstring);
 
         subquery.select(cb.min(tupleRoot.get(Chassis.Fields.id)));
         subquery.groupBy(tupleRoot.get(Chassis.Fields.name));
         subquery.distinct(true);
-        subquery.where(cb.and(vendorIdEquals, namePredicate));
+        subquery.where(cb.and(vendorPredicate, namePredicate));
 
         CriteriaQuery<Chassis> cq = cb.createQuery(tClass);
         Root<Chassis> root = cq.from(tClass);

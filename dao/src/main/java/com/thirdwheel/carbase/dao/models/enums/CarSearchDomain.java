@@ -8,10 +8,10 @@ public enum CarSearchDomain {
     CHASSIS(4),
     MODIFICATION(8);
 
-    private final int v;
+    private final int bitmask;
 
-    CarSearchDomain(int v) {
-        this.v = v;
+    CarSearchDomain(int bitmask) {
+        this.bitmask = bitmask;
     }
 
     public static EnumSet<CarSearchDomain> fromInt(int codeId) {
@@ -36,6 +36,6 @@ public enum CarSearchDomain {
     }
 
     public int intValue() {
-        return v;
+        return bitmask;
     }
 }

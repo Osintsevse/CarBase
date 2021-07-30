@@ -24,13 +24,13 @@ public class ModelRepository extends GeneralEntityWithIdRepository<Model>
         Subquery<Integer> subquery = tupleQuery.subquery(Integer.class);
         Root<Model> tupleRoot = subquery.from(tClass);
 
-        Predicate vendorIdPredicate = getPredicateModelByVendor(vendorId, cb, tupleRoot);
+        Predicate vendorPredicate = getPredicateModelByVendor(vendorId, cb, tupleRoot);
         Predicate namePredicate = predicateCreator.stringStartsWithOrHasSubstring(tupleRoot.get(Model.Fields.name), nameSubstring);
 
         subquery.select(cb.min(tupleRoot.get(Model.Fields.id)));
         subquery.groupBy(tupleRoot.get(Model.Fields.name));
         subquery.distinct(true);
-        subquery.where(cb.and(vendorIdPredicate, namePredicate));
+        subquery.where(cb.and(vendorPredicate, namePredicate));
 
         CriteriaQuery<Model> cq = cb.createQuery(tClass);
         Root<Model> root = cq.from(tClass);

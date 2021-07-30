@@ -48,15 +48,18 @@ public class ModificationRepository extends GeneralEntityWithIdRepository<Modifi
         subquery.groupBy(groupElements);
         subquery.distinct(true);
         subquery.where(cb.and(predicates.toArray(new Predicate[]{})));
+
         CriteriaQuery<Modification> cq = cb.createQuery(tClass);
         Root<Modification> root = cq.from(tClass);
         cq.where(root.get(Modification.Fields.id).in(subquery));
         cq.orderBy(cb.asc(root.get(Modification.Fields.name)));
 
-        root.fetch(Modification.Fields.chassis).fetch(Chassis.Fields.generation).fetch(Generation.Fields.model).fetch(Model.Fields.vendor).fetch(Vendor.Fields.vendorsConfiguration);
+        root.fetch(Modification.Fields.chassis).fetch(Chassis.Fields.generation).fetch(Generation.Fields.model)
+                .fetch(Model.Fields.vendor).fetch(Vendor.Fields.vendorsConfiguration);
         root.fetch(Modification.Fields.chassis).fetch(Chassis.Fields.rearSuspension);
         root.fetch(Modification.Fields.chassis).fetch(Chassis.Fields.frontSuspension);
-        root.fetch(Modification.Fields.engineModification).fetch(EngineModification.Fields.engine).fetch(Engine.Fields.vendor).fetch(Vendor.Fields.vendorsConfiguration);
+        root.fetch(Modification.Fields.engineModification).fetch(EngineModification.Fields.engine)
+                .fetch(Engine.Fields.vendor).fetch(Vendor.Fields.vendorsConfiguration);
 
         TypedQuery<Modification> query = entityManager.createQuery(cq);
         return query.getResultList();
@@ -70,13 +73,14 @@ public class ModificationRepository extends GeneralEntityWithIdRepository<Modifi
         Subquery<Integer> subquery = tupleQuery.subquery(Integer.class);
         Root<Modification> tupleRoot = subquery.from(tClass);
 
-        Predicate vendorIdPredicate = getPredicateModificationByVendor(vendorId, cb, tupleRoot);
-        Predicate namePredicate = predicateCreator.stringStartsWithOrHasSubstring(tupleRoot.get(Modification.Fields.name), nameSubstring);
+        Predicate vendorPredicate = getPredicateModificationByVendor(vendorId, cb, tupleRoot);
+        Predicate namePredicate = predicateCreator
+                .stringStartsWithOrHasSubstring(tupleRoot.get(Modification.Fields.name), nameSubstring);
 
         subquery.select(cb.min(tupleRoot.get(Modification.Fields.id)));
         subquery.groupBy(tupleRoot.get(Modification.Fields.name));
         subquery.distinct(true);
-        subquery.where(cb.and(vendorIdPredicate, namePredicate));
+        subquery.where(cb.and(vendorPredicate, namePredicate));
 
         CriteriaQuery<Modification> cq = cb.createQuery(tClass);
         Root<Modification> root = cq.from(tClass);
@@ -92,12 +96,12 @@ public class ModificationRepository extends GeneralEntityWithIdRepository<Modifi
         CriteriaQuery<Modification> cq = cb.createQuery(tClass);
         Root<Modification> root = cq.from(tClass);
 
-        Predicate idEquals = getPredicateModificationByVendor(vendorId, cb, root);
+        Predicate vendorPredicate = getPredicateModificationByVendor(vendorId, cb, root);
         Predicate namePredicate = cb.equal(root.get(Modification.Fields.name), name);
         Predicate yearBetweenStartAndEnd = predicateCreator
                 .yearBetweenStartAndEnd(root.get(Modification.Fields.start), root.get(Modification.Fields.end), year);
 
-        cq.where(cb.and(idEquals, namePredicate, yearBetweenStartAndEnd));
+        cq.where(cb.and(vendorPredicate, namePredicate, yearBetweenStartAndEnd));
         cq.orderBy(cb.asc(root.get(Modification.Fields.name)));
 
         TypedQuery<Modification> query = entityManager.createQuery(cq);
@@ -125,12 +129,12 @@ public class ModificationRepository extends GeneralEntityWithIdRepository<Modifi
         Root<Modification> root = cq.from(tClass);
 
         Predicate vendorPredicate = getPredicateModificationByVendor(vendorId, cb, root);
-        Predicate yearBetweenStartAndEnd = predicateCreator
+        Predicate yearPredicate = predicateCreator
                 .yearBetweenStartAndEnd(root.get(Modification.Fields.start), root.get(Modification.Fields.end), year);
         Predicate chassisPredicate = cb.equal(root.get(Modification.Fields.chassis)
                 .get(Chassis.Fields.name), chassisName);
 
-        cq.where(cb.and(chassisPredicate, yearBetweenStartAndEnd, vendorPredicate));
+        cq.where(cb.and(chassisPredicate, yearPredicate, vendorPredicate));
         cq.orderBy(cb.asc(root.get(Modification.Fields.name)));
 
         TypedQuery<Modification> query = entityManager.createQuery(cq);
@@ -159,13 +163,13 @@ public class ModificationRepository extends GeneralEntityWithIdRepository<Modifi
         Root<Modification> root = cq.from(tClass);
 
         Predicate vendorPredicate = getPredicateModificationByVendor(vendorId, cb, root);
-        Predicate yearBetweenStartAndEnd = predicateCreator
+        Predicate yearPredicate = predicateCreator
                 .yearBetweenStartAndEnd(root.get(Modification.Fields.start), root.get(Modification.Fields.end), year);
         Predicate chassisPredicate = cb.equal(root.get(Modification.Fields.chassis)
                 .get(Chassis.Fields.generation)
                 .get(Generation.Fields.name), generationName);
 
-        cq.where(cb.and(chassisPredicate, yearBetweenStartAndEnd, vendorPredicate));
+        cq.where(cb.and(chassisPredicate, yearPredicate, vendorPredicate));
         cq.orderBy(cb.asc(root.get(Modification.Fields.name)));
 
         TypedQuery<Modification> query = entityManager.createQuery(cq);
@@ -195,14 +199,14 @@ public class ModificationRepository extends GeneralEntityWithIdRepository<Modifi
         Root<Modification> root = cq.from(tClass);
 
         Predicate vendorPredicate = getPredicateModificationByVendor(vendorId, cb, root);
-        Predicate yearBetweenStartAndEnd = predicateCreator
+        Predicate yearPredicate = predicateCreator
                 .yearBetweenStartAndEnd(root.get(Modification.Fields.start), root.get(Modification.Fields.end), year);
         Predicate chassisPredicate = cb.equal(root.get(Modification.Fields.chassis)
                 .get(Chassis.Fields.generation)
                 .get(Generation.Fields.model)
                 .get(Model.Fields.name), modelName);
 
-        cq.where(cb.and(chassisPredicate, yearBetweenStartAndEnd, vendorPredicate));
+        cq.where(cb.and(chassisPredicate, yearPredicate, vendorPredicate));
         cq.orderBy(cb.asc(root.get(Modification.Fields.name)));
 
         TypedQuery<Modification> query = entityManager.createQuery(cq);

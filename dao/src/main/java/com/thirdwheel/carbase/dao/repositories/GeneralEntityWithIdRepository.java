@@ -36,8 +36,10 @@ public class GeneralEntityWithIdRepository<T extends EntityWithId> implements En
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<T> cq = cb.createQuery(tClass);
         Root<T> rootEntry = cq.from(tClass);
-        CriteriaQuery<T> all = cq.select(rootEntry);
-        TypedQuery<T> query = entityManager.createQuery(all);
+
+        cq.select(rootEntry);
+
+        TypedQuery<T> query = entityManager.createQuery(cq);
         return query.getResultList();
     }
 }
