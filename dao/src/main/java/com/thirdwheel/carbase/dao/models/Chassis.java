@@ -2,7 +2,10 @@ package com.thirdwheel.carbase.dao.models;
 
 import com.thirdwheel.carbase.dao.models.enums.BodyStyle;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import lombok.experimental.FieldNameConstants;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import java.util.List;
@@ -11,9 +14,13 @@ import java.util.List;
 @Entity
 @Table(name = "chassises")
 @ToString(exclude = "modifications")
-public class Chassis {
+@EqualsAndHashCode
+@FieldNameConstants
+public class Chassis implements IEntityWithName {
+    @EqualsAndHashCode.Exclude
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "chassises_pk_sequence", sequenceName = "chassises_pk_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "chassises_pk_sequence")
     @Column(name = "id", nullable = false)
     private int id;
 
@@ -44,6 +51,9 @@ public class Chassis {
     @Column(name = "rear_track")
     private Long rearTrack;
 
+    @Formula("wheel_base::float / greatest(front_track,rear_track)")
+    private Double squarenessCoefficient;
+
     @Column(name = "height")
     private Long height;
 
@@ -51,7 +61,7 @@ public class Chassis {
     @Column(name = "body_style")
     private BodyStyle bodyStyle;
 
-    @ManyToOne(optional=false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "generation_id")
     private Generation generation;
 
@@ -63,7 +73,8 @@ public class Chassis {
     @JoinColumn(name = "rear_suspension_id")
     private Suspension rearSuspension;
 
-    @OneToMany(mappedBy="chassis", fetch=FetchType.LAZY)
+    @EqualsAndHashCode.Exclude
+    @OneToMany(mappedBy = "chassis", fetch = FetchType.LAZY)
     private List<Modification> modifications;
 }
 

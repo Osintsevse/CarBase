@@ -1,8 +1,8 @@
 package com.thirdwheel.carbase.dao.models.enums;
 
 public enum TransmissionType {
-    Auto,
-    Manual,
-    Robot,
-    Unknown
+    AUTO,
+    MANUAL,
+    ROBOT,
+    UNKNOWN
 }

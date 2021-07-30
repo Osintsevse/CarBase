@@ -5,7 +5,9 @@ import com.thirdwheel.carbase.dao.models.enums.SteeringWheelPosition;
 import com.thirdwheel.carbase.dao.models.enums.TransmissionType;
 import com.thirdwheel.carbase.dao.models.enums.WDType;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import lombok.experimental.FieldNameConstants;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -15,9 +17,13 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "modifications")
 @ToString
-public class Modification {
+@EqualsAndHashCode
+@FieldNameConstants
+public class Modification implements IEntityWithName, Comparable<Modification> {
+    @EqualsAndHashCode.Exclude
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "modifications_pk_sequence", sequenceName = "modifications_pk_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "modifications_pk_sequence")
     @Column(name = "id", nullable = false)
     private int id;
 
@@ -78,11 +84,16 @@ public class Modification {
     @Column(name = "weight")
     private Integer weight;
 
-    @ManyToOne(optional=false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "chassis_id")
     private Chassis chassis;
 
-    @ManyToOne(optional=false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "engine_modification_id")
     private EngineModification engineModification;
+
+    @Override
+    public int compareTo(Modification o) {
+        return this.getName().compareTo(o.getName());
+    }
 }

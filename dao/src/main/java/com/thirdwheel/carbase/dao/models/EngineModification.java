@@ -2,7 +2,9 @@ package com.thirdwheel.carbase.dao.models;
 
 import com.thirdwheel.carbase.dao.models.enums.ChargerType;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import lombok.experimental.FieldNameConstants;
 
 import javax.persistence.*;
 
@@ -10,9 +12,14 @@ import javax.persistence.*;
 @Entity
 @Table(name = "engine_modifications")
 @ToString
-public class EngineModification {
+@EqualsAndHashCode
+@FieldNameConstants
+public class EngineModification implements IEntityWithName {
+    @EqualsAndHashCode.Exclude
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "engine_modifications_pk_sequence",
+            sequenceName = "engine_modifications_pk_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "engine_modifications_pk_sequence")
     @Column(name = "id", nullable = false)
     private int id;
 
@@ -38,7 +45,7 @@ public class EngineModification {
     @Column(name = "compression_ratio")
     private Double compressionRatio;
 
-    @ManyToOne(optional=false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "engine_id")
     private Engine engine;
 }
