@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="1" author="Stas">
+        <createTable tableName="vendors">
+            <column name="id" type="SERIAL" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2" author="Stas">
+        <createTable tableName="models">
+            <column name="id" type="SERIAL" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="vendor_id" type="SERIAL">
+                <constraints nullable="false"
+                             references="vendors(id)"
+                             foreignKeyName="FK_models_vendors"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="3" author="Stas">
+        <createTable tableName="generations">
+            <column name="id" type="SERIAL" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="start" type="timestamp">
+                <constraints nullable="true"/>
+            </column>
+            <column name="end" type="timestamp">
+                <constraints nullable="true"/>
+            </column>
+            <column name="image_src" type="TEXT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="model_id" type="SERIAL">
+                <constraints nullable="false"
+                             references="models(id)"
+                             foreignKeyName="FK_generations_models"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="4" author="Stas">
+        <createTable tableName="suspensions">
+            <column name="id" type="SERIAL" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="5" author="Stas">
+        <createTable tableName="chassises">
+            <column name="id" type="SERIAL" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_name_generated" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="length" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="width" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="wheel_base" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="front_overhang" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="rear_overhang" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="front_track" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="rear_track" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="height" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="body_type" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="generation_id" type="SERIAL">
+                <constraints nullable="false"
+                             references="generations(id)"
+                             foreignKeyName="FK_chassises_generations"/>
+            </column>
+            <column name="front_suspension_id" type="SERIAL">
+                <constraints nullable="true"
+                             references="suspensions(id)"
+                             foreignKeyName="FK_chassises_suspensions_front"/>
+            </column>
+            <column name="rear_suspension_id" type="SERIAL">
+                <constraints nullable="true"
+                             references="suspensions(id)"
+                             foreignKeyName="FK_chassises_suspensions_rear"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="6" author="Stas">
+        <createTable tableName="engines">
+            <column name="id" type="SERIAL" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fuel_type" type="TEXT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="volume" type="integer">
+                <constraints nullable="true"/>
+            </column>
+            <column name="cylinder_count" type="integer">
+                <constraints nullable="true"/>
+            </column>
+            <column name="valve_count" type="integer">
+                <constraints nullable="true"/>
+            </column>
+            <column name="valve_per_cylinder" type="integer">
+                <constraints nullable="true"/>
+            </column>
+            <column name="engine_type" type="TEXT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="bore" type="double precision">
+                <constraints nullable="true"/>
+            </column>
+            <column name="stroke" type="double precision">
+                <constraints nullable="true"/>
+            </column>
+            <column name="vendor_id" type="SERIAL">
+                <constraints nullable="false"
+                             references="vendors(id)"
+                             foreignKeyName="FK_engines_vendors"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="7" author="Stas">
+        <createTable tableName="engine_modifications">
+            <column name="id" type="SERIAL" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="TEXT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="max_power" type="integer">
+                <constraints nullable="true"/>
+            </column>
+            <column name="max_power_rpm" type="integer">
+                <constraints nullable="true"/>
+            </column>
+            <column name="max_torque" type="integer">
+                <constraints nullable="true"/>
+            </column>
+            <column name="max_torque_rpm" type="integer">
+                <constraints nullable="true"/>
+            </column>
+            <column name="charger_type" type="TEXT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="compression_ratio" type="double precision">
+                <constraints nullable="true"/>
+            </column>
+            <column name="engine_id" type="SERIAL">
+                <constraints nullable="false"
+                             references="engines(id)"
+                             foreignKeyName="FK_engine_modifications_engines"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="8" author="Stas">
+        <createTable tableName="modifications">
+            <column name="id" type="SERIAL" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="steering_wheel_position" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="transmission_type" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="start" type="timestamp">
+                <constraints nullable="true"/>
+            </column>
+            <column name="end" type="timestamp">
+                <constraints nullable="true"/>
+            </column>
+            <column name="acceleration0100" type="double precision">
+                <constraints nullable="true"/>
+            </column>
+            <column name="front_wheels" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="rear_wheels" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="gear_count" type="integer">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mtr" type="double precision">
+                <constraints nullable="true"/>
+            </column>
+            <column name="seat_count" type="integer">
+                <constraints nullable="true"/>
+            </column>
+            <column name="seat_row_count" type="integer">
+                <constraints nullable="true"/>
+            </column>
+            <column name="wd_type" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="clearance" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="country_build" type="TEXT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="country_store" type="TEXT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="door_count" type="integer">
+                <constraints nullable="true"/>
+            </column>
+            <column name="weight" type="integer">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="chassis_id" type="SERIAL">
+                <constraints nullable="false"
+                             references="chassises(id)"
+                             foreignKeyName="FK_modifications_chassises"/>
+            </column>
+            <column name="engine_modification_id" type="SERIAL">
+                <constraints nullable="false"
+                             references="engine_modifications(id)"
+                             foreignKeyName="FK_modifications_engine_modifications"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
