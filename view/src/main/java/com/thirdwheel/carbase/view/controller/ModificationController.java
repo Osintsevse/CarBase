@@ -11,7 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Min;
 
 @Validated
 @Controller
@@ -22,9 +22,9 @@ public class ModificationController {
 
     @GetMapping(path = "/modifications/{modificationId}")
     public ResponseEntity<ModificationDetailedResponse> getById(
-            @PathVariable(value = "modificationId") @Pattern(regexp = "[0-9]+") String modificationId) {
+            @PathVariable(value = "modificationId") @Min(0) Integer modificationId) {
 
-        Modification byId = modificationService.getById(Integer.parseInt(modificationId));
+        Modification byId = modificationService.getById(modificationId);
 
         return ResponseEntity.ok(new ModificationDetailedResponse(byId));
     }

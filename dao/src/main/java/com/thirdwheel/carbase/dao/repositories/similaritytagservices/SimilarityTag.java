@@ -1,5 +1,7 @@
 package com.thirdwheel.carbase.dao.repositories.similaritytagservices;
 
+import com.thirdwheel.carbase.dao.excetions.CarbaseIllegalArgumentException;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -36,7 +38,7 @@ public enum SimilarityTag {
                         .equalsIgnoreCase(tag.replace("_", "").trim()))
                 .findAny();
         if (any.isEmpty()) {
-            throw new IllegalArgumentException("Tag does not exist: " + tag);
+            throw new CarbaseIllegalArgumentException("Tag does not exist: " + tag);
         }
         return any.get();
     }
