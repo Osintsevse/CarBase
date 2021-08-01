@@ -1,6 +1,7 @@
 package com.thirdwheel.carbase.dao.repositories;
 
 import com.thirdwheel.carbase.dao.models.*;
+import com.thirdwheel.carbase.dao.querybuilders.QueryBuilder;
 import com.thirdwheel.carbase.dao.repositories.similaritytagservices.SimilarityPredicateAndGroupElement;
 import com.thirdwheel.carbase.dao.repositories.similaritytagservices.SimilarityTag;
 import com.thirdwheel.carbase.dao.repositories.similaritytagservices.SimilarityTagFiltersService;
@@ -25,31 +26,32 @@ public class ModificationRepository extends GeneralEntityWithIdRepository<Modifi
 
     public List<Modification> getSimilar(Modification modification, List<SimilarityTag> tagList) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Tuple> tupleQuery = cb.createTupleQuery();
-        Subquery<Integer> subquery = tupleQuery.subquery(Integer.class);
-        Root<Modification> tupleRoot = subquery.from(tClass);
+        CriteriaQuery<Modification> cq = cb.createQuery(tClass);
+        Subquery<Integer> subquery = cq.subquery(Integer.class);
+        Root<Modification> subqueryRoot = subquery.from(tClass);
 
 
         List<SimilarityPredicateAndGroupElement> predicateAndGroupElements = tagList.stream()
-                .map(x -> similarityTagFiltersService.getTagFilterMap().get(x).getPredicate(modification, tupleRoot))
+                .map(x -> similarityTagFiltersService.getTagFilterMap().get(x).getPredicate(modification, subqueryRoot))
                 .filter(Objects::nonNull).collect(Collectors.toList());
 
         List<Predicate> predicates = predicateAndGroupElements.stream()
                 .map(SimilarityPredicateAndGroupElement::getPredicate)
                 .filter(Objects::nonNull).collect(Collectors.toList());
-        predicates.add(cb.notEqual(tupleRoot.get(Modification.Fields.id), modification.getId()));
+        predicates.add(cb.notEqual(subqueryRoot.get(Modification.Fields.id), modification.getId()));
 
         List<Expression<?>> groupElements = predicateAndGroupElements.stream()
                 .map(SimilarityPredicateAndGroupElement::getGroupElement)
                 .filter(Objects::nonNull).collect(Collectors.toList());
-        groupElements.add(tupleRoot.get(Modification.Fields.chassis).get(Chassis.Fields.id));
+        groupElements.add(subqueryRoot.get(Modification.Fields.chassis).get(Chassis.Fields.id));
 
-        subquery.select(cb.min(tupleRoot.get(Modification.Fields.id)));
+        subquery.select(cb.min(subqueryRoot.get(Modification.Fields.id)));
         subquery.groupBy(groupElements);
         subquery.distinct(true);
-        subquery.where(cb.and(predicates.toArray(new Predicate[]{})));
 
-        CriteriaQuery<Modification> cq = cb.createQuery(tClass);
+        Predicate and = cb.and(predicates.toArray(new Predicate[]{}));
+        subquery.where(and);
+
         Root<Modification> root = cq.from(tClass);
         cq.where(root.get(Modification.Fields.id).in(subquery));
         cq.orderBy(cb.asc(root.get(Modification.Fields.name)));
@@ -62,7 +64,15 @@ public class ModificationRepository extends GeneralEntityWithIdRepository<Modifi
                 .fetch(Engine.Fields.vendor).fetch(Vendor.Fields.vendorsConfiguration);
 
         TypedQuery<Modification> query = entityManager.createQuery(cq);
-        return query.getResultList();
+
+        QueryBuilder<Modification> modificationQueryBuilder =
+                new QueryBuilder<Modification>(entityManager,Modification.class,Modification.Fields.name);
+        TypedQuery<Modification> query1 = modificationQueryBuilder.setSubquery(Modification.Fields.id)
+                .setSubqueryGroupBy(groupElements)
+                .setModificationFetch()
+                .setPredicate(cb.and(predicates.toArray(new Predicate[]{})))
+                .build();
+        return query1.getResultList();
     }
 
     @Override
@@ -71,14 +81,14 @@ public class ModificationRepository extends GeneralEntityWithIdRepository<Modifi
 
         CriteriaQuery<Tuple> tupleQuery = cb.createTupleQuery();
         Subquery<Integer> subquery = tupleQuery.subquery(Integer.class);
-        Root<Modification> tupleRoot = subquery.from(tClass);
+        Root<Modification> subqueryRoot = subquery.from(tClass);
 
-        Predicate vendorPredicate = getPredicateModificationByVendor(vendorId, cb, tupleRoot);
+        Predicate vendorPredicate = getPredicateModificationByVendor(vendorId, cb, subqueryRoot);
         Predicate namePredicate = predicateCreator
-                .stringStartsWithOrHasSubstring(tupleRoot.get(Modification.Fields.name), nameSubstring);
+                .stringStartsWithOrHasSubstring(subqueryRoot.get(Modification.Fields.name), nameSubstring);
 
-        subquery.select(cb.min(tupleRoot.get(Modification.Fields.id)));
-        subquery.groupBy(tupleRoot.get(Modification.Fields.name));
+        subquery.select(cb.min(subqueryRoot.get(Modification.Fields.id)));
+        subquery.groupBy(subqueryRoot.get(Modification.Fields.name));
         subquery.distinct(true);
         subquery.where(cb.and(vendorPredicate, namePredicate));
 
