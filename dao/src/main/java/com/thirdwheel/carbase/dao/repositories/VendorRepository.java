@@ -21,7 +21,8 @@ public class VendorRepository extends GeneralEntityWithIdRepository<Vendor> {
         CriteriaQuery<Vendor> cq = cb.createQuery(Vendor.class);
         Root<Vendor> root = cq.from(Vendor.class);
 
-        Predicate namePredicate = predicateCreator.stringStartsWithOrHasSubstring(root.get(Vendor.Fields.name), nameBeginning);
+        Predicate namePredicate = predicateCreator.
+                stringStartsWithOrHasSubstring(root.get(Vendor.Fields.name), nameBeginning);
 
         cq.where(namePredicate);
         cq.orderBy(cb.asc(root.get(Vendor.Fields.name)));

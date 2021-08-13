@@ -42,4 +42,25 @@ public class ModificationQueries extends AbstractQueries<Modification> {
                 getLowestRoot().get(Modification.Fields.end), year);
         return this;
     }
+
+    public ModificationQueries setChassisNameIsEqual(String chassisName) {
+        addPredicateAnd(getCriteriaBuilder().equal(getLowestRoot().get(Modification.Fields.chassis)
+                .get(Chassis.Fields.name), chassisName));
+        return this;
+    }
+
+    public ModificationQueries setGenerationNameIsEqual(String generationName) {
+        addPredicateAnd(getCriteriaBuilder().equal(getLowestRoot().get(Modification.Fields.chassis)
+                .get(Chassis.Fields.generation)
+                .get(Generation.Fields.name), generationName));
+        return this;
+    }
+
+    public ModificationQueries setModelNameIsEqual(String modelName) {
+        addPredicateAnd(getCriteriaBuilder().equal(getLowestRoot().get(Modification.Fields.chassis)
+                .get(Chassis.Fields.generation)
+                .get(Generation.Fields.model)
+                .get(Model.Fields.name), modelName));
+        return this;
+    }
 }
