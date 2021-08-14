@@ -3,13 +3,15 @@ package com.thirdwheel.carbase.dao.models;
 import com.thirdwheel.carbase.dao.models.common.SpecificEquals;
 import com.thirdwheel.carbase.dao.models.enums.EngineType;
 import com.thirdwheel.carbase.dao.models.enums.FuelType;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldNameConstants;
 
 import javax.persistence.*;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "engines")
 @ToString

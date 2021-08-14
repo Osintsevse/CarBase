@@ -1,14 +1,16 @@
 package com.thirdwheel.carbase.dao.models;
 
 import com.thirdwheel.carbase.dao.models.enums.ChargerType;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldNameConstants;
 
 import javax.persistence.*;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "engine_modifications")
 @ToString

@@ -1,8 +1,9 @@
 package com.thirdwheel.carbase.dao.models;
 
 import com.thirdwheel.carbase.dao.models.enums.BodyStyle;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldNameConstants;
 import org.hibernate.annotations.Formula;
@@ -10,10 +11,11 @@ import org.hibernate.annotations.Formula;
 import javax.persistence.*;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "chassises")
-@ToString(exclude = "modifications")
+@ToString
 @EqualsAndHashCode
 @FieldNameConstants
 public class Chassis implements EntityWithIdAndName {
@@ -75,6 +77,7 @@ public class Chassis implements EntityWithIdAndName {
 
     @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "chassis", fetch = FetchType.LAZY)
+    @ToString.Exclude
     private List<Modification> modifications;
 }
 

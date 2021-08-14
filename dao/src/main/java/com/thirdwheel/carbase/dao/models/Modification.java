@@ -4,8 +4,9 @@ package com.thirdwheel.carbase.dao.models;
 import com.thirdwheel.carbase.dao.models.enums.SteeringWheelPosition;
 import com.thirdwheel.carbase.dao.models.enums.TransmissionType;
 import com.thirdwheel.carbase.dao.models.enums.WDType;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldNameConstants;
 
@@ -13,7 +14,8 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "modifications")
 @ToString

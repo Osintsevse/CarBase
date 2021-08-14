@@ -1,17 +1,19 @@
 package com.thirdwheel.carbase.dao.models;
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldNameConstants;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "models")
-@ToString(exclude = "generations")
+@ToString
 @EqualsAndHashCode
 @FieldNameConstants
 public class Model implements EntityWithIdAndName {
@@ -31,5 +33,6 @@ public class Model implements EntityWithIdAndName {
 
     @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "model", fetch = FetchType.LAZY)
+    @ToString.Exclude
     private List<Generation> generations;
 }

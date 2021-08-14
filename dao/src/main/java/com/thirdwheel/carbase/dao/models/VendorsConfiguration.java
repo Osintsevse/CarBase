@@ -1,14 +1,16 @@
 package com.thirdwheel.carbase.dao.models;
 
 import com.thirdwheel.carbase.dao.models.enums.CarSearchDomain;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
 
 import javax.persistence.*;
 import java.util.EnumSet;
 
-@Data
+@Getter
+@Setter
 @javax.persistence.Entity
 @Table(name = "vendors_configurations")
 @EqualsAndHashCode
