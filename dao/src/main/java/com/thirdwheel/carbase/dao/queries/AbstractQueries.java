@@ -1,4 +1,4 @@
-package com.thirdwheel.carbase.dao.querybuilders;
+package com.thirdwheel.carbase.dao.queries;
 
 import com.thirdwheel.carbase.dao.models.EntityWithId;
 import lombok.Getter;
@@ -33,7 +33,7 @@ public abstract class AbstractQueries<T extends EntityWithId> {
         query.orderBy(criteriaBuilder.asc(root.get(this.rootNameFieldName)));
     }
 
-    protected AbstractQueries<T> setSubqueryByMinId(String rootIdFieldName) {
+    protected AbstractQueries<T> addSubqueryByMinId(String rootIdFieldName) {
         subquery = query.subquery(Integer.class);
         subqueryRoot = subquery.from(tClass);
         subquery.select(criteriaBuilder.min(subqueryRoot.get(rootIdFieldName)));
@@ -41,8 +41,6 @@ public abstract class AbstractQueries<T extends EntityWithId> {
         query.where(root.get(rootIdFieldName).in(subquery));
         return this;
     }
-
-    public abstract AbstractQueries<T> setSubqueryByMinId();
 
     public AbstractQueries<T> setGroupByInSubquery(List<Expression<?>> groupElements) {
         if (subquery == null) throw new RuntimeException("Subquery was not created.");
@@ -62,29 +60,29 @@ public abstract class AbstractQueries<T extends EntityWithId> {
     }
 
     public TypedQuery<T> build() {
-        if (subquery == null) {
-            query.where(predicate);
-        } else {
-            subquery.where(predicate);
+        if (predicate != null) {
+            if (subquery == null) {
+                query.where(predicate);
+            } else {
+                subquery.where(predicate);
+            }
         }
         return entityManager.createQuery(query);
     }
 
-    public abstract AbstractQueries<T> setFetch();
-
     public abstract AbstractQueries<T> byVendorId(Integer vendorId);
 
     public AbstractQueries<T> setPredicate(Predicate predicate) {
-        addPredicateAnd(predicate);
+        addPredicateByAnd(predicate);
         return this;
     }
 
-    public AbstractQueries<T> setPredicateByAnd(Predicate... predicate) {
-        addPredicateAnd(criteriaBuilder.and(predicate));
+    public AbstractQueries<T> setPredicatesByAnd(Predicate... predicate) {
+        addPredicateByAnd(criteriaBuilder.and(predicate));
         return this;
     }
 
-    public AbstractQueries<T> addPredicateAnd(Predicate predicate) {
+    public AbstractQueries<T> addPredicateByAnd(Predicate predicate) {
         if (this.predicate != null) {
             this.predicate = criteriaBuilder.and(this.predicate, predicate);
         } else {
@@ -101,14 +99,14 @@ public abstract class AbstractQueries<T extends EntityWithId> {
         }
     }
 
-    public AbstractQueries<T> setNameIsEqual(String name) {
-        addPredicateAnd(getCriteriaBuilder().equal(getLowestRoot().get(rootNameFieldName), name));
+    public AbstractQueries<T> byNameIsEqual(String name) {
+        addPredicateByAnd(getCriteriaBuilder().equal(getLowestRoot().get(rootNameFieldName), name));
         return this;
     }
 
-    protected AbstractQueries<T> setYearIsBetween(Path<LocalDate> manufacturingStartDate,
-                                                  Path<LocalDate> manufacturingEndDate,
-                                                  Integer year) {
+    protected AbstractQueries<T> byYearIsBetween(Path<LocalDate> manufacturingStartDate,
+                                                 Path<LocalDate> manufacturingEndDate,
+                                                 Integer year) {
         LocalDate beginningOfYear = LocalDate.parse(year + "-01-01");
         LocalDate endOfYear = LocalDate.parse(year + "-12-31");
 
@@ -119,18 +117,16 @@ public abstract class AbstractQueries<T extends EntityWithId> {
                 criteriaBuilder.greaterThanOrEqualTo(manufacturingEndDate, beginningOfYear),
                 criteriaBuilder.isNull(manufacturingEndDate));
 
-        addPredicateAnd(criteriaBuilder.and(startPredicate, endPredicate));
+        addPredicateByAnd(criteriaBuilder.and(startPredicate, endPredicate));
         return this;
     }
 
-    public abstract AbstractQueries<T> setYearIsBetween(Integer year);
-
-    public AbstractQueries<T> setNameStartsWithOrHasSubstring(String stringBeginningOrSubstring) {
+    public AbstractQueries<T> byNameStartsWithOrHasSubstring(String stringBeginningOrSubstring) {
         if (stringBeginningOrSubstring.length() > 1) {
-            addPredicateAnd(criteriaBuilder.like(criteriaBuilder.upper(getLowestRoot().get(rootNameFieldName)),
+            addPredicateByAnd(criteriaBuilder.like(criteriaBuilder.upper(getLowestRoot().get(rootNameFieldName)),
                     "%" + stringBeginningOrSubstring.toUpperCase() + "%"));
         } else {
-            addPredicateAnd(criteriaBuilder.like(criteriaBuilder.upper(getLowestRoot().get(rootNameFieldName)),
+            addPredicateByAnd(criteriaBuilder.like(criteriaBuilder.upper(getLowestRoot().get(rootNameFieldName)),
                     stringBeginningOrSubstring.toUpperCase() + "%"));
         }
         return this;

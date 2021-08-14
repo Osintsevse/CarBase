@@ -1,9 +1,7 @@
 package com.thirdwheel.carbase.dao.repositories;
 
 import com.thirdwheel.carbase.dao.models.EntityWithId;
-import com.thirdwheel.carbase.dao.models.common.PredicateCreator;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,8 +14,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GeneralEntityWithIdRepository<T extends EntityWithId> implements EntityWithIdRepository<T> {
     final protected Class<T> tClass;
-    @Autowired
-    protected PredicateCreator predicateCreator;
     @PersistenceContext
     protected EntityManager entityManager;
 

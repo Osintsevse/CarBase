@@ -1,4 +1,4 @@
-package com.thirdwheel.carbase.dao.querybuilders;
+package com.thirdwheel.carbase.dao.queries;
 
 import com.thirdwheel.carbase.dao.models.*;
 
@@ -9,8 +9,7 @@ public class ModificationQueries extends AbstractQueries<Modification> {
         super(entityManager, Modification.class, Modification.Fields.name);
     }
 
-    @Override
-    public AbstractQueries<Modification> setFetch() {
+    public ModificationQueries setFullFetch() {
         root.fetch(Modification.Fields.chassis).fetch(Chassis.Fields.generation).fetch(Generation.Fields.model)
                 .fetch(Model.Fields.vendor).fetch(Vendor.Fields.vendorsConfiguration);
         root.fetch(Modification.Fields.chassis).fetch(Chassis.Fields.rearSuspension);
@@ -21,8 +20,8 @@ public class ModificationQueries extends AbstractQueries<Modification> {
     }
 
     @Override
-    public AbstractQueries<Modification> byVendorId(Integer vendorId) {
-        addPredicateAnd(getCriteriaBuilder().equal(getLowestRoot().get(Modification.Fields.chassis)
+    public ModificationQueries byVendorId(Integer vendorId) {
+        addPredicateByAnd(getCriteriaBuilder().equal(getLowestRoot().get(Modification.Fields.chassis)
                 .get(Chassis.Fields.generation)
                 .get(Generation.Fields.model)
                 .get(Model.Fields.vendor)
@@ -30,34 +29,32 @@ public class ModificationQueries extends AbstractQueries<Modification> {
         return this;
     }
 
-    @Override
-    public ModificationQueries setSubqueryByMinId() {
-        super.setSubqueryByMinId(Modification.Fields.id);
+    public ModificationQueries addSubqueryByMinId() {
+        super.addSubqueryByMinId(Modification.Fields.id);
         return this;
     }
 
-    @Override
-    public ModificationQueries setYearIsBetween(Integer year) {
-        setYearIsBetween(getLowestRoot().get(Modification.Fields.start),
+    public ModificationQueries byYearIsBetween(Integer year) {
+        byYearIsBetween(getLowestRoot().get(Modification.Fields.start),
                 getLowestRoot().get(Modification.Fields.end), year);
         return this;
     }
 
-    public ModificationQueries setChassisNameIsEqual(String chassisName) {
-        addPredicateAnd(getCriteriaBuilder().equal(getLowestRoot().get(Modification.Fields.chassis)
+    public ModificationQueries byChassisNameIsEqual(String chassisName) {
+        addPredicateByAnd(getCriteriaBuilder().equal(getLowestRoot().get(Modification.Fields.chassis)
                 .get(Chassis.Fields.name), chassisName));
         return this;
     }
 
-    public ModificationQueries setGenerationNameIsEqual(String generationName) {
-        addPredicateAnd(getCriteriaBuilder().equal(getLowestRoot().get(Modification.Fields.chassis)
+    public ModificationQueries byGenerationNameIsEqual(String generationName) {
+        addPredicateByAnd(getCriteriaBuilder().equal(getLowestRoot().get(Modification.Fields.chassis)
                 .get(Chassis.Fields.generation)
                 .get(Generation.Fields.name), generationName));
         return this;
     }
 
-    public ModificationQueries setModelNameIsEqual(String modelName) {
-        addPredicateAnd(getCriteriaBuilder().equal(getLowestRoot().get(Modification.Fields.chassis)
+    public ModificationQueries byModelNameIsEqual(String modelName) {
+        addPredicateByAnd(getCriteriaBuilder().equal(getLowestRoot().get(Modification.Fields.chassis)
                 .get(Chassis.Fields.generation)
                 .get(Generation.Fields.model)
                 .get(Model.Fields.name), modelName));

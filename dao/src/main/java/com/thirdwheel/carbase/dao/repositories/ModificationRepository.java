@@ -2,8 +2,7 @@ package com.thirdwheel.carbase.dao.repositories;
 
 import com.thirdwheel.carbase.dao.models.Chassis;
 import com.thirdwheel.carbase.dao.models.Modification;
-import com.thirdwheel.carbase.dao.querybuilders.AbstractQueries;
-import com.thirdwheel.carbase.dao.querybuilders.ModificationQueries;
+import com.thirdwheel.carbase.dao.queries.ModificationQueries;
 import com.thirdwheel.carbase.dao.repositories.similaritytagservices.SimilarityPredicateAndGroupElement;
 import com.thirdwheel.carbase.dao.repositories.similaritytagservices.SimilarityTag;
 import com.thirdwheel.carbase.dao.repositories.similaritytagservices.SimilarityTagFiltersService;
@@ -28,8 +27,8 @@ public class ModificationRepository extends GeneralEntityWithIdRepository<Modifi
     }
 
     public List<Modification> getSimilar(Modification modification, List<SimilarityTag> tagList) {
-        AbstractQueries<Modification> modificationQueryBuilder =
-                new ModificationQueries(entityManager).setSubqueryByMinId();
+        ModificationQueries modificationQueryBuilder =
+                new ModificationQueries(entityManager).addSubqueryByMinId();
 
         Root<Modification> subqueryRoot = modificationQueryBuilder.getSubqueryRoot();
         CriteriaBuilder cb = modificationQueryBuilder.getCriteriaBuilder();
@@ -49,7 +48,8 @@ public class ModificationRepository extends GeneralEntityWithIdRepository<Modifi
         groupElements.add(subqueryRoot.get(Modification.Fields.chassis).get(Chassis.Fields.id));
 
         modificationQueryBuilder.setGroupByInSubquery(groupElements)
-                .setPredicate(cb.and(predicates.toArray(new Predicate[]{}))).setFetch();
+                .setPredicate(cb.and(predicates.toArray(new Predicate[]{})));
+        modificationQueryBuilder.setFullFetch();
 
         return modificationQueryBuilder.build().getResultList();
     }
@@ -57,49 +57,51 @@ public class ModificationRepository extends GeneralEntityWithIdRepository<Modifi
     @Override
     public List<Modification> getByVendorAndNameSubstringDistinctByName(Integer vendorId, String nameSubstring) {
         return new ModificationQueries(entityManager)
-                .setSubqueryByMinId().setGroupByNameInSubquery().byVendorId(vendorId)
-                .setNameStartsWithOrHasSubstring(nameSubstring).setFetch().build().getResultList();
+                .addSubqueryByMinId().setGroupByNameInSubquery().byVendorId(vendorId)
+                .byNameStartsWithOrHasSubstring(nameSubstring).build().getResultList();
     }
 
     public List<Modification> getByVendorAndNameAndYear(Integer vendorId, String name, Integer year) {
-        return new ModificationQueries(entityManager).setYearIsBetween(year)
-                .byVendorId(vendorId).setNameIsEqual(name).setFetch().build().getResultList();
+        ModificationQueries modificationQueries = new ModificationQueries(entityManager);
+        modificationQueries.byYearIsBetween(year).byVendorId(vendorId).byNameIsEqual(name);
+        return modificationQueries.setFullFetch().build().getResultList();
     }
 
     public List<Modification> getByVendorAndName(Integer vendorId, String name) {
-        return new ModificationQueries(entityManager).byVendorId(vendorId).setNameIsEqual(name).setFetch()
-                .build().getResultList();
+        ModificationQueries modificationQueries = new ModificationQueries(entityManager);
+        modificationQueries.byVendorId(vendorId).byNameIsEqual(name);
+        return modificationQueries.setFullFetch().build().getResultList();
     }
 
     public List<Modification> getByVendorIdAndChassisNameAndYear(Integer vendorId, String chassisName, Integer year) {
-        return new ModificationQueries(entityManager).setChassisNameIsEqual(chassisName).byVendorId(vendorId)
-                .setYearIsBetween(year).setFetch().build().getResultList();
+        return new ModificationQueries(entityManager).byChassisNameIsEqual(chassisName).byVendorId(vendorId)
+                .byYearIsBetween(year).setFullFetch().build().getResultList();
     }
 
     public List<Modification> getByVendorIdAndChassisName(Integer vendorId, String chassisName) {
-        return new ModificationQueries(entityManager).setChassisNameIsEqual(chassisName).byVendorId(vendorId)
-                .setFetch().build().getResultList();
+        return new ModificationQueries(entityManager).byChassisNameIsEqual(chassisName).byVendorId(vendorId)
+                .setFullFetch().build().getResultList();
     }
 
     public List<Modification> getByVendorIdAndGenerationNameAndYear(Integer vendorId,
                                                                     String generationName,
                                                                     Integer year) {
-        return new ModificationQueries(entityManager).setGenerationNameIsEqual(generationName).byVendorId(vendorId)
-                .setYearIsBetween(year).setFetch().build().getResultList();
+        return new ModificationQueries(entityManager).byGenerationNameIsEqual(generationName).byVendorId(vendorId)
+                .byYearIsBetween(year).setFullFetch().build().getResultList();
     }
 
     public List<Modification> getByVendorIdAndGenerationName(Integer vendorId, String generationName) {
-        return new ModificationQueries(entityManager).setGenerationNameIsEqual(generationName).byVendorId(vendorId)
-                .setFetch().build().getResultList();
+        return new ModificationQueries(entityManager).byGenerationNameIsEqual(generationName).byVendorId(vendorId)
+                .setFullFetch().build().getResultList();
     }
 
     public List<Modification> getByVendorIdAndModelNameAndYear(Integer vendorId, String modelName, Integer year) {
-        return new ModificationQueries(entityManager).setModelNameIsEqual(modelName).byVendorId(vendorId)
-                .setFetch().setYearIsBetween(year).build().getResultList();
+        return new ModificationQueries(entityManager).byModelNameIsEqual(modelName).byVendorId(vendorId)
+                .setFullFetch().byYearIsBetween(year).build().getResultList();
     }
 
     public List<Modification> getByVendorIdAndModelName(Integer vendorId, String modelName) {
-        return new ModificationQueries(entityManager).setModelNameIsEqual(modelName).byVendorId(vendorId)
-                .setFetch().build().getResultList();
+        return new ModificationQueries(entityManager).byModelNameIsEqual(modelName).byVendorId(vendorId)
+                .setFullFetch().build().getResultList();
     }
 }

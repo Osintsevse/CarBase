@@ -1,13 +1,9 @@
 package com.thirdwheel.carbase.dao.repositories;
 
 import com.thirdwheel.carbase.dao.models.Generation;
-import com.thirdwheel.carbase.dao.models.Model;
-import com.thirdwheel.carbase.dao.models.Vendor;
+import com.thirdwheel.carbase.dao.queries.GenerationQueries;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.Tuple;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.*;
 import java.util.List;
 
 @Service
@@ -18,34 +14,9 @@ public class GenerationRepository extends GeneralEntityWithIdRepository<Generati
     }
 
     @Override
-    public List<Generation> getByVendorAndNameSubstringDistinctByName(Integer vendorId, String nameBeginning) {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-
-        CriteriaQuery<Tuple> tupleQuery = cb.createTupleQuery();
-        Subquery<Integer> subquery = tupleQuery.subquery(Integer.class);
-        Root<Generation> tupleRoot = subquery.from(tClass);
-
-        Predicate vendorPredicate = getPredicateGenerationByVendor(vendorId, cb, tupleRoot);
-        Predicate namePredicate = predicateCreator.stringStartsWithOrHasSubstring(tupleRoot.get(Generation.Fields.name), nameBeginning);
-
-        subquery.select(cb.min(tupleRoot.get(Generation.Fields.id)));
-        subquery.groupBy(tupleRoot.get(Generation.Fields.name));
-        subquery.distinct(true);
-        subquery.where(cb.and(vendorPredicate, namePredicate));
-
-        CriteriaQuery<Generation> cq = cb.createQuery(tClass);
-        Root<Generation> root = cq.from(tClass);
-        cq.where(root.get(Generation.Fields.id).in(subquery));
-        cq.orderBy(cb.asc(root.get(Generation.Fields.name)));
-
-        TypedQuery<Generation> query = entityManager.createQuery(cq);
-        return query.getResultList();
-    }
-
-    private Predicate getPredicateGenerationByVendor(Integer vendorId, CriteriaBuilder cb, Root<Generation> root) {
-        return cb.equal(root.get(Generation.Fields.model)
-                        .get(Model.Fields.vendor)
-                        .get(Vendor.Fields.id),
-                vendorId);
+    public List<Generation> getByVendorAndNameSubstringDistinctByName(Integer vendorId, String nameSubstring) {
+        return new GenerationQueries(entityManager).addSubqueryByMinId().setGroupByNameInSubquery()
+                .byVendorId(vendorId).byNameStartsWithOrHasSubstring(nameSubstring)
+                .build().getResultList();
     }
 }
