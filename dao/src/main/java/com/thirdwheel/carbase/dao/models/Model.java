@@ -27,12 +27,8 @@ public class Model implements EntityWithIdAndName {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "vendor_id")
-    private Vendor vendor;
-
-    @EqualsAndHashCode.Exclude
-    @OneToMany(mappedBy = "model", fetch = FetchType.LAZY)
     @ToString.Exclude
-    private List<Generation> generations;
+    private Vendor vendor;
 }

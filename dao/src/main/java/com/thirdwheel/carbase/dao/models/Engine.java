@@ -52,8 +52,9 @@ public class Engine implements EntityWithIdAndName {
     @Column(name = "stroke")
     private Double stroke;
 
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "vendor_id")
+    @ToString.Exclude
     private Vendor vendor;
 
     @Override

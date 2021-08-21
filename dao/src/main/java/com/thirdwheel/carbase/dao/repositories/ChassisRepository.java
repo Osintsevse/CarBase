@@ -15,8 +15,9 @@ public class ChassisRepository extends GeneralEntityWithIdRepository<Chassis>
 
     @Override
     public List<Chassis> getByVendorAndNameSubstringDistinctByName(Integer vendorId, String nameSubstring) {
-        return new ChassisQueries(entityManager).addSubqueryByMinId().setGroupByNameInSubquery()
-                .byVendorId(vendorId).byNameStartsWithOrHasSubstring(nameSubstring)
-                .build().getResultList();
+        ChassisQueries chassisQueries = new ChassisQueries(entityManager);
+        chassisQueries.addSubqueryByMinId().setGroupByNameInSubquery()
+                .byVendorId(vendorId).byNameStartsWithOrHasSubstring(nameSubstring);
+        return chassisQueries.build().getResultList();
     }
 }

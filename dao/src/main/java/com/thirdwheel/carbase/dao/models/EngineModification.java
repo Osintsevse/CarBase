@@ -47,7 +47,8 @@ public class EngineModification implements EntityWithIdAndName {
     @Column(name = "compression_ratio")
     private Double compressionRatio;
 
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "engine_id")
+    @ToString.Exclude
     private Engine engine;
 }

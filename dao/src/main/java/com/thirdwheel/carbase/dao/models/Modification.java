@@ -86,12 +86,14 @@ public class Modification implements EntityWithIdAndName {
     @Column(name = "weight")
     private Integer weight;
 
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "chassis_id")
+    @ToString.Exclude
     private Chassis chassis;
 
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "engine_modification_id")
+    @ToString.Exclude
     private EngineModification engineModification;
 
 }

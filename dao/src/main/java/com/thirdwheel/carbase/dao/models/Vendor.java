@@ -29,10 +29,6 @@ public class Vendor implements EntityWithIdAndName {
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    @OneToMany(mappedBy = "vendor", fetch = FetchType.LAZY)
-    private List<Model> models;
-
-    @EqualsAndHashCode.Exclude
     @OneToOne(mappedBy = "vendor")
     private VendorsConfiguration vendorsConfiguration;
 }

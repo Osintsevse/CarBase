@@ -15,8 +15,9 @@ public class ModelRepository extends GeneralEntityWithIdRepository<Model>
 
     @Override
     public List<Model> getByVendorAndNameSubstringDistinctByName(Integer vendorId, String nameSubstring) {
-        return new ModelQueries(entityManager).addSubqueryByMinId().setGroupByNameInSubquery()
-                .byVendorId(vendorId).byNameStartsWithOrHasSubstring(nameSubstring)
-                .build().getResultList();
+        ModelQueries modelQueries = new ModelQueries(entityManager);
+        modelQueries.addSubqueryByMinId().setGroupByNameInSubquery()
+                .byVendorId(vendorId).byNameStartsWithOrHasSubstring(nameSubstring);
+        return modelQueries.build().getResultList();
     }
 }

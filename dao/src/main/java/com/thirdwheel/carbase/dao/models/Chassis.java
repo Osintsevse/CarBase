@@ -63,21 +63,19 @@ public class Chassis implements EntityWithIdAndName {
     @Column(name = "body_style")
     private BodyStyle bodyStyle;
 
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "generation_id")
+    @ToString.Exclude
     private Generation generation;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "front_suspension_id")
+    @ToString.Exclude
     private Suspension frontSuspension;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rear_suspension_id")
-    private Suspension rearSuspension;
-
-    @EqualsAndHashCode.Exclude
-    @OneToMany(mappedBy = "chassis", fetch = FetchType.LAZY)
     @ToString.Exclude
-    private List<Modification> modifications;
+    private Suspension rearSuspension;
 }
 

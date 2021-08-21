@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +25,7 @@ import java.util.List;
 public class ModificationSimilarityController {
     private final ModificationService modificationService;
 
+    @Transactional(readOnly = true)
     @GetMapping(path = "/modifications/{modificationId}/similar")
     public ResponseEntity<List<ModificationForListResponse>> getSimilarByModification(
             @PathVariable(value = "modificationId") @Min(0) Integer modificationId,

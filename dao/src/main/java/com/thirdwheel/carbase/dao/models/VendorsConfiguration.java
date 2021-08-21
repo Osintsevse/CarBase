@@ -4,6 +4,7 @@ import com.thirdwheel.carbase.dao.models.enums.CarSearchDomain;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.FieldNameConstants;
 
 import javax.persistence.*;
@@ -11,7 +12,7 @@ import java.util.EnumSet;
 
 @Getter
 @Setter
-@javax.persistence.Entity
+@Entity
 @Table(name = "vendors_configurations")
 @EqualsAndHashCode
 @FieldNameConstants

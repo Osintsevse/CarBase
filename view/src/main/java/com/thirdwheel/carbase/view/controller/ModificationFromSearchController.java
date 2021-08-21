@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,6 +40,7 @@ public class ModificationFromSearchController {
     }
 
 
+    @Transactional(readOnly = true)
     @GetMapping(path = "/generations/{generationId}/modificationsByGenerationName")
     public ResponseEntity<List<ModificationForListResponse>> getModificationsByGenerationNameAndYear(
             @PathVariable(value = "generationId") @Min(0) Integer generationId,
@@ -53,6 +55,7 @@ public class ModificationFromSearchController {
         return ResponseEntity.ok(modificationsResponse);
     }
 
+    @Transactional(readOnly = true)
     @GetMapping(path = "/chassises/{chassisId}/modificationsByChassisName")
     public ResponseEntity<List<ModificationForListResponse>> getModificationsByChassisNameAndYear(
             @PathVariable(value = "chassisId") @Min(0) Integer chassisId,
@@ -67,6 +70,7 @@ public class ModificationFromSearchController {
         return ResponseEntity.ok(modificationsResponse);
     }
 
+    @Transactional(readOnly = true)
     @GetMapping(path = "/modifications/{modificationId}/modificationsByModificationName")
     public ResponseEntity<List<ModificationForListResponse>> getModificationsByModificationNameAndYear(
             @PathVariable(value = "modificationId") @Min(0) Integer modificationId,

@@ -38,12 +38,8 @@ public class Generation implements EntityWithIdAndName {
     @Column(name = "image_src")
     private String imageSrc;
 
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "model_id")
-    private Model model;
-
-    @EqualsAndHashCode.Exclude
-    @OneToMany(mappedBy = "generation", fetch = FetchType.LAZY)
     @ToString.Exclude
-    private List<Chassis> chassises;
+    private Model model;
 }

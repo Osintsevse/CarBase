@@ -15,8 +15,9 @@ public class GenerationRepository extends GeneralEntityWithIdRepository<Generati
 
     @Override
     public List<Generation> getByVendorAndNameSubstringDistinctByName(Integer vendorId, String nameSubstring) {
-        return new GenerationQueries(entityManager).addSubqueryByMinId().setGroupByNameInSubquery()
-                .byVendorId(vendorId).byNameStartsWithOrHasSubstring(nameSubstring)
-                .build().getResultList();
+        GenerationQueries generationQueries = new GenerationQueries(entityManager);
+        generationQueries.addSubqueryByMinId().setGroupByNameInSubquery()
+                .byVendorId(vendorId).byNameStartsWithOrHasSubstring(nameSubstring);
+        return generationQueries.build().getResultList();
     }
 }

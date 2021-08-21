@@ -26,4 +26,14 @@ public class ChassisQueries extends AbstractQueries<Chassis> {
         super.addSubqueryByMinId(Chassis.Fields.id);
         return this;
     }
+
+    public ChassisQueries fetchAll() {
+        root.fetch(Chassis.Fields.generation)
+                .fetch(Generation.Fields.model)
+                .fetch(Model.Fields.vendor)
+                .fetch(Vendor.Fields.vendorsConfiguration);
+        root.fetch(Chassis.Fields.frontSuspension);
+        root.fetch(Chassis.Fields.rearSuspension);
+        return this;
+    }
 }

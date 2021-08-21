@@ -1,5 +1,6 @@
 package com.thirdwheel.carbase.dao.queries;
 
+import com.thirdwheel.carbase.dao.models.Generation;
 import com.thirdwheel.carbase.dao.models.Model;
 import com.thirdwheel.carbase.dao.models.Vendor;
 
@@ -20,6 +21,12 @@ public class ModelQueries extends AbstractQueries<Model> {
 
     public ModelQueries addSubqueryByMinId() {
         super.addSubqueryByMinId(Model.Fields.id);
+        return this;
+    }
+    
+    public ModelQueries fetchAll() {
+        root.fetch(Model.Fields.vendor)
+                .fetch(Vendor.Fields.vendorsConfiguration);
         return this;
     }
 }

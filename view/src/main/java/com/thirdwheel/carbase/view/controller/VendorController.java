@@ -7,6 +7,7 @@ import com.thirdwheel.carbase.view.model.subelements.EntityWithNameForResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -17,6 +18,7 @@ import java.util.List;
 public class VendorController {
     private final VendorService vendorService;
 
+    @Transactional(readOnly = true)
     @GetMapping(path = "/vendors")
     public ResponseEntity<List<EntityWithNameForResponse>> getVendors
             (@RequestParam(value = "nameSubstring", required = false) String nameSubstring) {

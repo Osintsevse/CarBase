@@ -56,9 +56,10 @@ public class ModificationRepository extends GeneralEntityWithIdRepository<Modifi
 
     @Override
     public List<Modification> getByVendorAndNameSubstringDistinctByName(Integer vendorId, String nameSubstring) {
-        return new ModificationQueries(entityManager)
-                .addSubqueryByMinId().setGroupByNameInSubquery().byVendorId(vendorId)
-                .byNameStartsWithOrHasSubstring(nameSubstring).build().getResultList();
+        ModificationQueries modificationQueries = new ModificationQueries(entityManager);
+        modificationQueries.addSubqueryByMinId().setGroupByNameInSubquery().byVendorId(vendorId)
+                .byNameStartsWithOrHasSubstring(nameSubstring);
+        return modificationQueries.setFullFetch().build().getResultList();
     }
 
     public List<Modification> getByVendorAndNameAndYear(Integer vendorId, String name, Integer year) {
@@ -87,7 +88,7 @@ public class ModificationRepository extends GeneralEntityWithIdRepository<Modifi
                                                                     String generationName,
                                                                     Integer year) {
         return new ModificationQueries(entityManager).byGenerationNameIsEqual(generationName).byVendorId(vendorId)
-                .byYearIsBetween(year).setFullFetch().build().getResultList();
+                .setFullFetch().byYearIsBetween(year).build().getResultList();
     }
 
     public List<Modification> getByVendorIdAndGenerationName(Integer vendorId, String generationName) {
@@ -103,5 +104,15 @@ public class ModificationRepository extends GeneralEntityWithIdRepository<Modifi
     public List<Modification> getByVendorIdAndModelName(Integer vendorId, String modelName) {
         return new ModificationQueries(entityManager).byModelNameIsEqual(modelName).byVendorId(vendorId)
                 .setFullFetch().build().getResultList();
+    }
+
+    @Override
+    public Modification getById(int id) {
+        ModificationQueries modificationQueries = new ModificationQueries(entityManager);
+        modificationQueries.addPredicateByAnd(
+                modificationQueries.getCriteriaBuilder().equal(
+                        modificationQueries.getRoot().get(Modification.Fields.id), id));
+        modificationQueries.setFullFetch();
+        return modificationQueries.build().getSingleResult();
     }
 }
